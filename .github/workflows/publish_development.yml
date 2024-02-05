@@ -1,0 +1,39 @@
+name: Build and publish to Test PyPI
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build:
+    name: Reuse build
+    uses: ./.github/workflows/build.yml
+
+  publish-to-test-pypi:
+    needs: build
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
+    environment:
+      name: development
+      url: https://test.pypi.org/p/reqstool-python-decorators
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
+    steps:
+      # Download artifacts from the build job
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          sign-artifacts: true
+          skip-existing: true

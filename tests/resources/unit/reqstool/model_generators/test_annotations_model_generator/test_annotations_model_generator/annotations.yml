@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/annotations.schema.json
+---
+requirement_annotations:
+  implementations:
+    REQ_001:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.ImplRequirementsExample"
+    REQ_002:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.ImplRequirementsExample"
+    REQ_003:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.ImplRequirementsExample"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.ImplRequirementsExample.someMethod1"
+    REQ_004:
+      - elementKind: "FIELD"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.ImplRequirementsExample.field"
+  tests:
+    REQ_001:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.TestRequirementsExample"
+    REQ_002:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.TestRequirementsExample"
+    REQ_003:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.TestRequirementsExample"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "se.lfv.common.annotations.requirements.resources.java.TestRequirementsExample.someMethod"

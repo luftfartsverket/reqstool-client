@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: ms-001
+  variant: microservice
+  title: Some Microservice Requirement Title
+  url: https://url.example.com
+
+imports:
+  local:
+    - path: ../sys-001
+
+filters:
+  sys-001:
+    requirement_ids:
+      includes: ["REQ_sys001_103"]
+  ext-001:
+    requirement_ids:
+      includes: ["REQ_ext001_101"]
+
+requirements:
+  - id: REQ_ms001_101
+    title: Title REQ_ms001_101
+    significance: may
+    description: Description REQ_ms001_101
+    rationale: Rationale REQ_ms001_101
+    category: ["operational", "business"]
+    revision: 0.0.1
+  - id: REQ_ms001_102
+    title: Title REQ_ms001_102
+    significance: may
+    description: Some description REQ_ms001_102
+    rationale: Rationale REQ_ms001_102
+    category: ["operational", "business"]
+    references:
+      - requirement_ids: ["sys-001:REQ_sys001_101"] # Should be in a list at the bottom of report.
+        sources: ["SRC"]
+    revision: 0.0.1

@@ -1,0 +1,300 @@
+{
+    "id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "metadata": {
+            "$ref": "#/$defs/metadata"
+        },
+        "imports": {
+            "$ref": "#/$defs/imports",
+            "description": "Array of systems or extenal sources to import"
+        },
+        "implementations": {
+            "$ref": "#/$defs/imports",
+            "description": "Implementations of this system (Only used with type: system)"
+        },
+        "filters": {
+            "$ref": "common.schema.json#/$defs/filters",
+            "description": "Filter requirements per urn. From the requirement imported from the imports section"
+        },
+        "requirements": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/requirements"
+            },
+            "description": "Array of Requirements"
+        }
+    },
+    "required": [
+        "metadata"
+    ],
+    "anyOf": [
+        {
+            "if": {
+                "properties": {
+                    "metadata": {
+                        "properties": {
+                            "variant": {
+                                "anyOf": [
+                                    {
+                                        "const": "microservice"
+                                    },
+                                    {
+                                        "const": "external"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "then": {
+                "not": {
+                    "required": [
+                        "implementations"
+                    ]
+                }
+            }
+        }
+    ],
+    "$defs": {
+        "metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Metadata regarding this requirements file",
+            "properties": {
+                "urn": {
+                    "type": "string",
+                    "description": "Unique resource name"
+                },
+                "variant": {
+                    "type": "string",
+                    "enum": [
+                        "microservice",
+                        "system",
+                        "external"
+                    ],
+                    "description": "Enum of system, microservice, or external"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "A \"human-readable\" description of what the file contains. E.g. for System ED254 it might be \"System Requirements for ED254\", for ED254 MP: \"Requirements for ED254 Message Producer\""
+                },
+                "url": {
+                    "type": "string",
+                    "description": "Needed in case the document has extenal references like NMB2B for example, this url might point to a source of information about the EuroControl requirements"
+                }
+            },
+            "required": [
+                "urn",
+                "variant",
+                "title"
+            ]
+        },
+        "imports": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "git": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/git"
+                    },
+                    "description": "Array of git repositories"
+                },
+                "maven": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/maven"
+                    },
+                    "description": "Array of Maven artifacts"
+                },
+                "local": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/local",
+                        "description": "local"
+                    },
+                    "description": "Array of local requirements.yml files"
+                }
+            }
+        },
+        "git": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "env_token": {
+                    "type": "string",
+                    "description": "Token to authenticate. E.g. GITLAB_TOKEN or empty"
+                },
+                "branch": {
+                    "type": "string",
+                    "description": "Git branch to read from."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "URL to repository host"
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to a directory (with requirements.yml and software_verification_cases.yml and/or manual_verification_results.yml)"
+                }
+            },
+            "required": [
+                "branch",
+                "url",
+                "path"
+            ]
+        },
+        "maven": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "env_token": {
+                    "type": "string",
+                    "description": "Token to authenticate. E.g. MAVEN_TOKEN or empty"
+                },
+                "url": {
+                    "$ref": "#/$defs/url",
+                    "description": "URL to artifact repository"
+                },
+                "group_id": {
+                    "type": "string",
+                    "description": "Group id for the Maven implementation"
+                },
+                "artifact_id": {
+                    "type": "string",
+                    "description": "Artifact id for the Maven implementation"
+                },
+                "classifier": {
+                    "type": "string",
+                    "description": "Maven classifier"
+                },
+                "path": {
+                    "type": "string",
+                    "description": "Path to resource e.g. path to a directory (with requirements.yml and software_verification_cases.yml and/or manual_verification_results.yml) or to a requirements.yml"
+                },
+                "version": {
+                    "type": "string",
+                    "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+                    "description": "Version for the Maven implementation"
+                }
+            },
+            "required": [
+                "group_id",
+                "artifact_id",
+                "url",
+                "path",
+                "version"
+            ]
+        },
+        "local": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "Path to resource e.g. path to a directory (with requirements.yml and software_verification_cases.yml and/or manual_verification_results.yml) or to a requirements.yml"
+                }
+            },
+            "required": [
+                "path"
+            ]
+        },
+        "requirements": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Requirement id"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Title for the requirement"
+                },
+                "significance": {
+                    "enum": [
+                        "shall",
+                        "should",
+                        "may"
+                    ],
+                    "description": "Enum with Level of significance. E.g. shall, should, may (https://www.rfc-editor.org/rfc/rfc2119)"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "High level description for the requirement"
+                },
+                "rationale": {
+                    "type": "string",
+                    "description": "Rationale for why the requirement exists"
+                },
+                "category": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "business",
+                            "user-interface",
+                            "system-interface",
+                            "performance",
+                            "it-security",
+                            "information-security",
+                            "reliability",
+                            "operational"
+                        ],
+                        "description": "Enum for requirement category. E.g. business, user-interface, system-interface, performance, it-security, information-security, reliability, operational"
+                    },
+                    "description": "Array of requirement categories. E.g. business, user-interface, system-interface, performance, it-security, information-security, reliability, operational"
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/reference"
+                    },
+                    "description": "Array of references related requirements"
+                },
+                "revision": {
+                    "type": "string",
+                    "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+                    "description": "Revision that the requirement was added"
+                }
+            },
+            "required": [
+                "id",
+                "title",
+                "significance",
+                "description",
+                "category",
+                "revision"
+            ]
+        },
+        "reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "requirement_ids": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "common.schema.json#/$defs/reqid",
+                        "description": "Requirement id that links to another requirement in this document"
+                    },
+                    "description": "Array of requirement ids that links to another requirement in this document"
+                },
+                "sources": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Requirement source. E.g. FSB, SAF, SWAL"
+                    },
+                    "description": "Array of requirement sources. E.g. FSB, SAF, SWAL"
+                }
+            }
+        },
+        "url": {
+            "type": "string"
+        }
+    }
+}

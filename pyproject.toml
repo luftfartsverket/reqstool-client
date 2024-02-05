@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs", "build", "twine"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+addopts = ["-s", "--import-mode=importlib", "--log-cli-level=DEBUG"]
+pythonpath = [".", "src", "tests"]
+testpaths = ["tests/unit"]
+
+[project]
+name = "reqstool"
+dynamic = ["version"]
+authors = [{ name = "LFV", email = "info@lfv.se" }]
+description = "A tool for managing requirements with related tests and test results."
+readme = "README.md"
+
+homepage = "https://github.com/Luftfartsverket/reqstool-client"
+repository = "https://github.com/Luftfartsverket/reqstool-client"
+documentation = "https://github.com/Luftfartsverket/reqstool-client"
+
+urls.Source = 'https://github.com/Luftfartsverket/reqstool-client'
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "colorama==0.4.6",
+    "Jinja2==3.1.3",
+    "jsonpickle==3.0.2",
+    "jsonschema[format-nongpl]==4.21.1",
+    "lark==1.1.9",
+    "maven-artifact==0.3.4",
+    "pygit2==1.14.0",
+    "referencing==0.33.0",
+    "requests-file==2.0.0",
+    "ruamel.yaml==0.18.5",
+    "tabulate==0.9.0",
+    "xmldict==0.4.1",
+]
+
+[project.scripts]
+reqstool = "reqstool.command:main"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
+[tool.hatch.envs.test]
+dependencies = ["pytest==8.0.0", "pytest-sugar==1.0.0", "pytest-cov==4.1.0"]
+
+[tool.hatch.envs.lint]
+detached = true
+
+dependencies = ["black==24.1.1", "flake8==7.0.0", "flake8-pyproject==1.2.3"]
+
+[tool.black]
+line-length = 120
+target-version = ['py310']
+
+[tool.flake8]
+ignore = ["W503"]
+max-line-length = 120
+# exclude = tests/*
+max-complexity = 10

@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/software_verification_cases.schema.json
+
+cases:
+  - id: SVC_sys001_101
+    requirement_ids: ["REQ_sys001_101"]
+    title: "Some Title SVC_sys001_101"
+    verification: automated-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_102
+    requirement_ids: ["REQ_sys001_102"]
+    title: "Some Title SVC_sys001_102"
+    verification: manual-test
+    instructions: Some clear and consice instructions
+    revision: "0.0.1"
+
+  - id: SVC_sys001_103
+    requirement_ids: ["ext-001:REQ_ext001_101", "REQ_sys001_102"]
+    title: "Some Title SVC_sys001_102"
+    description: |
+      Verify a very important aspect of system.
+    verification: manual-test
+    instructions: Some clear and consice instructions
+    revision: "0.0.1"
+
+  - id: SVC_sys001_107
+    requirement_ids: ["ext-001:REQ_ext001_101", "REQ_sys001_102"]
+    title: "Some Title SVC_sys001_107"
+    description: "A first svc for ext-001:REQ_ext001_101"
+    verification: automated-test
+    instructions: Some clear and consice instructions
+    revision: "0.0.1"
+
+  - id: SVC_sys001_108
+    requirement_ids: ["REQ_sys001_103"]
+    title: "Some Title SVC_sys001_108"
+    verification: manual-test
+    instructions: Some clear and consice instructions
+    revision: "0.0.1"
+
+  - id: SVC_sys001_109
+    requirement_ids: ["ext-001:REQ_ext001_101"]
+    title: "Some Title SVC_sys001_109"
+    description: "Another svc for ext-001:REQ_ext001_101"
+    verification: automated-test
+    instructions: Some clear and consice instructions
+    revision: "0.0.1"

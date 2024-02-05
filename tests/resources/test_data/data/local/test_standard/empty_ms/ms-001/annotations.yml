@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/annotations.schema.json
+---
+requirement_annotations:
+  implementations:
+    sys-001:REQ_sys001_101:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "com.example.ms001.RequirementsExample1"
+    sys-001:REQ_sys001_102:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "com.example.ms001.RequirementsExample2"
+    sys-001:REQ_sys001_103:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.example.sys001.RequirementsExample.someMethod"
+    ext-001:REQ_ext001_101:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.example.ext001.RequirementsExample.someMethod"
+  tests:
+    sys-001:SVC_sys001_101:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.exampleSVCs.TestA"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.exampleSVCs.TestB"
+    sys-001:SVC_sys001_107:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.exampleSVCs.Test1"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.exampleSVCs.Test2"
+    sys-001:SVC_sys001_109:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.exampleSVCs.ExtTest1"

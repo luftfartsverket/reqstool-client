@@ -1,0 +1,22 @@
+name: Linting (black and flake8)
+on:
+  workflow_call:
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install pip package(s)
+        run: pip install hatch
+      - name: Run black formatter check
+        run: hatch run lint:black --check --verbose src tests
+      - name: Run flake8 linter
+        run: hatch run lint:flake8
+      - name: Run unit and integrations tests
+        run: hatch run test:pytest --cov=reqstool-python-decorators --cov-report=xml --cov-report=html

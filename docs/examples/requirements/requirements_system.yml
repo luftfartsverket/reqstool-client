@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: sys-ed254 # unique resource name
+  variant: system # enum of system, microservice or external
+  title: title
+  url: optional
+
+imports:
+  git:
+    - env_token: e.g. GITLAB_TOKEN or empty
+      branch: main
+      url: url
+      path: ../..
+  maven:
+    - env_token: e.g. MAVEN_TOKEN or empty
+      group_id: x
+      artifact_id: y
+      url: x.se
+      path: ../..
+      version: 1.0.0
+  local:
+    - path: ../..
+
+filters:
+  ext-001:
+    requirement_ids:
+      imports: [REQ_001]
+  ext-002:
+    requirement_ids:
+      imports: [REQ_001]
+  ext-003:
+    requirement_ids:
+      imports: [REQ_001]
+
+implementations: # only used with type = system
+  git:
+    - env_token: e.g. GITLAB_TOKEN or empty
+      branch: main
+      url: url
+      path: ../..
+  maven:
+    - env_token: e.g. MAVEN_TOKEN or empty
+      group_id: x
+      artifact_id: y
+      url: x.se
+      path: ../..
+      version: 1.0.0
+  local:
+    - path: ../..
+
+requirements:
+  - id: id # alphanumerical
+    title: title # text
+    significance: shall # was level # shall, should, may # https://www.rfc-editor.org/rfc/rfc2119
+    description: description # text
+    rationale: test # text
+    category: [business] # [Business, User Interface, System Interface, Performance, IT Security, Information Security, Reliability, Operational]
+    references: # links, source
+      - requirement_ids: [REQ123] # links to another requirement in this document
+      - sources: [FSB] # FSB, SAF, SWAL
+      - requirement_ids: [REQ123] # links to another requirement in this document
+        sources: [FSB] # FSB, SAF, SWAL
+    revision: 0.0.0 # requirement added from revision number, e.g. 1.0.2

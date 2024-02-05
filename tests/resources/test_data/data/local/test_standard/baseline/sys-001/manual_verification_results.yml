@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/manual_verification_results.schema.json
+
+results:
+  - id: MVR_sys001_102
+    svc_ids: ["SVC_sys001_102"]
+    pass: true
+  - id: MVR_sys001_103
+    svc_ids: ["SVC_sys001_103"]
+    pass: false
+  - id: MVR_sys001_104
+    svc_ids: ["SVC_sys001_108"]
+    pass: true

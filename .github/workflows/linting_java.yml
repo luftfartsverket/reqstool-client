@@ -1,0 +1,21 @@
+name: Linting
+
+on:
+  workflow_call:
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Run linting
+        run: mvn --file tests/resources/test_data/data/local/test_basic/layout_maven/ms-101/pom.xml clean validate

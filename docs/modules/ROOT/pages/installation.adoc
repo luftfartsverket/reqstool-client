@@ -1,0 +1,13 @@
+## Installation
+
+You need to have following installed in order to use the tool:
+
+* Python, 3.10 or later
+* pip
+
+To use the tool, you need to install the pypi package _reqstool_.
+
+```bash
+$ pip install -U reqstool
+$ reqstool -h # to confirm installation
+```

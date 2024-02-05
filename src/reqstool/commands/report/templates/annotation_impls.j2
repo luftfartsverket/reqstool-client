@@ -1,0 +1,10 @@
+{%if report%}
+==== IMPLEMENTATIONS 
+{%endif%}
+{%for impl in report %}
+|===
+|{{impl.element_kind}}
+|{{impl.fqn|replace('.', '.​')}}{# Replace dot with dot and zero-width space to allow line breaks #}
+
+|===
+{%endfor%}

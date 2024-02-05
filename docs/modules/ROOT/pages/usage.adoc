@@ -1,0 +1,65 @@
+== Usage
+
+```bash
+reqstool [-h] {command: report-asciidoc,generate-json,status} {location: local,git,maven} ...
+```
+
+Use `-h/--help` for more information about each command and location.
+
+[[status]]
+== Command: status
+Status on implementations and tests of requirements.
+
+*Usage example*
+```bash
+reqstool status local -p path_to_dir
+```
+
+Example:
+
+STATUS RESULT
+
+|===
+| Req id | Implementation| Automated Test | Manual Test
+| REQ_ms001_101 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:green">Pass</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_ms001_102 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:red">Fail</span>+++
+| REQ_sys001_101 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:green">Pass</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_sys001_102 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_sys001_103 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:red">Fail</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_ext001_101 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:green">Pass</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_ext001_103 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_ext002_101 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_ext002_102 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
+| REQ_ext002_103 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
+|===
+
+|===
+|Total requirements|Not implemented|Missing tests|Failing tests
+| 3 | 0 (0.00%) | 0 (0.00%) | 2 (66.67%)
+|===
+
+[[report]]
+== Command: report-asciidoc
+
+Generates a report in AsciiDoc.
+
+*Default usage*
+
+```bash
+reqstool report-asciidoc local -p path_to_requirements_dir -o path_to_output_file.adoc
+```
+
+== Command: generate-json
+[[generate-json]]
+
+Same as `report-asciidoc`, but instead of generating an AsciiDoc report a complete raw JSON file is generated. 
+
+*Default usage*
+
+```bash
+reqstool report-asciidoc local -p path_to_requirements_dir -o path_to_output_file.json
+```
+
+Note: There is currently no JSON Schema for this file and it is a raw dump of the data structures using [jsonpickle](https://github.com/jsonpickle/jsonpickle) the format might change at anytime for the time being.
+
+

@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: sys-001
+  variant: system
+  title: Some System Requirement Title
+  url: https://url.example.com
+
+imports:
+  local:
+    - path: ./ext-001
+    - path: ./ext-002
+
+filters:
+  ext-001:
+    requirement_ids:
+      excludes:
+        - REQ_ext001_102
+
+implementations:
+  local:
+    - path: ../ms-001
+
+requirements:
+  - id: REQ_sys001_101
+    title: Title REQ_sys001_101
+    significance: shall
+    description: Description REQ_sys001_101
+    rationale: Rationale REQ_sys001_101
+    category: ["reliability", "business"]
+    revision: 0.0.1
+
+  - id: REQ_sys001_102
+    title: Title REQ_sys001_102
+    significance: may
+    description: Description REQ_sys001_102
+    rationale: Rationale REQ_sys001_102
+    category: ["operational", "performance"]
+    revision: 0.0.1
+
+  - id: REQ_sys001_103
+    title: Title REQ_sys001_103
+    significance: shall
+    description: Description REQ_sys001_103
+    rationale: Rationale REQ_sys001_103
+    category: [it-security, "business"]
+    revision: 0.0.1

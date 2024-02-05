@@ -1,0 +1,33 @@
+name: Publish Maven package to GitHub Packages
+on:
+  release:
+    types: [created]
+  push:
+    branches:
+      - feature/initial
+    # paths:
+    #   - "data/local/test_basic/**"
+    #   - "data/local/test_basic/layout_maven/ms-101/**"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  linting:
+    name: Check linting
+    uses: ./.github/workflows/linting_java.yml
+  publish:
+    name: Publish package to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          java-version: "11"
+          distribution: "temurin"
+      - name: Publish package
+        run: mvn --file tests/resources/test_data/data/local/test_basic/layout_maven/ms-101/pom.xml --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

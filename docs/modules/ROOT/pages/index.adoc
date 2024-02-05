@@ -1,0 +1,27 @@
+= Reqstool Client
+
+:keywords: Docs as Code, DocOps, content management system, docs writers, publish software documentation, CI and docs, CD and docs
+
+## Known bugs and issues
+
+* None (fingers-crossed) 
+
+## Limitations
+
+* Only Java and Maven supported
+
+## Contributing
+
+ * We adhere to the latest version of [Contributor Covenant](https://www.contributor-covenant.org/)
+ * Fork repo
+ * Before submitting a PR
+   * Perform formatting (black):  `hatch run lint:black src tests`
+   * Run linter (flake8): `hatch run lint:flake8`
+   * Run tests:
+     * all: `hatch run test:pytest --cov=reqstool`
+     * unit only: `hatch run test:pytest --cov=reqstool  tests/unit`
+     * integration only: `hatch run test:pytest --cov=reqstool  tests/integration` 
+
+## License
+
+Licensed under [MIT](LICENSE)
