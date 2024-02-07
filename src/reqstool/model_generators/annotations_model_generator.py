@@ -1,7 +1,5 @@
 # Copyright © LFV
 
-# /home/u30576/dev/clones/sysdev/devops/documentation/requirements-tool/requirements-tool-client/tests/resources/unit/reqstool/model_generators/test_annotations_model_generator/test_annotations_model_generator/annotations.yml
-# /home/u30576/dev/clones/sysdev/devops/documentation/requirements-tool/requirements-tool-client/tests/resources/unit/reqstool/model_generators/test_annotations_generator/test_annotations_generator/annotations.yml
 import sys
 from typing import Dict
 

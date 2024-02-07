@@ -29,7 +29,7 @@ class JsonSchemaTypes(Enum):
     ANNOTATIONS = JsonSchemaItem("annotations.schema.json")
     COMMON = JsonSchemaItem("common.schema.json")
     MANUAL_VERIFICATION_RESULTS = JsonSchemaItem("manual_verification_results.schema.json")
-    REQUIREMENTS_CONFIG = JsonSchemaItem("requirements-config.schema.json")
+    REQSTOOL_CONFIG = JsonSchemaItem("reqstool_config.schema.json")
     REQUIREMENTS = JsonSchemaItem("requirements.schema.json")
     SOFTWARE_VERIFICATION_CASES = JsonSchemaItem("software_verification_cases.schema.json")
 

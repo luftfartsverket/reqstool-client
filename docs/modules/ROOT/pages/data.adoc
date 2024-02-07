@@ -11,13 +11,13 @@ Reqstool uses static data (usually written by hand) and dynamic data (informatio
 📒 requirements <.>
   📄  manual_verification_results.yml <.>
   📄  requirements.yml <.>
-  📄  requirements-config.yml <.>
+  📄  reqstool_config.yml <.>
   📄  software_verification_cases.yml <.>
 ----
 <.> Content source root
 <.> See [manual_verification_results.yml]
 <.> See [requirements.yml]
-<.> See [requirements-config.yml]
+<.> See [reqstool_config.yml]
 <.> See [software_verification_cases.yml]
 
 This means that if you run Reqstool like this:
@@ -33,9 +33,9 @@ Reqstool will then look for the files specified above in the folder that's speci
 
 The structure of the files that are generated will differ from language to language (Java vs Python) and from build tool to build tool (Maven vs Gradle).
 
-Currently, only Java using Maven is supported. A custom layout can be specified in xref:file_and_directory_set.adoc#requirements-config[requirements-config.yml].
+Currently, only Java using Maven is supported. A custom layout can be specified in xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml].
 
-The tree below shows where the dynamic files will reside after the project has been built. If you have a configuration where the requirements_annotations.yml and/or svcs_annotations.yml will be placed elsewhere after a successful build, Reqstool will need the path to those files specified in a requirements-config.yml file. See link above for examples and further information.
+The tree below shows where the dynamic files will reside after the project has been built. If you have a configuration where the requirements_annotations.yml and/or svcs_annotations.yml will be placed elsewhere after a successful build, Reqstool will need the path to those files specified in a reqstool_config.yml file. See link above for examples and further information.
 
 
 [[java-maven-directory-structure]]
@@ -74,7 +74,7 @@ The Reqstool artifact uploaded as a zip to a Maven repository needs to have the 
   📄 manual_verification_results.yml <.>
   📄 requirements.yml <.>
   📄 requirements_annotations.yml <.>
-  📄 requirements_config.yml <.>
+  📄 reqstool_config.yml <.>
   📄 software_verification_cases.yml <.>
   📄 svcs_annotations.yml <.>
   📂 test_results
@@ -85,7 +85,7 @@ The Reqstool artifact uploaded as a zip to a Maven repository needs to have the 
 <.> See [manual_verification_results.yml]
 <.> See [requirements.yml]
 <.> See [requirements_annotations.yml]
-<.> See [requirements-config.yml]
+<.> See [reqstool_config.yml]
 <.> See [software_verification_cases.yml]
 <.> See [svcs_annotations.yml]
 <.> Failsafe Reports root

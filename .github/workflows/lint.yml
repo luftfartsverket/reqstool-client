@@ -1,4 +1,4 @@
-name: Linting (black and flake8)
+name: Lint (black and flake8)
 on:
   workflow_call:
 
@@ -18,5 +18,3 @@ jobs:
         run: hatch run lint:black --check --verbose src tests
       - name: Run flake8 linter
         run: hatch run lint:flake8
-      - name: Run unit and integrations tests
-        run: hatch run test:pytest --cov=reqstool-python-decorators --cov-report=xml --cov-report=html

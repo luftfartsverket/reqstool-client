@@ -5,7 +5,7 @@ import pytest
 from pytest import fixture
 from ruamel.yaml import YAML
 
-from reqstool.requirements_config.requirements_config import TYPES, RequirementsConfig
+from reqstool.reqstool_config.reqstool_config import TYPES, ReqstoolConfig
 
 
 @fixture
@@ -50,7 +50,7 @@ def rc_yaml_config_incorrect_type() -> dict:
 
 
 def test_all(rc_yaml_config_all):
-    rc = RequirementsConfig._parse(yaml_data=rc_yaml_config_all)
+    rc = ReqstoolConfig._parse(yaml_data=rc_yaml_config_all)
 
     assert rc.type == TYPES.JAVA_MAVEN
     assert rc.project_root_dir == "/some_root_dir"
@@ -60,11 +60,11 @@ def test_all(rc_yaml_config_all):
 
 
 def test_minimal(rc_yaml_config_minimal):
-    rc = RequirementsConfig._parse(yaml_data=rc_yaml_config_minimal)
+    rc = ReqstoolConfig._parse(yaml_data=rc_yaml_config_minimal)
 
     assert rc.type == TYPES.JAVA_MAVEN
 
 
 def test_incorrect_type(rc_yaml_config_incorrect_type):
     with pytest.raises(ValueError, match="'java-maven-docs' is not a valid TYPES"):
-        RequirementsConfig._parse(yaml_data=rc_yaml_config_incorrect_type)
+        ReqstoolConfig._parse(yaml_data=rc_yaml_config_incorrect_type)

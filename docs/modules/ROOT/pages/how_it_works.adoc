@@ -15,7 +15,7 @@ What each command actually does is described under xref:usage.adoc[usage]
 
 ==== Resolve custom paths
 
-If you are providing a path to a git repository or a Maven artifact, you can override the xref:file_and_directory_set.adoc#requirements-config[requirements-config.yml][default locations] of the yaml files by providing a requirements_config.yml file in the same folder as your requirements.yml. In the requirements_config.yml, you are able to describe the structure of your repository/artifact and specify where the required yaml files are located. If the CombinedRawDatasetsGenerator detects such a file, it will try to locate the required files from the path described in the requirements_config.yml instead of the default path using the RequirementsConfig component. 
+If you are providing a path to a git repository or a Maven artifact, you can override the xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml][default locations] of the yaml files by providing a requirements_config.yml file in the same folder as your requirements.yml. In the requirements_config.yml, you are able to describe the structure of your repository/artifact and specify where the required yaml files are located. If the CombinedRawDatasetsGenerator detects such a file, it will try to locate the required files from the path described in the requirements_config.yml instead of the default path using the ReqstoolConfig component. 
 
 
 ==== What is validated?
@@ -52,7 +52,7 @@ Component(GenerateJsonCommand, "GenerateJsonCommand", "Generates JSON from impor
 Component(ReportCommand, "ReportCommand", "Generates reports")
 Component(SemanticValidator, "SemanticValidator", "Validates data read from source")
 Component(CombinedRawDatasetsGenerator, "CombinedRawDatasetsGenerator", "Generates imported models") 
-Component(RequirementsConfig, "RequirementsConfig", "Resolves paths to yaml files")
+Component(ReqstoolConfig, "ReqstoolConfig", "Resolves paths to yaml files")
 Component(CombinedIndexedDatasetGenerator, "CombinedIndexedDatasetGenerator", "Prepares data for rendering of Jinja2 templates")
 Component(Command, "Command", "Handles user commands")
 
@@ -62,7 +62,7 @@ Rel(Command, StatusCommand, "Uses")
 Rel(Command, GenerateJsonCommand, "Uses") 
 Rel(Command, ReportCommand, "Uses") 
 Rel(CombinedRawDatasetsGenerator, SemanticValidator, "Depends on") 
-Rel_Right(CombinedRawDatasetsGenerator, RequirementsConfig, "Uses") 
+Rel_Right(CombinedRawDatasetsGenerator, ReqstoolConfig, "Uses") 
 Rel(StatusCommand, CombinedRawDatasetsGenerator, "Uses") 
 Rel(GenerateJsonCommand, CombinedRawDatasetsGenerator, "Uses") 
 Rel(ReportCommand, CombinedRawDatasetsGenerator, "Uses") 

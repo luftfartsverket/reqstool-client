@@ -5,7 +5,7 @@ on:
 jobs:
   linting:
     name: Reuse linting job
-    uses: ./.github/workflows/linting.yml
+    uses: ./.github/workflows/lint.yml
 
   build:
     needs: linting
@@ -20,8 +20,9 @@ jobs:
         with:
           python-version: "3.10"
       - name: Install dependencies
-        run: |
-          pip install hatch
+        run: pip install hatch
+      - name: Run unit and integrations tests
+        run: hatch run test:pytest --cov=reqstool-python-decorators --cov-report=xml --cov-report=html 
       - name: Build project
         run: hatch build
       # Upload artifacts for later use

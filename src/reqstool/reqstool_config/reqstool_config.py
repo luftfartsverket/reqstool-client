@@ -24,13 +24,13 @@ class Locations:
 
 
 @dataclass
-class RequirementsConfig:
+class ReqstoolConfig:
     project_root_dir: str
     type: TYPES
     locations: Optional[Locations] = None
 
     @staticmethod
-    def _parse(yaml_data: dict) -> "RequirementsConfig":
+    def _parse(yaml_data: dict) -> "ReqstoolConfig":
         r_type = TYPES(yaml_data["type"])
 
         r_project_root_dir = "." if "project_root_dir" not in yaml_data else yaml_data["project_root_dir"]
@@ -38,7 +38,7 @@ class RequirementsConfig:
         r_locations = Locations(annotations=None, test_results=TestResults())
 
         if "locations" not in yaml_data:
-            return RequirementsConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)
+            return ReqstoolConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)
 
         locations = yaml_data["locations"]
 
@@ -56,4 +56,4 @@ class RequirementsConfig:
             if "surefire" in test_results:
                 r_locations.test_results.surefire = test_results["surefire"]
 
-        return RequirementsConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)
+        return ReqstoolConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)

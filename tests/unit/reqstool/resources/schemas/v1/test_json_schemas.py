@@ -19,7 +19,7 @@ def test_validate_manual_verification_results_schema_json():
 
 
 def test_validate_requirements_config_schema_json():
-    Draft202012Validator.check_schema(JsonSchemaTypes.REQUIREMENTS_CONFIG.value.schema)
+    Draft202012Validator.check_schema(JsonSchemaTypes.REQSTOOL_CONFIG.value.schema)
 
 
 def test_validate_requirements_schema_json():

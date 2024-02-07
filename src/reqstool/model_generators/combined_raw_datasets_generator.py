@@ -26,7 +26,7 @@ from reqstool.models.raw_datasets import CombinedRawDataset, RawDataset
 from reqstool.models.requirements import VARIANTS, RequirementsData
 from reqstool.models.svcs import SVCsData
 from reqstool.models.test_data import TestsData
-from reqstool.requirements_config.requirements_config import RequirementsConfig
+from reqstool.reqstool_config.reqstool_config import ReqstoolConfig
 from reqstool.requirements_indata.requirements_indata import RequirementsIndata
 
 
@@ -166,7 +166,7 @@ class CombinedRawDatasetsGenerator:
 
         current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
 
-        requirements_config: RequirementsConfig = None
+        requirements_config: ReqstoolConfig = None
 
         if os.path.exists(os.path.join(tmp_path, "requirements_config.yml")):
             response = open_file_https_file(os.path.join(tmp_path, "requirements_config.yml"))
@@ -176,11 +176,11 @@ class CombinedRawDatasetsGenerator:
             data: dict = yaml.load(response.text)
 
             if not SyntaxValidator.is_valid_data(
-                json_schema_type=JsonSchemaTypes.REQUIREMENTS_CONFIG, data=data, urn="unknown"
+                json_schema_type=JsonSchemaTypes.REQSTOOL_CONFIG, data=data, urn="unknown"
             ):
                 sys.exit(EXIT_CODE_SYNTAX_VALIDATION_ERROR)
 
-            requirements_config = RequirementsConfig._parse(yaml_data=data)
+            requirements_config = ReqstoolConfig._parse(yaml_data=data)
 
         requirements_indata = RequirementsIndata(
             requirements_config=requirements_config, dst_path=tmp_path, location=current_location_handler.current

@@ -7,7 +7,7 @@ from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
 from reqstool.locations.maven_location import MavenLocation
-from reqstool.requirements_config.requirements_config import TYPES, RequirementsConfig
+from reqstool.reqstool_config.reqstool_config import TYPES, ReqstoolConfig
 from reqstool.requirements_indata.java.java_maven_requirements_indata_paths import (
     JavaMavenRequirementsIndataPaths,
     RequirementsIndataPathItem,
@@ -22,7 +22,7 @@ from reqstool.requirements_indata.requirements_indata_paths import (
 class RequirementsIndata:
     dst_path: str  # tmp path
     location: LocationInterface  # current location
-    requirements_config: RequirementsConfig
+    requirements_config: ReqstoolConfig
     requirements_indata_paths: RequirementsIndataPaths = field(default_factory=RequirementsIndataPaths)
 
     def __post_init__(self):

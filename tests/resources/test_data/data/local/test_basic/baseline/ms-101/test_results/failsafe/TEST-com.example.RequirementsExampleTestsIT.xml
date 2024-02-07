@@ -29,7 +29,7 @@
     <property name="surefire.test.class.path"
       value="some.jar" />
     <property name="sun.cpu.endian" value="little" />
-    <property name="user.home" value="/home/u30576" />
+    <property name="user.home" value="/home/guest" />
     <property name="user.language" value="en" />
     <property name="git.closest.tag.commit.count" value="" />
     <property name="java.specification.vendor" value="Oracle Corporation" />
@@ -57,7 +57,7 @@
     <property name="git.commit.message.full" value="feat: Fix topsky request json" />
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
     <property name="java.runtime.version" value="17.0.4.1+1" />
-    <property name="user.name" value="u30576" />
+    <property name="user.name" value="guest" />
     <property name="path.separator" value=":" />
     <property name="os.version" value="6.1.0-1006-oem" />
     <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
@@ -68,14 +68,14 @@
     <property name="java.vendor.version" value="Temurin-17.0.4.1+1" />
     <property name="git.local.branch.behind" value="0" />
     <property name="git.dirty" value="true" />
-    <property name="localRepository" value="/home/u30576/.m2/repository" />
+    <property name="localRepository" value="/home/guest/.m2/repository" />
     <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues" />
     <property name="java.io.tmpdir" value="/tmp" />
     <property name="java.version" value="17.0.4.1" />
     <property name="user.dir"
       value="/home/user/dev" />
     <property name="os.arch" value="amd64" />
-    <property name="git.commit.user.name" value="Jonas Werne" />
+    <property name="git.commit.user.name" value="John Doe" />
     <property name="git.commit.id.abbrev" value="7f5a902" />
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
     <property name="PID" value="654021" />

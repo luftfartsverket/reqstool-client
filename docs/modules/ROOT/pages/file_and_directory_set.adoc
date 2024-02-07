@@ -7,8 +7,8 @@ For examples see:
 * docs/examples
 * unit tests: [TODO](#todo)
 
-[[requirement-config]]
-=== requirements-config.yml
+[[reqstool_config]]
+=== reqstool_config.yml
 Contains file and directory configuration used by `Reqstool`.
 
 The layout of files and directories for a project can change using any of the following types:
@@ -17,13 +17,13 @@ The layout of files and directories for a project can change using any of the fo
 * java-maven-docs: xref:data.adoc#dynamic-directory-structure[dynamic files] are relative "../../target" to the xref:data.adoc#static-directory-structure[static files]
 * custom: custom path to xref:data.adoc#dynamic-directory-structure[dynamic files] can be set relative to the xref:data.adoc#static-directory-structure[static files]
 
-If no requirements-config.yml file is present in the folder that contains the xref:data.adoc#static-directory-structure[static files], Reqstool will expect all files and folders, even the dynamic ones, to reside in the path provided to the -p argument when Reqstool is run. This works well with a xref:data.adoc#maven-artifact-zip-directory-structure[Maven zip file directory structure]. 
+If no reqstool_config.yml file is present in the folder that contains the xref:data.adoc#static-directory-structure[static files], Reqstool will expect all files and folders, even the dynamic ones, to reside in the path provided to the -p argument when Reqstool is run. This works well with a xref:data.adoc#maven-artifact-zip-directory-structure[Maven zip file directory structure]. 
 
 
-If you are using a regular xref:data.adoc#java-maven-directory-structure[Maven] project, It is recommended to let all the xref:data.adoc#static-directory-structure[static files] be placed in a folder in the root of the project called 'requirements'. Your requirements-config.yml file should also be placed in this folder, and would then only need to include the following:
+If you are using a regular xref:data.adoc#java-maven-directory-structure[Maven] project, It is recommended to let all the xref:data.adoc#static-directory-structure[static files] be placed in a folder in the root of the project called 'requirements'. Your reqstool_config.yml file should also be placed in this folder, and would then only need to include the following:
 
 ```yaml
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements-config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
 type: java-maven
 ```
@@ -32,7 +32,7 @@ type: java-maven
 Below is an example on how to change the default paths to the required *.yml files and folders that are generated when the artifact is produced by Maven. The path specified for should be relative to the -p argument that you provide when Reqstool is run. 
 
 ```yaml
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements-config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
 type: custom 
 locations:
