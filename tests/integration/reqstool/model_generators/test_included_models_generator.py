@@ -44,7 +44,7 @@ def test_basic_maven():
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
 
     artifact_id: str = "reqstool-testdata-test-basic-ms101"
-    version: str = "0.0.1-SNAPSHOT"
+    version: str = "0.0.2"
 
     combined_raw_datasets_generator.CombinedRawDatasetsGenerator(
         # Setup

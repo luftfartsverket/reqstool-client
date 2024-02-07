@@ -158,7 +158,7 @@ systems:
       group_id: se.lfv.reqstool.testdata
       artifact_id: reqstool-testdata-test-basic-ms101
       path: ""
-      version: 0.0.1-SNAPSHOT
+      version: 0.0.2
 ```
 
 === Import from different sources

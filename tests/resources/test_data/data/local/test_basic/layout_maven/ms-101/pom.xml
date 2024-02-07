@@ -7,7 +7,7 @@
 
     <groupId>se.lfv.reqstool.testdata</groupId>
     <artifactId>reqstool-testdata-test-basic-ms101</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -34,11 +34,11 @@
         <url>https://github.com/Luftfartsverket/reqstool-client/-/tree/main</url>
     </scm>
     <issueManagement>
-        <system>GitLab</system>
+        <system>GitHub</system>
         <url>https://github.com/Luftfartsverket/reqstool-client/-/issues</url>
     </issueManagement>
     <ciManagement>
-        <system>GitLab</system>
+        <system>GitHub</system>
         <url>https://github.com/Luftfartsverket/reqstool-client/-/pipelines</url>
     </ciManagement>
 
@@ -55,7 +55,7 @@
             <plugin>
                 <groupId>se.lfv.reqstool</groupId>
                 <artifactId>reqstool-maven-plugin</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
+                <version>0.0.2</version>
                 <executions>
                     <execution>
                         <goals>
