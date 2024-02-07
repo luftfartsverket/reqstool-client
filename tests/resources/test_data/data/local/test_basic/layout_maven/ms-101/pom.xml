@@ -46,7 +46,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Luftfartsverket/reqstool-client</url>
+            <url>https://maven.pkg.github.com/Luftfartsverket/reqstool-test-packages</url>
         </repository>
     </distributionManagement>
 
