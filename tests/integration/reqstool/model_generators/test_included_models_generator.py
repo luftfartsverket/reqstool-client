@@ -43,18 +43,15 @@ def test_basic_git():
 def test_basic_maven():
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
 
-    artifact_id: str = "reqstool-testdata-test-basic-ms101"
-    version: str = "0.0.2"
-
     combined_raw_datasets_generator.CombinedRawDatasetsGenerator(
         # Setup
         initial_location=MavenLocation(
             env_token=choose_token(),
-            url="https://",
-            path="https://maven.pkg.github.com/Luftfartsverket/reqstool-client",
+            url="https://maven.pkg.github.com/Luftfartsverket/reqstool-test-packages",
+            path="",
             group_id="se.lfv.reqstool.testdata",
-            artifact_id=artifact_id,
-            version=version,
+            artifact_id="reqstool-testdata-test-basic-ms101",
+            version="0.0.2",
             classifier="reqstool",
         ),
         semantic_validator=semantic_validator,

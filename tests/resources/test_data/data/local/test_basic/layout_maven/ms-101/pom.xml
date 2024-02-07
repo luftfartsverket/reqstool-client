@@ -12,7 +12,7 @@
 
     <name>${project.artifactId}</name>
     <description>Reqstool Testdata Maven Zip artifact ms101</description>
-    <url>https://github.com/Luftfartsverket/reqstool-client</url>
+    <url>https://github.com/Luftfartsverket/reqstool-test-packages</url>
     <licenses>
         <license>
             <name>MIT License</name>
