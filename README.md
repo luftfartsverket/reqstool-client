@@ -1,6 +1,3 @@
-Sure, here's the markdown content in raw format:
-
-````markdown
 # Reqstool Client
 
 ## Overview
@@ -52,5 +49,3 @@ For full documentation see [xxx](https://somelink).
     - all: `hatch run test:pytest --cov=reqstool`
     - unit only: `hatch run test:pytest --cov=reqstool  tests/unit`
     - integration only: `hatch run test:pytest --cov=reqstool  tests/integration`
-````
-You can copy this raw content and use it wherever you need.
