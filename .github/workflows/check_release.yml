@@ -1,0 +1,11 @@
+name: Lint (black and flake8)
+on:
+  workflow_call:
+
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch and tag
+        if: github.event_name == 'push' && !(github.ref == 'refs/heads/main' && startsWith(github.ref, 'refs/tags/v'))
+        run: exit 1

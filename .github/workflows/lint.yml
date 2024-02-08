@@ -1,5 +1,6 @@
 name: Lint (black and flake8)
 on:
+  workflow_dispatch:
   workflow_call:
 
 jobs:
