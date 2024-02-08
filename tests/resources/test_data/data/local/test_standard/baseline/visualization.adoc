@@ -1,0 +1,17 @@
+[plantuml, format="png"]
+....
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Example diagram medium example 
+
+System_Ext(ext001, "ext-001", "REQ: REQ_ext001_101, REQ_ext001_102, REQ_ext001_103")
+System_Ext(ext002, "ext-002", "REQ: REQ_ext002_101, REQ_ext002_102, REQ_ext002_103")
+
+System(sys001, "sys-001", "Req:REQ_sys001_101, REQ_sys001_102, REQ_sys001_103 \n\n SVCS:SVC_sys001_101, SVC_sys001_102, SVC_sys001_103, SVC_sys001_107, SVC_sys001_108, SVC_sys001_109 \n Anno_tests:SVC_sys001_101, SVC_sys001_107, SVC_sys001_109 \n\n MVRS:MVR_sys001_102, MVR_sys001_103, MVR_sys001_104 \n\n Automatic:SVC_sys001_101, SVC_sys001_107, SVC_sys001_109")
+
+System(ms001, "ms-001", "Req: REQ_ms001_101, REQ_ms001_102\n\n SVCS: SVC_ms001_101, SVC_ms001_102 \n\n Anno impls: REQ_ms001_101, REQ_ms001_102, sys001:REQ_sys001_103 \n\n Anno tests: SVC_ms101_101, SVC_ms101_102, sys001:SVC_sys001_109, \n\n  MVRS:MVR_ms001_102 \n\n Automatic:SVC_ms101_101, SVC_ms101_102, SVC_sys001_109")
+
+Rel(sys001,ms001,"")
+Rel(ext001,sys001,"")
+Rel(ext002,sys001,"")
+....

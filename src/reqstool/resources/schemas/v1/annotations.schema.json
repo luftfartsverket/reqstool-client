@@ -1,0 +1,71 @@
+{
+    "$id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/annotations.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "requirement_annotations": {
+            "type": "object",
+            "$ref": "#/$defs/requirement_annotations",
+            "description": "All annotations used in tests or implementations"
+        }
+    },
+    "required": [
+        "requirement_annotations"
+    ],
+    "$defs": {
+        "requirement_annotations": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^implementations": {
+                    "type": "object",
+                    "$ref": "#/$defs/annotation",
+                    "description": "requirement annotation used in implementation"
+                },
+                "^tests": {
+                    "type": "object",
+                    "$ref": "#/$defs/annotation",
+                    "description": "requirement annotation used in test"
+                }
+            }
+        },
+        "annotation": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/requirement"
+                    },
+                    "description": "Array of requirement annotaiton locations in source code"
+                }
+            },
+            "additionalProperties": false
+        },
+        "requirement": {
+            "type": "object",
+            "properties": {
+                "elementKind": {
+                    "enum": [
+                        "CLASS",
+                        "ENUM",
+                        "INTERFACE",
+                        "RECORD",
+                        "METHOD",
+                        "FIELD"
+                    ],
+                    "description": "Enum for all valid elementKinds. E.g. CLASS, ENUM, INTERFACE, RECORD, METHOD, FIELD"
+                },
+                "fullyQualifiedName": {
+                    "type": "string",
+                    "description": "Fully Qualified Name where the requirement annotaiton is located"
+                }
+            },
+            "required": [
+                "elementKind",
+                "fullyQualifiedName"
+            ]
+        }
+    }
+}

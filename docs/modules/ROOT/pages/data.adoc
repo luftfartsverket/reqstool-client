@@ -1,0 +1,203 @@
+== Data
+
+Reqstool uses static data (usually written by hand) and dynamic data (information about annotations and test results).
+
+[[static-directory-structure]]
+=== Static
+`reqstool` will look for the following files in the location provided as an argument:
+
+[listing]
+----
+📒 requirements <.>
+  📄  manual_verification_results.yml <.>
+  📄  requirements.yml <.>
+  📄  reqstool_config.yml <.>
+  📄  software_verification_cases.yml <.>
+----
+<.> Content source root
+<.> See [manual_verification_results.yml]
+<.> See [requirements.yml]
+<.> See [reqstool_config.yml]
+<.> See [software_verification_cases.yml]
+
+This means that if you run Reqstool like this:
+
+```bash
+reqstool report-asciidoc local -p /home/ms001/requirements
+```
+
+Reqstool will then look for the files specified above in the folder that's specified in the -p argument. 
+
+[[dynamic-directory-structure]]
+=== Dynamic
+
+The structure of the files that are generated will differ from language to language (Java vs Python) and from build tool to build tool (Maven vs Gradle).
+
+Currently, only Java using Maven is supported. A custom layout can be specified in xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml].
+
+The tree below shows where the dynamic files will reside after the project has been built. If you have a configuration where the requirements_annotations.yml and/or svcs_annotations.yml will be placed elsewhere after a successful build, Reqstool will need the path to those files specified in a reqstool_config.yml file. See link above for examples and further information.
+
+
+[[java-maven-directory-structure]]
+=== Java - Maven
+
+[listing]
+----
+📒 target <.>
+  📂 failsafe-reports <.>
+  📂 surefire-reports <.>
+  📂 generated-sources
+    📂 annotations
+      📂 resources
+        📄 requirements_annotations.yml <.>
+  📂 generated-test-sources
+    📂 test-annotations
+      📂 resources
+        📄 svcs_annotations.yml <.> 
+----
+<.> Maven target root
+<.> Failsafe Reports root
+<.> Surefire Reports root
+<.> See [requirements_annotations.yml]
+<.> See [svcs_annotations.yml]
+
+[[maven-artifact-zip-directory-structure]]
+=== Maven Artifact Zip Directory Structure
+
+In order to produce a Maven Artifact Zip, you will need to incorporate the https://github.com/Luftfartsverket/requirements-tool-maven-assembly[Maven Assembly Plugin Descriptor file] into your build process. 
+
+The Reqstool artifact uploaded as a zip to a Maven repository needs to have the following structure:
+
+[listing]
+----
+📒 requirements  <.>
+  📄 manual_verification_results.yml <.>
+  📄 requirements.yml <.>
+  📄 requirements_annotations.yml <.>
+  📄 reqstool_config.yml <.>
+  📄 software_verification_cases.yml <.>
+  📄 svcs_annotations.yml <.>
+  📂 test_results
+    📂 failsafe <.>
+    📂 surefire <.>
+----
+<.> Content source root
+<.> See [manual_verification_results.yml]
+<.> See [requirements.yml]
+<.> See [requirements_annotations.yml]
+<.> See [reqstool_config.yml]
+<.> See [software_verification_cases.yml]
+<.> See [svcs_annotations.yml]
+<.> Failsafe Reports root
+<.> Surefire Reports root
+
+
+== What data can exist where?
+
+|===
+|variant|requirements|annotation (implemention)|annotations (tests)|software verification cases|automated-test|manual verification cases
+
+|microservice|yes|yes|yes|yes|yes|yes
+|system|yes|no|yes|yes|yes|yes
+|external|yes|no|no|no|no|no
+|===
+
+
+== Handle imports
+
+In order to import requirements or software verification cases from other sources, requirements.yml supports an import attribute. There are several ways to import content from other sources. This functionality could also be combined with <<filters>>
+
+In order to import content from other sources, add something like the following to the requirements.yml
+
+=== Local import
+
+To import content from other sources (systems) on the same filesystem as your current project. 
+
+.requirements.yml
+```yaml
+
+systems:
+  local:
+    - path: ../sys-001
+
+```
+
+=== Git import
+
+To import content from other sources (systems) using git. 
+
+The git key supports a optional value of an env_token, where you could enter a token to authenticate yourself in order to access the repository. 
+
+Normally, you should refrain from entering token information explicitly, but rather point towards a secret only accessible through your development/production pipeline or environment variables. 
+
+If no authentication is required in order to access the repository, the field `env_token` can be omitted
+
+
+.requirements.yml
+```yaml
+systems:
+  git:
+  git:
+    - url: https://github.com/Luftfartsverket/reqstool-demo
+      branch: main
+      path: docs/reqstool
+      env_token: SECRET_TOKEN
+```
+
+
+
+=== Maven import
+
+To import content from other sources (systems) using Maven. 
+
+.requirements.yml
+```yaml
+systems:
+  maven:
+    - url: https://maven.pkg.github.com/Luftfartsverket/reqstool-client
+      group_id: se.lfv.reqstool.testdata
+      artifact_id: reqstool-testdata-test-basic-ms101
+      path: ""
+      version: 0.0.2
+```
+
+=== Import from different sources
+
+It is also possible to import files from different types of sources. 
+
+.requirements.yml
+```yaml
+systems:
+  local:
+    - path: ../sys-001
+  git:
+    - url: https://github.com/Luftfartsverket/reqstool-demo
+      branch: main
+      path: docs/reqstool
+```
+
+[[filters]]
+== Filters
+
+Filters can be applied on both requirements.yml and software_verification_cases.yml in order to exclude or import certain requirements or software verification cases. Note that the `filter` key is on different levels in the two files
+
+
+.requiremens.yml
+```yaml
+systems:
+  local:
+    - path: ../sys-001
+      filters:
+        sys-001:
+          requirement_ids:
+            imports: ["REQ_sys001_103", "ext-001:REQ_ext001_101"]
+```
+
+
+.software_verification_cases.yml
+```yaml
+filters:
+  sys-001:
+    svc_ids:
+      imports: ["SVC_sys001_101", "SVC_sys001_109"]
+```

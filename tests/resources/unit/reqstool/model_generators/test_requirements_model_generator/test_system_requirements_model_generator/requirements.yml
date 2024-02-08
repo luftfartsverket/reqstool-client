@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: sys-001
+  variant: system
+  title: Some System Requirement Title
+
+imports:
+  git:
+    - env_token: "GITLAB_TOKEN"
+      url: https://gitlab.sys-example.com
+      branch: feature/sys
+      path: /some/path
+  local:
+    - path: /some/local-sys-path
+
+  maven:
+    - env_token: "MAVEN_TOKEN"
+      url: https://repo.maven.org
+      group_id: com.example.one
+      artifact_id: test-one
+      version: 1.0.0
+      classifier: someclassifier
+      path: some/path1
+
+    - env_token: "MAVEN_TOKEN"
+      url: https://repo2.maven.org
+      group_id: com.example.two
+      artifact_id: test-two
+      version: 0.0.2
+      classifier: classifier2
+      path: some/path2
+
+filters:
+  "gitlab-001":
+    requirement_ids:
+      includes: ["REQ_100"]
+  "local-001":
+    requirement_ids:
+      includes: ["REQ_100"]
+  "maven-001":
+    requirement_ids:
+      includes: ["REQ_100"]
+  "maven-002":
+    requirement_ids:
+      includes: ["REQ_100", "REQ_101"]
+
+implementations: # only used with type = system
+  git:
+    - env_token: GITLAB_TOKEN
+      url: https://gitlab.impl-example.com
+      branch: feature/impl
+      path: README.md
+
+  local: # for future use
+    - path: /some/local-impl-path
+  maven:
+    - env_token: "MAVEN_TOKEN"
+      url: https://repo.maven.org
+      group_id: com.example.one
+      artifact_id: test-one
+      version: 0.0.1
+      classifier: classifier1
+      path: some/path1
+
+    - env_token: "MAVEN_TOKEN"
+      url: https://repo2.maven.org
+      group_id: com.example.two
+      artifact_id: test-two
+      version: 0.0.2
+      classifier: classifier2
+      path: some/path2
+
+requirements:
+  - id: REQ_001
+    title: Title REQ_001
+    significance: may
+    description: Description REQ_001
+    rationale: Rationale REQ_001
+    category: ["operational", "business"]
+    references:
+      - requirement_ids: ["REQ_200"]
+        sources: ["SRC"]
+    revision: 0.0.1

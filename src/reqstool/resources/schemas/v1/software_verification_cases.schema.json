@@ -1,0 +1,76 @@
+{
+    "$id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/software_verification_cases.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "filters": {
+            "$ref": "common.schema.json#/$defs/filters"
+        },
+        "cases": {
+            "type": "array",
+            "description": "Array of Software Verification Cases",
+            "items": {
+                "$ref": "#/$defs/cases"
+            }
+        }
+    },
+    "required": [
+        "cases"
+    ],
+    "$defs": {
+        "cases": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "ID of the Software Verification Case"
+                },
+                "requirement_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Requirement id"
+                    },
+                    "description": "Array of related Requirement ids"
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Software Verification Case title"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Software Verification Case description"
+                },
+                "verification": {
+                    "type": "string",
+                    "enum": [
+                        "automated-test",
+                        "manual-test",
+                        "review",
+                        "platform",
+                        "other"
+                    ],
+                    "description": "Verification method. E.g. automated-test, manual-test, review, platform or other"
+                },
+                "instructions": {
+                    "type": "string",
+                    "description": "Instructional steps for how to verify, if it is manual"
+                },
+                "revision": {
+                    "type": "string",
+                    "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+                    "description": "Version the Software Verification Case was revised"
+                }
+            },
+            "required": [
+                "id",
+                "requirement_ids",
+                "title",
+                "verification",
+                "revision"
+            ]
+        }
+    }
+}

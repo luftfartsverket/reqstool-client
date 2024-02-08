@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>se.lfv.reqstool.testdata</groupId>
+    <artifactId>reqstool-testdata-test-basic-ms101</artifactId>
+    <version>0.0.2</version>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>Reqstool Testdata Maven Zip artifact ms101</description>
+    <url>https://github.com/Luftfartsverket/reqstool-test-packages</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit/</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>LFV System Development Team</name>
+            <email>sysdev@lfv.se</email>
+            <organization>Luftfartsverket</organization>
+            <organizationUrl>http://www.lfv.se</organizationUrl>
+        </developer>
+    </developers>
+
+
+    <scm>
+        <connection>scm:git:https://github.com/Luftfartsverket/reqstool-client.git</connection>
+        <url>https://github.com/Luftfartsverket/reqstool-client/-/tree/main</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Luftfartsverket/reqstool-client/-/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Luftfartsverket/reqstool-client/-/pipelines</url>
+    </ciManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Luftfartsverket/reqstool-test-packages</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>se.lfv.reqstool</groupId>
+                <artifactId>reqstool-maven-plugin</artifactId>
+                <version>0.0.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>attach-reqstool-zip</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <datasetPath>
+                        data/local/test_basic/layout_maven/ms-101/src/resources/docs/requirements
+                    </datasetPath>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: ms-001
+  variant: microservice
+  title: Some Microservice Requirement Title
+  url: https://url.example.com
+
+imports:
+  git:
+    - env_token: "GITLAB_TOKEN"
+      url: https://gitlab.ms-example.com
+      branch: main
+      path: /some/ms-path
+  local:
+    - path: /some/local-ms-path
+  maven:
+    - env_token: "MAVEN_TOKEN"
+      url: https://repo.maven.org
+      group_id: com.example.one
+      artifact_id: test-one
+      version: 1.0.0
+      classifier: someclassifier
+      path: some/path1
+
+filters:
+  "gitlab-001":
+    requirement_ids:
+      includes: ["REQ_100"]
+  "local-001":
+    requirement_ids:
+      includes: ["REQ_100"]
+  "maven-001":
+    requirement_ids:
+      includes: ["REQ_100", "REQ_101"]
+
+requirements:
+  - id: REQ_001
+    title: Title REQ_001
+    significance: shall
+    description: Description REQ_001
+    rationale: Rationale REQ_001
+    category: ["business"]
+    revision: 0.0.1

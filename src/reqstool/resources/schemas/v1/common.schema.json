@@ -1,0 +1,267 @@
+{
+    "$id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/common.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$defs": {
+        "filters": {
+            "type": "object",
+            "description": "Filters allows importing just subset of the requirements/verification cases present in the parent system",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^.+$": {
+                    "type": "object",
+                    "description": "An URI to the parent systems or external systems to receive requirements or SVCs",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^requirement_ids|svc_ids|mvr_ids$": {
+                            "$ref": "#/$defs/filterids"
+                        }
+                    },
+                    "properties": {
+                        "custom": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "imports": {
+                                    "$ref": "#/$defs/expressionLang"
+                                },
+                                "exclude": {
+                                    "$ref": "#/$defs/expressionLang"
+                                }
+                            },
+                            "oneOf": [
+                                {
+                                    "required": [
+                                        "includes"
+                                    ],
+                                    "not": {
+                                        "required": [
+                                            "exclude"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "required": [
+                                        "exclude"
+                                    ],
+                                    "not": {
+                                        "required": [
+                                            "includes"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "description": "Optionally includes or exclude requirements/verification cases using an expression language. Excludes have precedence and cannot be combined with includes"
+                        }
+                    },
+                    "allOf": [
+                        {
+                            "if": {
+                                "properties": {
+                                    "custom": {
+                                        "required": [
+                                            "exclude"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "custom",
+                                    "requirement_ids"
+                                ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "requirement_ids": {
+                                        "not": {
+                                            "required": [
+                                                "includes"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "requirement_ids": {
+                                        "required": [
+                                            "excludes"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "custom",
+                                    "requirement_ids"
+                                ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "custom": {
+                                        "not": {
+                                            "required": [
+                                                "includes"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "custom": {
+                                        "required": [
+                                            "exclude"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "custom",
+                                    "svcs_ids"
+                                ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "svcs_ids": {
+                                        "not": {
+                                            "required": [
+                                                "includes"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "svcs_ids": {
+                                        "required": [
+                                            "excludes"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "custom",
+                                    "svcs_ids"
+                                ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "custom": {
+                                        "not": {
+                                            "required": [
+                                                "includes"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "custom": {
+                                        "required": [
+                                            "exclude"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "custom",
+                                    "mvr_ids"
+                                ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "mvr_ids": {
+                                        "not": {
+                                            "required": [
+                                                "includes"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "mvr_ids": {
+                                        "required": [
+                                            "excludes"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "custom",
+                                    "mvr_ids"
+                                ]
+                            },
+                            "then": {
+                                "properties": {
+                                    "custom": {
+                                        "not": {
+                                            "required": [
+                                                "includes"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "reqid": {
+            "type": "string"
+        },
+        "expressionLang": {
+            "type": "string",
+            "description": "Use the expression language. Example: ids == \"REQ_100\", \"REQ_101\""
+        },
+        "filterids": {
+            "type": "object",
+            "description": "IDs to include or exclude. Excludes have precedence and cannot be combined with includes",
+            "properties": {
+                "includes": {
+                    "type": "array",
+                    "description": "Array of requirements to import from source",
+                    "items": {
+                        "$ref": "#/$defs/reqid"
+                    }
+                },
+                "excludes": {
+                    "type": "array",
+                    "description": "Array of requirements to exclude from source",
+                    "items": {
+                        "$ref": "#/$defs/reqid"
+                    }
+                }
+            },
+            "oneOf": [
+                {
+                    "required": [
+                        "includes"
+                    ],
+                    "not": {
+                        "required": [
+                            "excludes"
+                        ]
+                    }
+                },
+                {
+                    "required": [
+                        "excludes"
+                    ],
+                    "not": {
+                        "required": [
+                            "includes"
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

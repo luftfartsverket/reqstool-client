@@ -1,0 +1,21 @@
+name: Lint (black and flake8)
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install pip package(s)
+        run: pip install hatch
+      - name: Run black formatter check
+        run: hatch run lint:black --check --verbose src tests
+      - name: Run flake8 linter
+        run: hatch run lint:flake8

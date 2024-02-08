@@ -1,0 +1,13 @@
+[cols="1,1"]
+== REQUIREMENT DOCUMENTATION
+|===
+{% for k,v in report.items()-%}
+|{{k}}
+|{{v}}
+{%-if v is mapping-%}
+{%-for key, val in v.items()-%}
+{{key}}:{{val}}
+{%endfor%}
+{%endif%}
+{%endfor%}
+|===

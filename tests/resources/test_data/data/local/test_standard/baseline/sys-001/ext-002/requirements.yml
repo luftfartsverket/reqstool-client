@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: ext-002
+  variant: external
+  title: Some More External Requirement Title
+  url: https://external-url.example.com
+
+requirements:
+  - id: REQ_ext002_101
+    title: Title REQ_ext002_101
+    significance: shall
+    description: Description REQ_ext002_101
+    rationale: Rationale REQ_ext002_101
+    category: ["reliability", "business"]
+    revision: 0.0.1
+
+  - id: REQ_ext002_102
+    title: Title REQ_ext002_102
+    significance: may
+    description: Description REQ_ext002_102
+    rationale: Rationale REQ_ext002_102
+    category: ["operational", "performance"]
+    revision: 0.0.1
+
+  - id: REQ_ext002_103
+    title: Title REQ_ext002_103
+    significance: shall
+    description: Description REQ_ext002_103
+    rationale: Rationale REQ_ext002_103
+    category: [it-security, "business"]
+    revision: 0.0.1

@@ -1,0 +1,6 @@
+. Duplicate REQ id's (REQ_101)
+. Duplicate on SVC id's (SVC_101)
+. Svc's refers to non exisitent req's (SVC_201)
+. annotation impls refers to non existing REQ (REQ_10101)
+. annotation tests refers to non existing SVC (SVC_101121)
+. MVR's points to non existent SVC (SVC_20111)

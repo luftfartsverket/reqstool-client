@@ -1,0 +1,51 @@
+{
+    "$id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/manual_verification_results.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "results": {
+            "type": "array",
+            "description": "Array of Manual Verification Results",
+            "items": {
+                "$ref": "#/$defs/results"
+            }
+        }
+    },
+    "required": [
+        "results"
+    ],
+    "$defs": {
+        "results": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id for the Manual Verification Result"
+                },
+                "svc_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "Software Verification Case id"
+                    },
+                    "description": "Array of ids to related to Software Verification Cases"
+                },
+                "comment": {
+                    "type": "string",
+                    "description": "Comment of the result if needed"
+                },
+                "pass": {
+                    "type": "boolean",
+                    "description": "Boolean if test passed"
+                }
+            },
+            "required": [
+                "id",
+                "svc_ids",
+                "pass"
+            ]
+        }
+    }
+}

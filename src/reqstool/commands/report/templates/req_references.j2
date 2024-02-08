@@ -1,0 +1,18 @@
+{% for req_template in report%}
+{%if req_template.req_refs%}
+[cols="1,2a"]
+|===
+|*URN*|*REQS*
+{%for ref_sys, ref_list in req_template.req_refs.items()%}
+|{{ref_sys}}
+|
+[frame = "none", grid="none"] 
+!===
+{%for req in ref_list %}
+!{{req}}
+{%endfor%}
+!===
+{%endfor%}
+|===
+{%endif%}
+{%endfor%}

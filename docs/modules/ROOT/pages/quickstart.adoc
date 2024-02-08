@@ -1,0 +1,7 @@
+
+## Quickstart
+
+. Create a requirements.yml file (see [Link examples](../examples/) or [JSON Schema](../schemas/))
+. Add annotations to your code
+. Add parsing of Reqstool annotations to your build 
+. Run `reqstool status` xref:usage.adoc#status[here]

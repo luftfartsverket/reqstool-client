@@ -1,0 +1,26 @@
+{%if report%}
+==== SVCS
+{%endif%}
+{% for svc in report%}
+[cols="1a,1"]
+|===
+|*SVC*|*Title*
+|{{svc.id.urn}}:{{svc.id.id}}
+|{{svc.title}}
+2+|*Description*
+2+|{{svc.description}}
+2+|*Instructions*
+2+|{{svc.instructions}}
+|*Requirements*|*Verification*
+|
+[frame = "none", grid="none"] 
+!===
+{%for svc_req in svc.requirement_ids-%}
+!{{svc_req.urn}}:{{svc_req.id}}
+{%endfor%}
+!===
+|{{svc.verification.value}}
+2+|Revision: {{svc.revision}}
+|===
+{%endfor%}
+
