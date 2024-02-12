@@ -1,17 +1,12 @@
 # Copyright © LFV
 
 import logging
-import os
 import sys
 from typing import Dict, List
 
-from ruamel.yaml import YAML
-
-from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
 from reqstool.common import utils
-from reqstool.common.utils import TempDirectoryUtil, open_file_https_file
+from reqstool.common.utils import TempDirectoryUtil
 from reqstool.common.validators.semantic_validator import SemanticValidator
-from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.location_resolver.location_resolver import LocationResolver
 from reqstool.locations.location import LocationInterface
 from reqstool.model_generators.annotations_model_generator import AnnotationsModelGenerator
@@ -26,7 +21,6 @@ from reqstool.models.raw_datasets import CombinedRawDataset, RawDataset
 from reqstool.models.requirements import VARIANTS, RequirementsData
 from reqstool.models.svcs import SVCsData
 from reqstool.models.test_data import TestsData
-from reqstool.reqstool_config.reqstool_config import ReqstoolConfig
 from reqstool.requirements_indata.requirements_indata import RequirementsIndata
 
 
@@ -166,25 +160,7 @@ class CombinedRawDatasetsGenerator:
 
         current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
 
-        requirements_config: ReqstoolConfig = None
-
-        if os.path.exists(os.path.join(tmp_path, "reqstool_config.yml")):
-            response = open_file_https_file(os.path.join(tmp_path, "reqstool_config.yml"))
-
-            yaml = YAML(typ="safe")
-
-            data: dict = yaml.load(response.text)
-
-            if not SyntaxValidator.is_valid_data(
-                json_schema_type=JsonSchemaTypes.REQSTOOL_CONFIG, data=data, urn="unknown"
-            ):
-                sys.exit(EXIT_CODE_SYNTAX_VALIDATION_ERROR)
-
-            requirements_config = ReqstoolConfig._parse(yaml_data=data)
-
-        requirements_indata = RequirementsIndata(
-            requirements_config=requirements_config, dst_path=tmp_path, location=current_location_handler.current
-        )
+        requirements_indata = RequirementsIndata(dst_path=tmp_path, location=current_location_handler.current)
 
         if not requirements_indata.requirements_indata_paths.requirements_yml.exists:
             msg = f"Missing requirements file:  {requirements_indata.requirements_indata_paths.requirements_yml.path}"
