@@ -168,8 +168,8 @@ class CombinedRawDatasetsGenerator:
 
         requirements_config: ReqstoolConfig = None
 
-        if os.path.exists(os.path.join(tmp_path, "requirements_config.yml")):
-            response = open_file_https_file(os.path.join(tmp_path, "requirements_config.yml"))
+        if os.path.exists(os.path.join(tmp_path, "reqstool_config.yml")):
+            response = open_file_https_file(os.path.join(tmp_path, "reqstool_config.yml"))
 
             yaml = YAML(typ="safe")
 
