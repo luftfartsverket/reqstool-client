@@ -19,3 +19,7 @@ jobs:
         run: hatch run lint:black --check --verbose src tests
       - name: Run flake8 linter
         run: hatch run lint:flake8
+      - name: Install pip package check-jsonschema
+        run: pip install check-jsonschema
+      - name: Validate JSON Schemas
+        run: check-jsonschema --verbose --schemafile "https://json-schema.org/draft/2020-12/schema" src/reqstool/resources/schemas/*/*  
