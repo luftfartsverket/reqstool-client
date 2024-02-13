@@ -22,4 +22,4 @@ jobs:
       - name: Install pip package check-jsonschema
         run: pip install check-jsonschema
       - name: Validate JSON Schemas
-        run: check-jsonschema --verbose --schemafile "https://json-schema.org/draft/2020-12/schema" src/reqstool/resources/schemas/*  
+        run: check-jsonschema --verbose --schemafile "https://json-schema.org/draft/2020-12/schema" src/reqstool/resources/schemas/*/*  
