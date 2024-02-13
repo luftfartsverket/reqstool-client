@@ -1,8 +1,14 @@
 # Copyright © LFV
 
 import os
+import sys
 from dataclasses import dataclass, field, fields
 
+from ruamel.yaml import YAML
+
+from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
+from reqstool.common.utils import open_file_https_file
+from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
@@ -22,7 +28,7 @@ from reqstool.requirements_indata.requirements_indata_paths import (
 class RequirementsIndata:
     dst_path: str  # tmp path
     location: LocationInterface  # current location
-    requirements_config: ReqstoolConfig
+    reqstool_config: ReqstoolConfig = field(default=None)
     requirements_indata_paths: RequirementsIndataPaths = field(default_factory=RequirementsIndataPaths)
 
     def __post_init__(self):
@@ -31,17 +37,29 @@ class RequirementsIndata:
         self._check_what_indata_that_exists()
 
     def _handle_requirements_config(self):
-        if self.requirements_config is None:
-            return
 
-        match self.requirements_config.type:
-            case TYPES.JAVA_MAVEN:
-                self.requirements_indata_paths = JavaMavenRequirementsIndataPaths()
+        if os.path.exists(os.path.join(self.dst_path, "reqstool_config.yml")):
+            response = open_file_https_file(os.path.join(self.dst_path, "reqstool_config.yml"))
 
-        self._handle_custom()
+            yaml = YAML(typ="safe")
 
-        if self.requirements_config.project_root_dir is not None:
-            self.requirements_indata_paths.prepend_paths(self.requirements_config.project_root_dir)
+            data: dict = yaml.load(response.text)
+
+            if not SyntaxValidator.is_valid_data(
+                json_schema_type=JsonSchemaTypes.REQSTOOL_CONFIG, data=data, urn="unknown"
+            ):
+                sys.exit(EXIT_CODE_SYNTAX_VALIDATION_ERROR)
+
+            self.reqstool_config = ReqstoolConfig._parse(yaml_data=data)
+
+            match self.reqstool_config.type:
+                case TYPES.JAVA_MAVEN:
+                    self.requirements_indata_paths = JavaMavenRequirementsIndataPaths()
+
+            self._handle_custom()
+
+            if self.reqstool_config.project_root_dir is not None:
+                self.requirements_indata_paths.prepend_paths(self.reqstool_config.project_root_dir)
 
     def _ensure_absolute_paths(self):
         # iterate over all fields and ensure absolute paths
@@ -77,8 +95,8 @@ class RequirementsIndata:
     def _handle_custom(self):
         # replace default values with custom if specified
 
-        if self.requirements_config.locations:
-            test_results = self.requirements_config.locations.test_results
+        if self.reqstool_config.locations:
+            test_results = self.reqstool_config.locations.test_results
 
             if test_results:
                 if test_results.failsafe:
@@ -91,7 +109,7 @@ class RequirementsIndata:
                         path=test_results.surefire
                     )
 
-            if self.requirements_config.locations.annotations:
+            if self.reqstool_config.locations.annotations:
                 self.requirements_indata_paths.annotations_yml = RequirementsIndataStructureItem(
-                    path=self.requirements_config.locations.annotations
+                    path=self.reqstool_config.locations.annotations
                 )
