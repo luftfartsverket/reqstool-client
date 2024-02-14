@@ -173,19 +173,15 @@ class SemanticValidator:
     ) -> List[ValidationError]:
         errors: List[ValidationError] = []
         for model, model_data in combined_raw_dataset.raw_datasets.items():
-            # Continue if model is not inital_urn
-            if (
-                model is not combined_raw_dataset.initial_model_urn
-                or not model_data.annotations_data
-                or not model_data.annotations_data.tests
-            ):
+            # Continue if no annotations data
+            if not model_data.annotations_data:
                 continue
             for svc_id in model_data.annotations_data.tests:
                 if not self._svc_id_exists(svc_id, combined_raw_dataset=combined_raw_dataset):
                     errors.append(
                         ValidationError(msg=f"Annotation refers to non-existing svc id: {self.prettify_urn_id(svc_id)}")
                     )
-
+        print(errors)
         return errors
 
     def _validate_mvr_refers_to_existing_svc_ids(
