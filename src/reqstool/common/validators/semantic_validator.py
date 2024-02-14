@@ -181,7 +181,7 @@ class SemanticValidator:
                     errors.append(
                         ValidationError(msg=f"Annotation refers to non-existing svc id: {self.prettify_urn_id(svc_id)}")
                     )
-        print(errors)
+
         return errors
 
     def _validate_mvr_refers_to_existing_svc_ids(
