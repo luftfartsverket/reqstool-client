@@ -18,7 +18,8 @@ def test_total_statistics_item_update():
         completed=True,
         automated_tests_stats=TestStatisticsItem(
             nr_of_failed_tests=0,
-            nr_of_missing_tests=0,
+            nr_of_missing_automated_tests=0,
+            nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=1,
             nr_of_total_tests=1,
@@ -26,7 +27,8 @@ def test_total_statistics_item_update():
         ),
         mvrs_stats=TestStatisticsItem(
             nr_of_failed_tests=0,
-            nr_of_missing_tests=0,
+            nr_of_missing_automated_tests=0,
+            nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=0,
             nr_of_total_tests=0,
@@ -43,7 +45,8 @@ def test_total_statistics_item_update():
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=1,
@@ -51,7 +54,8 @@ def test_total_statistics_item_update():
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -61,7 +65,8 @@ def test_total_statistics_item_update():
         },
         _total_statistics=TotalStatisticsItem(
             nr_of_failed_tests=0,
-            nr_of_missing_tests=0,
+            nr_of_missing_automated_tests=0,
+            nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=1,
             nr_of_total_tests=1,
