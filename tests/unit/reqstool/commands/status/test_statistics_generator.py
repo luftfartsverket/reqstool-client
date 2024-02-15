@@ -26,7 +26,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=1,
@@ -34,7 +35,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -46,7 +48,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=1,
@@ -54,7 +57,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -66,7 +70,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -74,7 +79,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=1,
@@ -86,7 +92,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -94,7 +101,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=1,
@@ -104,7 +112,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
         },
         _total_statistics=TotalStatisticsItem(
             nr_of_failed_tests=2,
-            nr_of_missing_tests=0,
+            nr_of_missing_automated_tests=0,
+            nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=2,
             nr_of_total_tests=4,
@@ -130,7 +139,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=2,
                     nr_of_total_tests=2,
@@ -138,7 +148,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -150,7 +161,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -158,7 +170,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=1,
@@ -170,7 +183,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=2,
@@ -178,7 +192,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -190,7 +205,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=1,
+                    nr_of_missing_automated_tests=1,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=2,
@@ -198,7 +214,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -210,7 +227,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -218,7 +236,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -230,7 +249,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -238,7 +258,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -250,7 +271,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -258,7 +280,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -268,7 +291,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
         },
         _total_statistics=TotalStatisticsItem(
             nr_of_failed_tests=2,
-            nr_of_missing_tests=2,
+            nr_of_missing_automated_tests=2,
+            nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=4,
             nr_of_total_tests=8,
@@ -293,7 +317,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=2,
                     nr_of_total_tests=2,
@@ -301,7 +326,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -313,7 +339,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=1,
+                    nr_of_missing_automated_tests=1,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=3,
@@ -321,7 +348,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=2,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=3,
@@ -333,7 +361,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -341,7 +370,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=1,
@@ -353,7 +383,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=2,
+                    nr_of_missing_automated_tests=2,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=2,
                     nr_of_total_tests=5,
@@ -361,7 +392,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=1,
@@ -373,7 +405,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -381,7 +414,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -393,7 +427,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -401,7 +436,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -413,7 +449,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -421,7 +458,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -433,7 +471,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -441,7 +480,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
-                    nr_of_missing_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
@@ -451,7 +491,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
         },
         _total_statistics=TotalStatisticsItem(
             nr_of_failed_tests=3,
-            nr_of_missing_tests=2,
+            nr_of_missing_automated_tests=2,
+            nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=6,
             nr_of_total_tests=11,
