@@ -8,7 +8,8 @@ from reqstool.common.dataclasses.urn_id import UrnId
 @dataclass(kw_only=True)
 class TestStatisticsItem:
     nr_of_failed_tests: int = 0
-    nr_of_missing_tests: int = 0
+    nr_of_missing_automated_tests: int = 0
+    nr_of_missing_manual_tests: int = 0
     nr_of_skipped_tests: int = 0
     nr_of_passed_tests: int = 0
     nr_of_total_tests: int = 0
@@ -29,7 +30,8 @@ class CombinedRequirementTestItem:
 @dataclass(kw_only=True)
 class TotalStatisticsItem:
     nr_of_failed_tests: int = 0
-    nr_of_missing_tests: int = 0
+    nr_of_missing_automated_tests: int = 0
+    nr_of_missing_manual_tests: int = 0
     nr_of_skipped_tests: int = 0
     nr_of_passed_tests: int = 0
     nr_of_total_tests: int = 0

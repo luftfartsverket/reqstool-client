@@ -73,7 +73,8 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         passed_tests=stats_container._total_statistics.nr_of_passed_tests,
         failed_tests=stats_container._total_statistics.nr_of_failed_tests,
         skipped_tests=stats_container._total_statistics.nr_of_skipped_tests,
-        missing_tests=stats_container._total_statistics.nr_of_missing_tests,
+        missing_automated_tests=stats_container._total_statistics.nr_of_missing_automated_tests,
+        missing_manual_tests=stats_container._total_statistics.nr_of_missing_manual_tests,
     )
 
     legend = [
@@ -101,7 +102,8 @@ def _summarize_statisics(
     passed_tests: int,
     failed_tests: int,
     skipped_tests: int,
-    missing_tests: int,
+    missing_automated_tests: int,
+    missing_manual_tests: int,
 ) -> str:
     table_data = [
         [
@@ -111,7 +113,10 @@ def _summarize_statisics(
             str(passed_tests) + __numbers_as_percentage(numerator=passed_tests, denominator=total_tests),
             str(failed_tests) + __numbers_as_percentage(numerator=failed_tests, denominator=total_tests),
             str(skipped_tests) + __numbers_as_percentage(numerator=skipped_tests, denominator=total_tests),
-            str(missing_tests) + __numbers_as_percentage(numerator=missing_tests, denominator=total_tests),
+            str(missing_automated_tests)
+            + __numbers_as_percentage(numerator=missing_automated_tests, denominator=total_tests),
+            str(missing_manual_tests)
+            + __numbers_as_percentage(numerator=missing_manual_tests, denominator=total_tests),
         ]
     ]
     headers = [
@@ -121,7 +126,8 @@ def _summarize_statisics(
         "Passed tests",
         "Failing tests",
         "Skipped tests",
-        "Missing tests",
+        "Missing automated tests",
+        "Missing manual tests",
     ]
     col_align = ["center"] * len(table_data[0])
     table = table = tabulate(tablefmt="fancy_grid", tabular_data=table_data, headers=headers, colalign=col_align)
@@ -152,7 +158,10 @@ def _extend_row(result: TestStatisticsItem, row: List[str]):
     if result.nr_of_skipped_tests > 0:
         colored_item += f"{Fore.YELLOW}{' S'}{str(result.nr_of_skipped_tests)}{Style.RESET_ALL}"
 
-    if result.nr_of_missing_tests > 0:
-        colored_item += f"{Fore.RED}{' M'}{str(result.nr_of_missing_tests)}{Style.RESET_ALL}"
+    if result.nr_of_missing_automated_tests > 0:
+        colored_item += f"{Fore.RED}{' M'}{str(result.nr_of_missing_automated_tests)}{Style.RESET_ALL}"
+
+    if result.nr_of_missing_manual_tests > 0:
+        colored_item += f"{Fore.RED}{' M'}{str(result.nr_of_missing_manual_tests)}{Style.RESET_ALL}"
 
     row.append(colored_item)
