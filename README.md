@@ -1,3 +1,12 @@
+
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/Luftfartsverket/reqstool-client?label=commits&style=for-the-badge)](https://github.com/Luftfartsverket/reqstool-client/pulse)
+[![GitHub Issues](https://img.shields.io/github/issues/Luftfartsverket/reqstool-client?style=for-the-badge&logo=github)](https://github.com/Luftfartsverket/reqstool-client/issues)
+[![License](https://img.shields.io/github/license/Luftfartsverket/reqstool-client?style=for-the-badge&logo=opensourceinitiative)](https://opensource.org/license/mit/)
+[![Build](https://img.shields.io/github/actions/workflow/status/Luftfartsverket/reqstool-client/build.yml?style=for-the-badge&logo=github)](https://github.com/Luftfartsverket/reqstool-client/actions/workflows/build.yml)
+[![Static Badge](https://img.shields.io/badge/Documentation-blue?style=for-the-badge&link=docs)](https://luftfartsverket.github.io/reqstool-client/reqstool-client/0.3.0/index.html)
+[![GitHub Discussions](https://img.shields.io/github/discussions/Luftfartsverket/reqstool-client?style=for-the-badge&logo=github)](https://github.com/Luftfartsverket/reqstool-client/discussions)
+
+
 # Reqstool Client
 
 ## Overview
