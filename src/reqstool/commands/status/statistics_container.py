@@ -41,7 +41,8 @@ class TotalStatisticsItem:
 
     def update(self, completed: bool, combined_req_test_item: CombinedRequirementTestItem):
         self.nr_of_total_requirements += 1
-
+        self.nr_of_missing_automated_tests += combined_req_test_item.automated_tests_stats.nr_of_missing_automated_tests
+        self.nr_of_missing_manual_tests += combined_req_test_item.mvrs_stats.nr_of_missing_manual_tests
         self.nr_of_reqs_with_implementation += combined_req_test_item.nr_of_implementations
 
         if completed:

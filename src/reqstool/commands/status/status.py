@@ -114,9 +114,13 @@ def _summarize_statisics(
             str(failed_tests) + __numbers_as_percentage(numerator=failed_tests, denominator=total_tests),
             str(skipped_tests) + __numbers_as_percentage(numerator=skipped_tests, denominator=total_tests),
             str(missing_automated_tests)
-            + __numbers_as_percentage(numerator=missing_automated_tests, denominator=total_tests),
+            + __numbers_as_percentage(
+                numerator=missing_automated_tests, denominator=missing_automated_tests + missing_manual_tests
+            ),
             str(missing_manual_tests)
-            + __numbers_as_percentage(numerator=missing_manual_tests, denominator=total_tests),
+            + __numbers_as_percentage(
+                numerator=missing_manual_tests, denominator=missing_automated_tests + missing_manual_tests
+            ),
         ]
     ]
     headers = [
@@ -126,8 +130,8 @@ def _summarize_statisics(
         "Passed tests",
         "Failing tests",
         "Skipped tests",
-        "Missing automated tests",
-        "Missing manual tests",
+        "SVCs missing tests",
+        "SVCs missing MVRs",
     ]
     col_align = ["center"] * len(table_data[0])
     table = table = tabulate(tablefmt="fancy_grid", tabular_data=table_data, headers=headers, colalign=col_align)

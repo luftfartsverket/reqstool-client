@@ -122,10 +122,7 @@ class StatisticsGenerator:
             # if we have no results from the gathering of results, expect at least as many missing
             # tests as we have svc's
             no_of_missing_automated_tests = sum(1 for svc in svcs if svc.verification in EXPECTS_AUTOMATED_TESTS)
-            return TestStatisticsItem(
-                nr_of_missing_automated_tests=no_of_missing_automated_tests,
-                nr_of_total_tests=no_of_missing_automated_tests,
-            )
+            return TestStatisticsItem(nr_of_missing_automated_tests=no_of_missing_automated_tests)
 
         stats_item = TestStatisticsItem(nr_of_total_tests=len(tests))
         # we need to do a check if the current automated test is already counted as passed or failed,
@@ -152,9 +149,7 @@ class StatisticsGenerator:
             # for this req with expected verification status
             no_of_expected_mvrs = sum(1 for svc in svcs if svc.verification in EXPECTS_MVRS)
 
-            return TestStatisticsItem(
-                nr_of_missing_manual_tests=no_of_expected_mvrs, nr_of_total_tests=no_of_expected_mvrs
-            )
+            return TestStatisticsItem(nr_of_missing_manual_tests=no_of_expected_mvrs)
 
         stats_item = TestStatisticsItem(nr_of_total_tests=len(mvrs))
 
@@ -293,3 +288,4 @@ class StatisticsGenerator:
                     stats_container._total_statistics.nr_of_skipped_tests += 1
                 case TestRunStatus.MISSING:
                     stats_container._total_statistics.nr_of_missing_automated_tests += 1
+                    stats_container._total_statistics.nr_of_total_tests -= 1
