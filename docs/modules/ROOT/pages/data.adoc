@@ -15,10 +15,10 @@ Reqstool uses static data (usually written by hand) and dynamic data (informatio
   📄  software_verification_cases.yml <.>
 ----
 <.> Content source root
-<.> See xref:../examples/manual_verification_results.yml[]
-<.> See xref:../examples/requirements.yml[]
-<.> See xref:../examples/reqstool_config.yml[]
-<.> See xref:../examples/software_verification_cases.yml[]
+<.> See xref:yml/manual_verification_results.adoc[manual_verification_results.yml example]
+<.> See xref:yml/requirements.adoc[requirements.yml example]
+<.> See xref:yml/reqstool_config.adoc[reqstool_config.yml example]
+<.> See xref:yml/software_verification_cases.adoc[software_verification_cases.yml example]
 
 This means that if you run Reqstool like this:
 
@@ -58,8 +58,8 @@ The tree below shows where the dynamic files will reside after the project has b
 <.> Maven target root
 <.> Failsafe Reports root
 <.> Surefire Reports root
-<.> See xref:yml_examples/requirements_annotations.yml[]
-<.> See xref:yml_examples/svcs_annotations.yml[]
+<.> See xref:yml/requirements_annotations.adoc[requirements_annotations.yml example]
+<.> See xref:yml/svcs_annotations.adoc[svcs_annotations.yml example]
 
 [[maven-artifact-zip-directory-structure]]
 === Maven Artifact Zip Directory Structure
@@ -84,11 +84,11 @@ The Reqstool artifact uploaded as a zip to a Maven repository needs to have the 
     📂 surefire <.>
 ----
 <.> Content source root
-<.> See xref:yml_examples/manual_verification_results.yml[]
-<.> See xref:yml_examples/requirements.yml[]
-<.> See xref:yml_examples/reqstool_config.yml[]
-<.> See xref:yml_examples/software_verification_cases.yml[]
-<.> See xref:yml_examples/annotations.yml[]
+<.> See xref:yml/manual_verification_results.adoc[manual_verification_results.yml example]
+<.> See xref:yml/requirements.adoc[requirements.yml example]
+<.> See xref:yml/reqstool_config.adoc[reqstool_config.yml example]
+<.> See xref:yml/software_verification_cases.adoc[software_verification_cases.yml example]
+<.> See xref:yml/annotations.adoc[annotations.yml example]
 <.> Failsafe Reports root
 <.> Surefire Reports root
 

@@ -1,3 +1,7 @@
+[source,yaml]
+----
+
+
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/annotations.schema.json
 ---
 requirement_annotations:
@@ -14,3 +18,5 @@ requirement_annotations:
     SVC_040:
       - elementKind: "METHOD"
         fullyQualifiedName: "package.example.SVCsTest.testMethod2"
+
+----

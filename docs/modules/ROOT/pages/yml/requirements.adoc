@@ -1,3 +1,7 @@
+[source,yaml]
+----
+
+
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
 
 metadata:
@@ -65,3 +69,5 @@ requirements:
       - requirement_ids: [REQ123] # links to another requirement in this document
         sources: [FSB] # FSB, SAF, SWAL
     revision: 0.0.0 # requirement added from revision number, e.g. 1.0.2
+
+----
