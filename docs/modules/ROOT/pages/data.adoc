@@ -15,10 +15,10 @@ Reqstool uses static data (usually written by hand) and dynamic data (informatio
   📄  software_verification_cases.yml <.>
 ----
 <.> Content source root
-<.> See xref:example$manual_verification_results.yml[]
-<.> See xref:example$requirements.yml[]
-<.> See xref:example$reqstool_config.yml[]
-<.> See xref:example$software_verification_cases.yml[]
+<.> See xref:../examples/manual_verification_results.yml[]
+<.> See xref:../examples/requirements.yml[]
+<.> See xref:../examples/reqstool_config.yml[]
+<.> See xref:../examples/software_verification_cases.yml[]
 
 This means that if you run Reqstool like this:
 
@@ -58,8 +58,8 @@ The tree below shows where the dynamic files will reside after the project has b
 <.> Maven target root
 <.> Failsafe Reports root
 <.> Surefire Reports root
-<.> See xref:example$requirements_annotations.yml[]
-<.> See xref:example$svcs_annotations.yml[]
+<.> See xref:yml_examples/requirements_annotations.yml[]
+<.> See xref:yml_examples/svcs_annotations.yml[]
 
 [[maven-artifact-zip-directory-structure]]
 === Maven Artifact Zip Directory Structure
@@ -84,11 +84,11 @@ The Reqstool artifact uploaded as a zip to a Maven repository needs to have the 
     📂 surefire <.>
 ----
 <.> Content source root
-<.> See xref:example$manual_verification_results.yml[]
-<.> See xref:example$requirements.yml[]
-<.> See xref:example$reqstool_config.yml[]
-<.> See xref:example$software_verification_cases.yml[]
-<.> See xref:example$annotations.yml[]
+<.> See xref:yml_examples/manual_verification_results.yml[]
+<.> See xref:yml_examples/requirements.yml[]
+<.> See xref:yml_examples/reqstool_config.yml[]
+<.> See xref:yml_examples/software_verification_cases.yml[]
+<.> See xref:yml_examples/annotations.yml[]
 <.> Failsafe Reports root
 <.> Surefire Reports root
 
