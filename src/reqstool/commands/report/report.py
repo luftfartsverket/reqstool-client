@@ -2,8 +2,8 @@
 
 import logging
 from enum import Enum
-from typing import Dict, List
 from pathlib import Path
+from typing import Dict, List
 
 from jinja2 import (
     BaseLoader,
@@ -15,6 +15,7 @@ from jinja2 import (
     select_autoescape,
 )
 
+from reqstool.commands.group_and_sort import Grouping, Sorting
 from reqstool.commands.status.statistics_container import StatisticsContainer
 from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.dataclasses.urn_id import UrnId
@@ -41,8 +42,10 @@ class TemplateNames(Enum):
 
 
 class ReportCommand:
-    def __init__(self, location: LocationInterface):
+    def __init__(self, location: LocationInterface, group_by: str = Grouping.DEFAULT, sort_by: str = Sorting.DEFAULT):
         self.__initial_location: LocationInterface = location
+        self.group_by = group_by
+        self.sort_by = sort_by
         self.templates = {}
         self.result = self.__run()
 

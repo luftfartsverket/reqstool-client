@@ -2,13 +2,15 @@
 # Copyright © LFV
 
 import argparse
+import enum
+import logging
 import os
 import sys
 from importlib.metadata import version
 from typing import TextIO, Union
 
-
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
+from reqstool.commands.group_and_sort import Grouping, Sorting
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
 
 if __package__ is None:
@@ -63,11 +65,31 @@ class Command:
         )
         return argument_parser
 
+    def _add_grouping_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        argument_parser.add_argument(
+            "--group-by",
+            type=str,
+            help="group requirements by (default: initial/imported)",
+            default="initial/imported",
+        )
+        return argument_parser
+
+    def _add_sorting_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        argument_parser.add_argument(
+            "--sort-by",
+            type=str,
+            help="sort requirements by (default: id-alphanumerical)",
+            default="id-alphanumerical",
+        )
+        return argument_parser
+
     def _add_subparsers_source(self, parser):
         # Subparser for local report
         local_report_parser = parser.add_parser("local", help="local source")
         local_report_parser.add_argument("-p", "--path", help="path description", required=True)
         self._add_argument_output(local_report_parser)
+        self._add_grouping_output(local_report_parser)
+        self._add_sorting_output(local_report_parser)
 
         # Subparser for git report
         git_report_parser = parser.add_parser("git", help="git source")
@@ -76,6 +98,8 @@ class Command:
         git_report_parser.add_argument("-b", "--branch", help="branch description")
         git_report_parser.add_argument("-t", "--env_token", help="env_token description")
         self._add_argument_output(git_report_parser)
+        self._add_grouping_output(git_report_parser)
+        self._add_sorting_output(git_report_parser)
 
         # Subparser for maven report
         maven_report_parser = parser.add_parser("maven", help="maven source")
@@ -87,6 +111,8 @@ class Command:
         maven_report_parser.add_argument("--version", help="version description", required=True)
         maven_report_parser.add_argument("--classifier", help="classifier description")
         self._add_argument_output(maven_report_parser)
+        self._add_grouping_output(maven_report_parser)
+        self._add_sorting_output(maven_report_parser)
 
     def _add_argument_version(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         ver: str = "local dev" if __package__ is None else f"{version('reqstool')}"
@@ -176,11 +202,33 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         return location
 
+    def _resolve_group_and_sort(self, report_args: argparse.Namespace):
+        group_by = self.__get_enum_value(
+            input_string=report_args.group_by, the_enum=Grouping, default_value=Grouping.DEFAULT
+        )
+        sort_by = self.__get_enum_value(
+            input_string=report_args.sort_by, the_enum=Sorting, default_value=Sorting.DEFAULT
+        )
+
+        return group_by, sort_by
+
+    def __get_enum_value(self, input_string: str, the_enum: enum, default_value: str):
+        matching_values = next((member for member in the_enum if input_string == member.value), None)
+
+        if matching_values:
+            return matching_values
+        else:
+            logging.warning(
+                f"{input_string} is not a valid value for {the_enum.__name__}. Defaulting to: {default_value.value}"
+            )
+            return default_value
+
     def command_report(self, report_args: argparse.Namespace):
         initial_source = self._get_initial_source(report_args)
+        group_by, sort_by = self._resolve_group_and_sort(report_args)
 
         output = report_args.output  # where to put the generated report
-        result = report.ReportCommand(location=initial_source)
+        result = report.ReportCommand(location=initial_source, group_by=group_by, sort_by=sort_by)
 
         output.write(result.result)
 
