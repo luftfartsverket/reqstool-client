@@ -5,11 +5,12 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from operator import attrgetter
 from types import MappingProxyType
-from typing import Dict, Iterator, List, Tuple, TypeVar
+from typing import Callable, Dict, Iterator, List, Tuple, TypeVar
 
 from reqstool.commands.report.criterias.sort_by.sort_by import SORT_BY_OPTIONS
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
+from reqstool.models.requirements import RequirementData
 
 K = TypeVar("K")
 
@@ -47,3 +48,30 @@ class GroupByInterface(ABC):
     @abstractmethod
     def _group(self):
         pass
+
+    def group(self):
+        group_by = "category"
+
+        for urn_id, req_data in self.cid.requirements.items():
+            group = group_by_functions[group_by]()
+
+            self._add_req_to_group(group=group, urn_id=urn_id)
+
+
+# Define the Callable interface with type annotations
+GroupByFunction = Callable[[RequirementData, CombinedIndexedDataset], str]
+
+# Define lambda functions for grouping
+group_by_category: GroupByFunction = lambda req_data, cid: (
+    req_data.category[0] if req_data.category and len(req_data.category) > 0 else None
+)
+
+group_by_initial_imported: GroupByFunction = lambda req_data, cid: (
+    "Initial URN" if req_data.id.urn == cid.initial_model_urn else "Imported"
+)
+
+# Create a dictionary to map operation names to lambda functions
+group_by_functions = {
+    "category": group_by_category,
+    "initial_imported": group_by_initial_imported,
+}
