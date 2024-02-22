@@ -22,13 +22,27 @@ filters:
 
 implementations:
   local:
-    - path: ../ms-001
+    - path: ../demo
 
 requirements:
   - id: REQ_sys001_505
     title: Title REQ_sys001_505
     significance: may
-    description: Imported requirement, has a SVC with a passing automated-test but not implemented
+    description: Not implemented requirement, has one passed automated-test and one failed MVR
     rationale: Rationale REQ_sys001_505
+    category: ["operational", "business"]
+    revision: 0.0.1
+  - id: REQ_sys001_010
+    title: Title REQ_sys001_010
+    significance: may
+    description: Implemented requirement with two passing and one failed automated-test and one passed MVR
+    rationale: Rationale REQ_sys001_010
+    category: ["operational", "business"]
+    revision: 0.0.1
+  - id: REQ_sys001_020
+    title: Implemented requirement with one passed automated-test and one missing MVR
+    significance: may
+    description: Description REQ_sys001_020
+    rationale: Rationale REQ_sys001_020
     category: ["operational", "business"]
     revision: 0.0.1

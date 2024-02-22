@@ -10,7 +10,7 @@ requirements:
   - id: REQ_ext001_100
     title: Title REQ_ext001_100
     significance: may
-    description: Imported and included requirement, should be included in the report
+    description: Imported and included requirement, should be included in the report. One passed MVR
     rationale: Rationale REQ_100
     category: ["operational", "business"]
     revision: 0.0.1

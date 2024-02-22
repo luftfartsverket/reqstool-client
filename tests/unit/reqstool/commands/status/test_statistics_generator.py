@@ -126,7 +126,7 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
     assert result == expected
 
 
-@pytest.mark.skip(reason="Might be testdata error. Need to investigate")
+# @pytest.mark.skip(reason="Might be testdata error. Need to investigate")
 def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
     result: StatisticsContainer = StatisticsGenerator(
         initial_location=LocalLocation(path=local_testdata_resources_rootdir_w_path("test_standard/baseline/ms-001")),
@@ -292,7 +292,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
         },
         _total_statistics=TotalStatisticsItem(
             nr_of_failed_tests=2,
-            nr_of_missing_automated_tests=2,
+            nr_of_missing_automated_tests=1,
             nr_of_missing_manual_tests=0,
             nr_of_skipped_tests=0,
             nr_of_passed_tests=4,

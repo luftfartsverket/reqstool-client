@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/software_verification_cases.schema.json
+
+cases:
+  - id: SVC_sys001_010
+    requirement_ids: ["REQ_sys001_010"]
+    title: "SVC with 2 passed and 1 failed automated-test"
+    verification: automated-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_020
+    requirement_ids: ["REQ_sys001_020", "ext-002:REQ_ext002_400"]
+    title: "SVC with one passing automated-test"
+    verification: automated-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_021
+    requirement_ids: ["REQ_sys001_010", "ext-001:REQ_ext001_100"]
+    title: "SVC with passing MVR"
+    verification: manual-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_022
+    requirement_ids: ["REQ_sys001_020"]
+    title: "SVC with failed MVR"
+    verification: manual-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_025
+    requirement_ids: ["ext-002:REQ_ext002_300"]
+    title: "SVC with missing automated-test"
+    verification: automated-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_026
+    requirement_ids: ["ext-002:REQ_ext002_400"]
+    title: "SVC with missing MVR"
+    verification: manual-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_500
+    requirement_ids: ["REQ_sys001_505"]
+    title: "SVC with passed automated-test"
+    verification: automated-test
+    revision: "0.0.1"
+
+  - id: SVC_sys001_600
+    requirement_ids: ["REQ_sys001_505"]
+    title: "SVC with failed MVR"
+    verification: manual-test
+    revision: "0.0.1"
