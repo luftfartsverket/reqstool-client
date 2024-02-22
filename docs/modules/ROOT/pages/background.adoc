@@ -1,4 +1,4 @@
-## Background
+== Background
 
 The idea behind Reqstool was conceived by Jimisola Laursen (@jimisola/@lfvjimisola) when working for LFV (Sweden's leading Air Navigation Provider). The aviation industry has strong regulations in all aspects including software with a lot of requirements.
 

@@ -2,15 +2,15 @@
 
 :keywords: Docs as Code, DocOps, content management system, docs writers, publish software documentation, CI and docs, CD and docs
 
-## Known bugs and issues
+== Known bugs and issues
 
 * None (fingers-crossed) 
 
-## Limitations
+== Limitations
 
 * Only Java and Maven supported
 
-## Contributing
+== Contributing
 
  * We adhere to the latest version of [Contributor Covenant](https://www.contributor-covenant.org/)
  * Fork repo
@@ -22,6 +22,6 @@
      * unit only: `hatch run test:pytest --cov=reqstool  tests/unit`
      * integration only: `hatch run test:pytest --cov=reqstool  tests/integration` 
 
-## License
+== License
 
 Licensed under [MIT](LICENSE)

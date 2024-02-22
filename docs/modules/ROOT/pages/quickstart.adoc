@@ -1,5 +1,4 @@
-
-## Quickstart
+== Quickstart
 
 . Create a requirements.yml file (see [Link examples](../examples/) or [JSON Schema](../schemas/))
 . Add annotations to your code
