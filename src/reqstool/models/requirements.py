@@ -31,6 +31,18 @@ class SIGNIFANCETYPES(Enum):
     MAY = "may"
 
 
+@unique
+class CATEGORYTYPES(Enum):
+    BUSINESS = "business"
+    USER_INTERFACE = "user-interface"
+    SYSTEM_INTERFACE = "system-interface"
+    PERFORMANCE = "performance"
+    IT_SECURITY = "it-security"
+    INFORMATION_SECURITY = "information-security"
+    RELIABILITY = "reliability"
+    OPERATIONAL = "operational"
+
+
 @dataclass
 class ReferenceData:
     requirement_ids: Set[UrnId] = set[UrnId]
