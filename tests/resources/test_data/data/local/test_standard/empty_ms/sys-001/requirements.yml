@@ -22,7 +22,7 @@ filters:
 
 implementations:
   local:
-    - path: ../demo
+    - path: ../ms-001
 
 requirements:
   - id: REQ_sys001_505
