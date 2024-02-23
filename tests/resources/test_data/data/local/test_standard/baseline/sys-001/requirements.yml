@@ -30,5 +30,5 @@ requirements:
     significance: may
     description: Imported requirement, has a SVC with a passing automated-test but not implemented
     rationale: Rationale REQ_sys001_505
-    category: ["operational", "business"]
+    category: ["operational", "information-security"]
     revision: 0.0.1

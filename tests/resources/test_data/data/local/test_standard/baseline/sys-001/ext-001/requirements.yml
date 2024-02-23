@@ -9,16 +9,16 @@ metadata:
 requirements:
   - id: REQ_ext001_100
     title: Title REQ_ext001_100
-    significance: may
+    significance: shall
     description: Imported and included requirement, should be included in the report
     rationale: Rationale REQ_100
-    category: ["operational", "business"]
+    category: ["reliability", "business"]
     revision: 0.0.1
 
   - id: REQ_ext001_200
     title: Title REQ_ext001_200
-    significance: may
+    significance: shall
     description: Should not be included and therefore not visible in the report
     rationale: Rationale REQ_100
-    category: ["operational", "business"]
+    category: ["it-security", "business"]
     revision: 0.0.1

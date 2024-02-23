@@ -14,15 +14,15 @@ imports:
 requirements:
   - id: REQ_010
     title: Title REQ_010
-    significance: may
+    significance: should
     description: Description REQ_010
     rationale: Rationale REQ_010
-    category: ["operational", "business"]
+    category: ["user-interface", "business"]
     revision: 0.0.1
   - id: REQ_020
     title: Title REQ_020
-    significance: may
+    significance: shall
     description: Description REQ_020
     rationale: Rationale REQ_020
-    category: ["operational", "business"]
+    category: ["operational", "performance"]
     revision: 0.0.1

@@ -12,7 +12,7 @@ requirements:
     significance: shall
     description: Requirement that is excluded, should not be included in statistics
     rationale: Rationale REQ_ext002_200
-    category: ["reliability", "business"]
+    category: ["reliability", "performance"]
     revision: 0.0.1
 
   - id: REQ_ext002_300
