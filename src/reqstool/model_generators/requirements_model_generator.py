@@ -3,6 +3,7 @@
 import re
 import sys
 from typing import Dict, List, Set
+from packaging.version import InvalidVersion, Version
 
 from ruamel.yaml import YAML
 
@@ -289,15 +290,16 @@ class RequirementsModelGenerator:
                 # Check if rationale is defined, or set it to None
                 rationale = req["rationale"] if "rationale" in req else None
 
+                urn_id = UrnId(urn=urn, id=req["id"])
                 req_data = RequirementData(
-                    id=UrnId(urn=urn, id=req["id"]),
+                    id=urn_id,
                     title=req["title"],
                     significance=SIGNIFANCETYPES(req["significance"]),
                     description=req["description"],
                     rationale=rationale,
                     category=req["category"],
                     references=refs_data,
-                    revision=req["revision"],
+                    revision=self.__parse_req_version(version=req["revision"], urn_id=urn_id),
                 )
 
                 if req_data.id not in r_reqs:
@@ -318,3 +320,9 @@ class RequirementsModelGenerator:
         )
 
         refs_data.append(ref_data)
+
+    def __parse_req_version(self, version: str, urn_id: UrnId) -> Version:
+        try:
+            return Version(version)
+        except InvalidVersion as e:
+            raise TypeError(f"Invalid version: {e} for: {urn_id}")

@@ -101,7 +101,7 @@ def test_system_requirements_model_generator(resource_funcname_rootdir_w_path):
         UrnId(urn="sys-001", id="REQ_200")
     ]
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].references[0].sources == ["SRC"]
-    assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].revision.base_version == "0.0.1"
 
 
 def test_microservice_requirements_model_generator(resource_funcname_rootdir_w_path):
@@ -152,7 +152,7 @@ def test_microservice_requirements_model_generator(resource_funcname_rootdir_w_p
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].category == ["business"]
 
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].references == []
-    assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].revision.base_version == "0.0.1"
 
 
 def test_external_requirements_model_generator(resource_funcname_rootdir_w_path):
@@ -186,7 +186,7 @@ def test_external_requirements_model_generator(resource_funcname_rootdir_w_path)
         UrnId(urn="ext-001", id="REQ_200")
     ]
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].references[0].sources == ["SRC"]
-    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision.base_version == "0.0.1"
 
 
 def test_rational_optional_model_generator(resource_funcname_rootdir_w_path):
@@ -220,4 +220,4 @@ def test_rational_optional_model_generator(resource_funcname_rootdir_w_path):
         UrnId(urn="ext-001", id="REQ_200")
     ]
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].references[0].sources == ["SRC"]
-    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision.base_version == "0.0.1"

@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 from enum import Enum, unique
 from typing import Dict, List, Set
+from packaging.version import Version
 
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.filters.requirements_filters import RequirementFilter
@@ -44,7 +45,7 @@ class RequirementData:
     significance: SIGNIFANCETYPES
     description: str
     rationale: str
-    revision: str
+    revision: Version
     category: List[str] = field(default_factory=list)
     references: List[ReferenceData] = field(default_factory=list)
 
