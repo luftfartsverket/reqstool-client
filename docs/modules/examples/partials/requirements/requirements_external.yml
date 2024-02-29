@@ -13,7 +13,7 @@ requirements:
     significance: # was level # shall, should, may # https://www.rfc-editor.org/rfc/rfc2119
     description: # text
     rationale: # text
-    category: # [Business, User Interface, System Interface, Performance, IT Security, Information Security, Reliability, Operational]
+    categories: # [Business, User Interface, System Interface, Performance, IT Security, Information Security, Reliability, Operational]
     references: # links, source
       - requirement_ids: [REQ123] # links to another requirement in this document
         sources: [FSB] # FSB, SAF, SWAL

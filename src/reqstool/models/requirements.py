@@ -32,6 +32,19 @@ class SIGNIFANCETYPES(Enum):
     MAY = "may"
 
 
+@unique
+class CATEGORIES(Enum):
+    BUSINESS = "business"
+    DATA_FORMAT = "data-format"
+    INFORMATION_SECURITY = "information-security"
+    IT_SECURITY = "it-security"
+    OPERATIONAL = "operational"
+    PERFORMANCE = "performance"
+    RELIABILITY = "reliability"
+    SYSTEM_INTERFACE = "system-interface"
+    USER_INTERFACE = "user-interface"
+
+
 @dataclass
 class ReferenceData:
     requirement_ids: Set[UrnId] = set[UrnId]
@@ -46,7 +59,7 @@ class RequirementData:
     description: str
     rationale: str
     revision: Version
-    category: List[str] = field(default_factory=list)
+    categories: List[CATEGORIES] = field(default_factory=list)
     references: List[ReferenceData] = field(default_factory=list)
 
 

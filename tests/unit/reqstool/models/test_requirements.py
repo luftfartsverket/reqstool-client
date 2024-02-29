@@ -18,7 +18,7 @@ def requirement_data(reference_data):
         significance="shall",
         description="some description",
         rationale="some rationale",
-        category=["operational", "business"],
+        categories=["operational", "business"],
         references=[reference_data],
         revision="0.0.1",
     )
@@ -50,7 +50,7 @@ def test_requirement_data(requirement_data, reference_data):
     assert requirement_data.significance == "shall"
     assert requirement_data.description == "some description"
     assert requirement_data.rationale == "some rationale"
-    assert requirement_data.category == ["operational", "business"]
+    assert requirement_data.categories == ["operational", "business"]
     assert requirement_data.references == [reference_data]
     assert requirement_data.revision == "0.0.1"
 

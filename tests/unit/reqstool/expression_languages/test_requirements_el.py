@@ -25,7 +25,7 @@ def requirement_data():
             significance=SIGNIFANCETYPES("shall"),
             description="some description",
             rationale="some rationale",
-            category=["operational", "business"],
+            categories=["operational", "business"],
             references=None,
             revision="0.0.1",
         )

@@ -32,7 +32,7 @@ requirements:
     significance: shall
     description: Description REQ_sys001_101
     rationale: Rationale REQ_sys001_101
-    category: ["reliability", "business"]
+    categories: ["reliability", "business"]
     revision: 0.0.1
 
   - id: REQ_sys001_102
@@ -40,7 +40,7 @@ requirements:
     significance: may
     description: Description REQ_sys001_102
     rationale: Rationale REQ_sys001_102
-    category: ["operational", "performance"]
+    categories: ["operational", "performance"]
     revision: 0.0.1
 
   - id: REQ_sys001_103
@@ -48,5 +48,5 @@ requirements:
     significance: shall
     description: Description REQ_sys001_103
     rationale: Rationale REQ_sys001_103
-    category: [it-security, "business"]
+    categories: [it-security, "business"]
     revision: 0.0.1

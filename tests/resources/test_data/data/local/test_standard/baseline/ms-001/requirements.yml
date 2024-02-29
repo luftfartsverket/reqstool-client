@@ -24,14 +24,14 @@ requirements:
     significance: may
     description: Description REQ_ms001_101
     rationale: Rationale REQ_ms001_101
-    category: ["operational", "business"]
+    categories: ["operational", "business"]
     revision: 0.0.1
   - id: REQ_ms001_102
     title: Title REQ_ms001_102
     significance: may
     description: Some description REQ_ms001_102
     rationale: Rationale REQ_ms001_102
-    category: ["operational", "business"]
+    categories: ["operational", "business"]
     references:
       - requirement_ids: ["sys-001:REQ_sys001_101"] # Should be in a list at the bottom of report.
         sources: ["SRC"]

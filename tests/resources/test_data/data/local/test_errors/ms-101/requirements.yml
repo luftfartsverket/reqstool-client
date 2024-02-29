@@ -12,7 +12,7 @@ requirements:
     significance: may
     description: Description REQ_101
     rationale: Rationale REQ_001
-    category: ["operational", "business"]
+    categories: ["operational", "business"]
     revision: 0.0.1
 
   - id: REQ_101
@@ -20,7 +20,7 @@ requirements:
     significance: shall
     description: Description REQ_102
     rationale: Rationale REQ_002
-    category: ["information-security", "operational"]
+    categories: ["information-security", "operational"]
     revision: 0.0.1
 
   - id: REQ_201
@@ -28,7 +28,7 @@ requirements:
     significance: may
     description: Description REQ_201
     rationale: Rationale REQ_201
-    category: ["operational", "business"]
+    categories: ["operational", "business"]
     references:
       - requirement_ids: ["REQ_101"]
         sources: ["SRC"]
@@ -39,5 +39,5 @@ requirements:
     significance: should
     description: Description REQ_202
     rationale: Rationale REQ_201
-    category: ["reliability", "user-interface"]
+    categories: ["reliability", "user-interface"]
     revision: 0.0.1

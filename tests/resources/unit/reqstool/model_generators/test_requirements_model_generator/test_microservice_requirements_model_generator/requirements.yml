@@ -40,5 +40,5 @@ requirements:
     significance: shall
     description: Description REQ_001
     rationale: Rationale REQ_001
-    category: ["business"]
+    categories: ["business"]
     revision: 0.0.1
