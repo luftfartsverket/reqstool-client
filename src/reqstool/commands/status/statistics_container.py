@@ -16,6 +16,8 @@ class TestStatisticsItem:
     not_applicable: bool = False
 
     def is_completed(self):
+        if self.nr_of_missing_automated_tests or self.nr_of_missing_manual_tests > 0:
+            return False
         return self.nr_of_total_tests == self.nr_of_passed_tests
 
 
