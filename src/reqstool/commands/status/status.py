@@ -66,6 +66,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
     table_with_title = f"{title}\n{table}\n"
     statisics = _summarize_statisics(
         nr_of_total_reqs=stats_container._total_statistics.nr_of_total_requirements,
+        nr_of_completed_reqs=stats_container._total_statistics.nr_of_completed_requirements,
         implemented=stats_container._total_statistics.nr_of_reqs_with_implementation,
         left_to_implement=stats_container._total_statistics.nr_of_total_requirements
         - stats_container._total_statistics.nr_of_reqs_with_implementation,
@@ -96,6 +97,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
 
 def _summarize_statisics(
     nr_of_total_reqs: int,
+    nr_of_completed_reqs: int,
     implemented: int,
     left_to_implement: int,
     total_tests: int,
@@ -105,11 +107,17 @@ def _summarize_statisics(
     missing_automated_tests: int,
     missing_manual_tests: int,
 ) -> str:
-    table_data = [
+    table_req_data = [
         [
             str(nr_of_total_reqs),
+            str(nr_of_completed_reqs)
+            + __numbers_as_percentage(numerator=nr_of_completed_reqs, denominator=nr_of_total_reqs),
             str(implemented) + __numbers_as_percentage(numerator=implemented, denominator=nr_of_total_reqs),
             str(left_to_implement) + __numbers_as_percentage(numerator=left_to_implement, denominator=nr_of_total_reqs),
+        ]
+    ]
+    table_svc_data = [
+        [
             str(passed_tests) + __numbers_as_percentage(numerator=passed_tests, denominator=total_tests),
             str(failed_tests) + __numbers_as_percentage(numerator=failed_tests, denominator=total_tests),
             str(skipped_tests) + __numbers_as_percentage(numerator=skipped_tests, denominator=total_tests),
@@ -123,19 +131,27 @@ def _summarize_statisics(
             ),
         ]
     ]
-    headers = [
+    req_headers = [
         "Total requirements",
+        "Completed requirements",
         "Implemented",
         "Not implemented",
+    ]
+    svc_headers = [
         "Passed tests",
         "Failing tests",
         "Skipped tests",
         "SVCs missing tests",
         "SVCs missing MVRs",
     ]
-    col_align = ["center"] * len(table_data[0])
-    table = table = tabulate(tablefmt="fancy_grid", tabular_data=table_data, headers=headers, colalign=col_align)
-    table_with_title = f"\n{table}"
+    col_align = ["center"] * len(table_req_data[0])
+    req_table = req_table = tabulate(
+        tablefmt="fancy_grid", tabular_data=table_req_data, headers=req_headers, colalign=col_align
+    )
+    svc_table = svc_table = tabulate(
+        tablefmt="fancy_grid", tabular_data=table_svc_data, headers=svc_headers, colalign=col_align
+    )
+    table_with_title = f"\n{req_table}\n{svc_table}"
 
     return table_with_title
 
