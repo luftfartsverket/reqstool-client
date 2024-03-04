@@ -7,7 +7,7 @@ import logging
 import os
 import sys
 from importlib.metadata import version
-from typing import TextIO, Union
+from typing import List, TextIO, Union
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
 from reqstool.commands.group_and_sort import Grouping, Sorting
@@ -68,18 +68,18 @@ class Command:
     def _add_grouping_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--group-by",
-            type=str,
+            nargs="+",
             help="group requirements by (default: initial/imported)",
-            default="initial/imported",
+            default=["initial/imports"],
         )
         return argument_parser
 
     def _add_sorting_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--sort-by",
-            type=str,
+            type=lambda s: s.split(","),
             help="sort requirements by (default: id-alphanumerical)",
-            default="id-alphanumerical",
+            default=["id-alphanumerical"],
         )
         return argument_parser
 
@@ -212,8 +212,12 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         return group_by, sort_by
 
-    def __get_enum_value(self, input_string: str, the_enum: enum, default_value: str):
-        matching_values = next((member for member in the_enum if input_string == member.value), None)
+    def __get_enum_value(self, input_string: List[str], the_enum: enum, default_value: str):
+        matching_values = [
+            enum_value
+            for enum_value in the_enum
+            if any(enum_value.value == string_value for string_value in input_string)
+        ]
 
         if matching_values:
             return matching_values
