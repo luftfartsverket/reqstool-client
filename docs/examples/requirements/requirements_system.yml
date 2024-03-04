@@ -55,7 +55,7 @@ requirements:
     significance: shall # was level # shall, should, may # https://www.rfc-editor.org/rfc/rfc2119
     description: description # text
     rationale: test # text
-    categories: [business] # [Business, User Interface, System Interface, Performance, IT Security, Information Security, Reliability, Operational]
+    categories: [functional-suitability] # [ "compatibility", "functional-suitability", "maintainability", "performance-efficiency", "portability", "reliability", "security", "usability"]
     references: # links, source
       - requirement_ids: [REQ123] # links to another requirement in this document
       - sources: [FSB] # FSB, SAF, SWAL

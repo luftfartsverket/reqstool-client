@@ -34,15 +34,14 @@ class SIGNIFANCETYPES(Enum):
 
 @unique
 class CATEGORIES(Enum):
-    BUSINESS = "business"
-    DATA_FORMAT = "data-format"
-    INFORMATION_SECURITY = "information-security"
-    IT_SECURITY = "it-security"
-    OPERATIONAL = "operational"
-    PERFORMANCE = "performance"
+    COMPATIBILITY = "compatibility"
+    FUNCTIONAL_SUITABILITY = "functional-suitability"
+    MAINTAINABILITY = "maintainability"
+    PERFORMANCE_EFFICIENCY = "performance-efficiency"
+    PORTABILITY = "portability"
     RELIABILITY = "reliability"
-    SYSTEM_INTERFACE = "system-interface"
-    USER_INTERFACE = "user-interface"
+    SECURITY = "security"
+    USABILITY = "usability"
 
 
 @dataclass

@@ -69,7 +69,7 @@ def get_requirements_data_raw():
                 "significance": "may",
                 "description": "Description REQ_ms001_101",
                 "rationale": "Rationale REQ_ms001_101",
-                "categories": ["operational", "business"],
+                "categories": ["maintainability", "functional-suitability"],
                 "revision": "0.0.1",
             },
             {
@@ -78,7 +78,7 @@ def get_requirements_data_raw():
                 "significance": "may",
                 "description": "Some description REQ_ms001_102",
                 "rationale": "Rationale REQ_ms001_102",
-                "categories": ["operational", "business"],
+                "categories": ["maintainability", "functional-suitability"],
                 "references": [{"requirement_ids": ["sys-001:REQ_sys001_101"], "sources": ["SRC"]}],
                 "revision": "0.0.1",
             },

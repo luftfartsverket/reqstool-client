@@ -11,7 +11,7 @@ requirements:
     title: Title REQ_001
     significance: may
     description: Description REQ_001
-    categories: ["operational", "business"]
+    categories: ["maintainability", "functional-suitability"]
     references:
       - requirement_ids: ["REQ_200"]
         sources: ["SRC"]

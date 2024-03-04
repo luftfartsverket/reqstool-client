@@ -236,19 +236,18 @@
                     "items": {
                         "type": "string",
                         "enum": [
-                            "business",
-                            "data-format",
-                            "information-security",
-                            "it-security",
-                            "operational",
-                            "performance",
+                            "compatibility",
+                            "functional-suitability",
+                            "maintainability",
+                            "performance-efficiency",
+                            "portability",
                             "reliability",
-                            "system-interface",
-                            "user-interface"
+                            "security",
+                            "usability"
                         ],
-                        "description": "Enum for requirement categories. E.g. business, user-interface, system-interface, performance, it-security, information-security, reliability, operational"
+                        "description": "Enum for requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
                     },
-                    "description": "Array of requirement categories. E.g. business, user-interface, system-interface, performance, it-security, information-security, reliability, operational"
+                    "description": "Array of requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
                 },
                 "references": {
                     "type": "array",
