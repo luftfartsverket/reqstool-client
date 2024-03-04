@@ -76,6 +76,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         skipped_tests=stats_container._total_statistics.nr_of_skipped_tests,
         missing_automated_tests=stats_container._total_statistics.nr_of_missing_automated_tests,
         missing_manual_tests=stats_container._total_statistics.nr_of_missing_manual_tests,
+        nr_of_total_svcs=stats_container._total_statistics.nr_of_total_svcs,
     )
 
     legend = [
@@ -106,13 +107,18 @@ def _summarize_statisics(
     skipped_tests: int,
     missing_automated_tests: int,
     missing_manual_tests: int,
+    nr_of_total_svcs: int,
 ) -> str:
+    header_req_data = ("\b" * len(str(nr_of_total_reqs))) + f"Total Requirements: {str(nr_of_total_reqs)}"
+    header_test_data = ("\b" * len(str(total_tests))) + f"Total Tests: {str(total_tests)}"
+    header_svcs_data = ("\b" * len(str(nr_of_total_svcs))) + f"Total SVCs: {str(nr_of_total_svcs)}"
+
     table_req_data = [
         [
-            str(nr_of_total_reqs),
             str(nr_of_completed_reqs)
             + __numbers_as_percentage(numerator=nr_of_completed_reqs, denominator=nr_of_total_reqs),
-            str(implemented) + __numbers_as_percentage(numerator=implemented, denominator=nr_of_total_reqs),
+            str(implemented - nr_of_completed_reqs)
+            + __numbers_as_percentage(numerator=implemented - nr_of_completed_reqs, denominator=nr_of_total_reqs),
             str(left_to_implement) + __numbers_as_percentage(numerator=left_to_implement, denominator=nr_of_total_reqs),
         ]
     ]
@@ -122,43 +128,58 @@ def _summarize_statisics(
             str(failed_tests) + __numbers_as_percentage(numerator=failed_tests, denominator=total_tests),
             str(skipped_tests) + __numbers_as_percentage(numerator=skipped_tests, denominator=total_tests),
             str(missing_automated_tests)
-            + __numbers_as_percentage(
-                numerator=missing_automated_tests, denominator=missing_automated_tests + missing_manual_tests
-            ),
+            + __numbers_as_percentage(numerator=missing_automated_tests, denominator=nr_of_total_svcs),
             str(missing_manual_tests)
-            + __numbers_as_percentage(
-                numerator=missing_manual_tests, denominator=missing_automated_tests + missing_manual_tests
-            ),
+            + __numbers_as_percentage(numerator=missing_manual_tests, denominator=nr_of_total_svcs),
         ]
     ]
     req_headers = [
-        "Total requirements",
-        "Completed requirements",
+        "Implemented and Verified",
         "Implemented",
         "Not implemented",
     ]
     svc_headers = [
         "Passed tests",
-        "Failing tests",
+        "Failed tests",
         "Skipped tests",
         "SVCs missing tests",
         "SVCs missing MVRs",
     ]
     col_align = ["center"] * len(table_req_data[0])
     req_table = req_table = tabulate(
-        tablefmt="fancy_grid", tabular_data=table_req_data, headers=req_headers, colalign=col_align
+        tablefmt="fancy_grid",
+        tabular_data=table_req_data,
+        headers=req_headers,
+        colalign=col_align,
     )
     svc_table = svc_table = tabulate(
-        tablefmt="fancy_grid", tabular_data=table_svc_data, headers=svc_headers, colalign=col_align
+        tablefmt="fancy_grid",
+        tabular_data=table_svc_data,
+        headers=svc_headers,
+        colalign=col_align,
     )
-    table_with_title = f"\n{req_table}\n{svc_table}"
+
+    total_req_header = (
+        "╒════════════════════════════════════════════════════════════════╕"
+        f"\n│                      {header_req_data}                      │"
+        "\n╘════════════════════════════════════════════════════════════════╛"
+    )
+
+    total_tests_svcs_header = (
+        "╒═══════════════════════════════════════════════════╤════════════════════════════════════════════╕"
+        f"\n│                   {header_test_data}                   │"
+        f"                {header_svcs_data}                │"
+        "\n╘═══════════════════════════════════════════════════╧════════════════════════════════════════════╛"
+    )
+
+    table_with_title = f"\n{total_req_header}\n{req_table}\n{total_tests_svcs_header}\n{svc_table}"
 
     return table_with_title
 
 
 def __numbers_as_percentage(numerator: int, denominator: int) -> str:
     if denominator == 0:
-        return "--"
+        return ""
     percentage = (numerator / denominator) * 100
     percentage_as_string = " ({:.2f}%)".format(percentage)
     return percentage_as_string

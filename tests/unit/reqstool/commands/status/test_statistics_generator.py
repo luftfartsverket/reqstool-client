@@ -121,6 +121,7 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
             nr_of_completed_requirements=2,
             nr_of_total_requirements=4,
             nr_of_reqs_with_implementation=2,
+            nr_of_total_svcs=4,
         ),
     )
     assert result == expected
