@@ -10,7 +10,7 @@ from importlib.metadata import version
 from typing import List, TextIO, Union
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
-from reqstool.commands.group_and_sort import Grouping, Sorting
+from reqstool.commands.report.criterias.group_and_sort import Grouping, Sorting
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
 
 if __package__ is None:
@@ -68,9 +68,9 @@ class Command:
     def _add_grouping_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--group-by",
-            nargs="+",
+            type=lambda s: s.split(","),
             help="group requirements by (default: initial/imported)",
-            default=["initial/imports"],
+            default=[Grouping.DEFAULT.value],
         )
         return argument_parser
 
@@ -79,7 +79,7 @@ class Command:
             "--sort-by",
             type=lambda s: s.split(","),
             help="sort requirements by (default: id-alphanumerical)",
-            default=["id-alphanumerical"],
+            default=[Sorting.DEFAULT.value],
         )
         return argument_parser
 
