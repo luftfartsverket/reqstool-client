@@ -1,0 +1,22 @@
+[source,yaml]
+----
+
+
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/annotations.schema.json
+---
+requirement_annotations:
+  tests:
+    SVC_010:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "package.example.ms001.SVCsTest"
+    SVC_011:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "package.example.ms001.SVCsTest"
+    SVC_025:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "package.example.SVCsTest.testMethod1"
+    SVC_040:
+      - elementKind: "METHOD"
+        fullyQualifiedName: "package.example.SVCsTest.testMethod2"
+
+----
