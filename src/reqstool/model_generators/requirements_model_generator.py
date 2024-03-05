@@ -26,6 +26,7 @@ from reqstool.models.requirements import (
     ReferenceData,
     RequirementData,
     RequirementsData,
+    CATEGORIES,
 )
 
 
@@ -297,7 +298,7 @@ class RequirementsModelGenerator:
                     significance=SIGNIFANCETYPES(req["significance"]),
                     description=req["description"],
                     rationale=rationale,
-                    categories=req["categories"],
+                    categories=[CATEGORIES.safe_get(c) for c in req["categories"]],
                     references=refs_data,
                     revision=self.__parse_req_version(version=req["revision"], urn_id=urn_id),
                 )

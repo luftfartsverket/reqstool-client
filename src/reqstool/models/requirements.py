@@ -43,6 +43,13 @@ class CATEGORIES(Enum):
     SECURITY = "security"
     USABILITY = "usability"
 
+    @classmethod
+    def safe_get(cls, value):
+        for member in cls:
+            if member.value == value:
+                return member.value
+        raise ValueError(f"No enum member found with value '{value}'")
+
 
 @dataclass
 class ReferenceData:
