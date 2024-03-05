@@ -40,6 +40,7 @@ class TotalStatisticsItem:
     nr_of_completed_requirements: int = 0
     nr_of_total_requirements: int = 0
     nr_of_reqs_with_implementation: int = 0
+    nr_of_total_svcs: int = 0
 
     def update(self, completed: bool, combined_req_test_item: CombinedRequirementTestItem):
         self.nr_of_total_requirements += 1

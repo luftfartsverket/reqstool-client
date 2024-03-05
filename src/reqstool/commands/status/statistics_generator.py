@@ -222,6 +222,9 @@ class StatisticsGenerator:
         # Total mvrs
         total_no_of_mvrs = len(self.cid.mvrs)
 
+        # Total SVCs
+        stats_container._total_statistics.nr_of_total_svcs = len(self.cid.svcs)
+
         # Combined
         stats_container._total_statistics.nr_of_total_tests = total_no_of_annotated_tests + total_no_of_mvrs
 
