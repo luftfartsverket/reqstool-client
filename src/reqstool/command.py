@@ -10,7 +10,6 @@ from importlib.metadata import version
 from typing import List, TextIO, Union
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
-from reqstool.commands.group_and_sort import Grouping, Sorting
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
 
 if __package__ is None:

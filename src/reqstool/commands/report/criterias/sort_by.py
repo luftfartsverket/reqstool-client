@@ -11,19 +11,8 @@ from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 K = TypeVar("K")
 
 
-# sorting can only be made on relevant req_data data
-
-# relevant is:
-
-# * a scalar: string, int, enumeration etc (not dict, list etc)
-# * mandatory field?
-
-
-# relevant for now are
-
-
 @unique
-class SORT_BY_OPTIONS(Enum):
+class SortByOptions(Enum):
     ID = "id"
     SIGNIFICANCE = "significance"
     REVISION = "revision"

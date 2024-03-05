@@ -15,7 +15,7 @@ from jinja2 import (
     select_autoescape,
 )
 
-from reqstool.commands.group_and_sort import Grouping
+from reqstool.commands.report.criterias.group_and_sort import Grouping, Sorting
 from reqstool.commands.status.statistics_container import StatisticsContainer
 from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.dataclasses.urn_id import UrnId
@@ -46,11 +46,11 @@ class ReportCommand:
         self,
         location: LocationInterface,
         group_by: Grouping = Grouping.DEFAULT,
-        sort_by: List[Grouping] = None,
+        sort_by: List[Sorting] = None,
     ):
         self.__initial_location: LocationInterface = location
         self.group_by = group_by
-        self.sort_by = [Grouping.DEFAULT] if sort_by is None else sort_by
+        self.sort_by = [Sorting.DEFAULT] if sort_by is None else sort_by
         self.templates = {}
         self.result = self.__run()
 
@@ -101,6 +101,7 @@ class ReportCommand:
             initial_location=self.__initial_location, semantic_validator=semantic_validator
         ).combined_raw_datasets
         cid: CombinedIndexedDataset = CombinedIndexedDatasetGenerator(_crd=crd).combined_indexed_dataset
+
         # generate all reqs templates
         all_reqs = {"initial_model": crd.initial_model_urn, "templates": self.__create_requirements_container(cid=cid)}
 
@@ -121,7 +122,7 @@ class ReportCommand:
 
         return report
 
-    def __generate_asciidoc_information(self, reqs, statistics: StatisticsContainer):
+    def __generate_asciidoc_information(self, all_reqs, statistics: StatisticsContainer):
         """Parses the read data from the imported models and creates a AsciiDoc string
 
         Args:
@@ -136,8 +137,8 @@ class ReportCommand:
         initial = "=== INITIAL REQUIREMENTS\n"
         imported = "=== IMPORTED REQUIREMENTS\n"
         # we should start to generate requirements defined in inital source
-        for req_template in reqs["templates"]:
-            if reqs["initial_model"] == req_template["urn"]:
+        for req_template in all_reqs["templates"]:
+            if all_reqs["initial_model"] == req_template["urn"]:
                 initial += self.__extract_template_data(req_template=req_template)
             else:
                 imported += self.__extract_template_data(req_template=req_template)

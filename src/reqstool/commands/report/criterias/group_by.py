@@ -3,14 +3,21 @@
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass, field
+from enum import Enum
 from operator import attrgetter
 from types import MappingProxyType
 from typing import Callable, Dict, Iterator, List, Tuple, TypeVar
 
-from reqstool.commands.report.criterias.sort_by.sort_by import SORT_BY_OPTIONS
+from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.requirements import RequirementData
+
+
+class GroupbyOptions(Enum):
+    DEFAULT = "initial/imports"
+    CATEGORY = "category"
+
 
 K = TypeVar("K")
 
@@ -18,7 +25,7 @@ K = TypeVar("K")
 @dataclass(kw_only=True)
 class GroupByInterface(ABC):
     cid: CombinedIndexedDataset
-    sort_by: List[SORT_BY_OPTIONS]
+    sort_by: List[SortByOptions]
 
     grouped_requirements: Dict[K, List[UrnId]] = field(init=False, default_factory=lambda: defaultdict(list))
 
