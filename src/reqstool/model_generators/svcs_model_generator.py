@@ -2,6 +2,7 @@
 
 import sys
 from typing import Dict, Set
+from packaging.version import InvalidVersion, Version
 
 from ruamel.yaml import YAML
 
@@ -56,7 +57,7 @@ class SVCsModelGenerator:
                 description=case["description"] if "description" in case else None,
                 verification=VERIFICATIONTYPES(case["verification"]),
                 instructions=case["instructions"] if "instructions" in case else None,
-                revision=case["revision"],
+                revision=self.__parse_svc_version(version=case["revision"], urn_id=urn_id),
             )
 
             if svc.id not in r_result:
@@ -108,3 +109,9 @@ class SVCsModelGenerator:
                 r_filters[urn] = svc_filter
 
         return r_filters
+
+    def __parse_svc_version(self, version: str, urn_id: UrnId) -> Version:
+        try:
+            return Version(version)
+        except InvalidVersion as e:
+            raise TypeError(f"Invalid version: {e} for: {urn_id}")

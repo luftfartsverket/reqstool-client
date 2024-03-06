@@ -34,7 +34,7 @@ def test_svcs_model_generator(svcs_model_generator, resource_funcname_rootdir_w_
     ]
     assert model.cases[UrnId(urn="ms-001", id="SVC_001")].title == "Some Title SVC_001"
     assert model.cases[UrnId(urn="ms-001", id="SVC_001")].verification == VERIFICATIONTYPES.AUTOMATED_TEST
-    assert model.cases[UrnId(urn="ms-001", id="SVC_001")].revision == "0.0.1"
+    assert model.cases[UrnId(urn="ms-001", id="SVC_001")].revision.base_version == "0.0.1"
 
     assert model.cases[UrnId(urn="ms-001", id="SVC_002")].id.id == "SVC_002"
     assert model.cases[UrnId(urn="ms-001", id="SVC_002")].requirement_ids == [
@@ -45,4 +45,4 @@ def test_svcs_model_generator(svcs_model_generator, resource_funcname_rootdir_w_
     assert model.cases[UrnId(urn="ms-001", id="SVC_002")].description == "Some Description SVC_002"
     assert model.cases[UrnId(urn="ms-001", id="SVC_002")].verification == VERIFICATIONTYPES.MANUAL_TEST
     assert model.cases[UrnId(urn="ms-001", id="SVC_002")].instructions == "Some instructions"
-    assert model.cases[UrnId(urn="ms-001", id="SVC_002")].revision == "0.0.2"
+    assert model.cases[UrnId(urn="ms-001", id="SVC_002")].revision.base_version == "0.0.2"

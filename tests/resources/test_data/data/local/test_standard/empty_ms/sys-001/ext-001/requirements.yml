@@ -12,7 +12,7 @@ requirements:
     significance: may
     description: Imported and included requirement, should be included in the report. One passed MVR
     rationale: Rationale REQ_100
-    category: ["information-security", "reliability"]
+    categories: ["security", "reliability"]
     revision: 0.0.1
 
   - id: REQ_ext001_200
@@ -20,5 +20,5 @@ requirements:
     significance: shall
     description: Should not be included and therefore not visible in the report
     rationale: Rationale REQ_100
-    category: ["information-security", "performance"]
+    categories: ["security", "functional-suitability"]
     revision: 0.0.1
