@@ -2,29 +2,42 @@
 ---
 requirement_annotations:
   implementations:
-    REQ_ms001_101:
+    REQ_010:
       - elementKind: "CLASS"
-        fullyQualifiedName: "com.example.ms001.RequirementsExample1"
-    REQ_ms001_102:
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample.firstMethod"
+    REQ_020:
       - elementKind: "CLASS"
-        fullyQualifiedName: "com.example.ms001.RequirementsExample2"
-    sys-001:REQ_sys001_103:
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample"
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.example.sys001.RequirementsExample.someMethod"
-    ext-001:REQ_ext001_101:
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample.someMethod"
+    ext-001:REQ_ext001_100:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample"
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.example.ext001.RequirementsExample.someMethod"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample.firstMethod"
+    ext-002:REQ_ext002_300:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample.anotherMethod"
+    ext-002:REQ_ext002_400:
+      - elementKind: "CLASS"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample"
+      - elementKind: "METHOD"
+        fullyQualifiedName: "com.reqstool.example.demo.RequirementsExample.yetAnotherMethod"
   tests:
-    SVC_ms001_101:
+    SVC_010:
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.exampleSVCs.TestA"
+        fullyQualifiedName: "com.reqstool.example.demo.DemoApplicationTestsIT.contextLoads"
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.exampleSVCs.TestB"
-    SVC_ms001_103:
+        fullyQualifiedName: "com.reqstool.example.demo.SVCsTest.testMethod1"
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.exampleSVCs.Test1"
+        fullyQualifiedName: "com.reqstool.example.demo.SVCsTest.testMethod1point5"
+    SVC_020:
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.exampleSVCs.Test2"
-    sys-001:SVC_sys001_109:
+        fullyQualifiedName: "com.reqstool.example.demo.SVCsTest.testMethod2"
+    sys-001:SVC_sys001_500:
       - elementKind: "METHOD"
-        fullyQualifiedName: "com.exampleSVCs.ExtTest1"
+        fullyQualifiedName: "com.reqstool.example.demo.SVCsTest.testMethod3"
