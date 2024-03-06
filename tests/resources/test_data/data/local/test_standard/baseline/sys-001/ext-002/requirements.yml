@@ -1,32 +1,32 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
 
 metadata:
-  urn: ext-002
-  variant: external
-  title: Some More External Requirement Title
-  url: https://external-url.example.com
+    urn: ext-002
+    variant: external
+    title: Some More External Requirement Title
+    url: https://external-url.example.com
 
 requirements:
-  - id: REQ_ext002_101
-    title: Title REQ_ext002_101
-    significance: shall
-    description: Description REQ_ext002_101
-    rationale: Rationale REQ_ext002_101
-    categories: ["reliability", "functional-suitability"]
-    revision: 0.0.1
+    - id: REQ_ext002_200
+      title: Title REQ_ext002_200
+      significance: shall
+      description: Requirement that is excluded, should not be included in statistics
+      rationale: Rationale REQ_ext002_200
+      categories: ["reliability", "functional-suitability"]
+      revision: 0.0.1
 
-  - id: REQ_ext002_102
-    title: Title REQ_ext002_102
-    significance: may
-    description: Description REQ_ext002_102
-    rationale: Rationale REQ_ext002_102
-    categories: ["maintainability", "performance-efficiency"]
-    revision: 0.0.1
+    - id: REQ_ext002_300
+      title: Title REQ_ext002_300
+      significance: may
+      description: Implemented requirement with SVC missing automated-test
+      rationale: Rationale REQ_ext002_300
+      categories: ["maintainability", "performance-efficiency"]
+      revision: 0.0.1
 
-  - id: REQ_ext002_103
-    title: Title REQ_ext002_103
-    significance: shall
-    description: Description REQ_ext002_103
-    rationale: Rationale REQ_ext002_103
-    categories: [security, "functional-suitability"]
-    revision: 0.0.1
+    - id: REQ_ext002_400
+      title: Title REQ_ext002_400
+      significance: shall
+      description: Implemented requirement with SVC missing MVR and one passing automated-test
+      rationale: Rationale REQ_ext002_400
+      categories: [security, "functional-suitability"]
+      revision: 0.0.1

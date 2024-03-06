@@ -10,7 +10,7 @@ def test_status_incomplete_implementation(local_testdata_resources_rootdir_w_pat
 
     status, nr_of_incomplete_requirements = result.result
 
-    assert nr_of_incomplete_requirements == 6
+    assert nr_of_incomplete_requirements == 5
 
 
 def test_status_report_generation_sys_ms(local_testdata_resources_rootdir_w_path):
@@ -20,4 +20,4 @@ def test_status_report_generation_sys_ms(local_testdata_resources_rootdir_w_path
 
     status, nr_of_incomplete_requirements = result.result
 
-    assert nr_of_incomplete_requirements == 6
+    assert nr_of_incomplete_requirements == 5

@@ -4,12 +4,12 @@
 
 title Example diagram medium example 
 
-System_Ext(ext001, "ext-001", "REQ: REQ_ext001_101, REQ_ext001_102, REQ_ext001_103")
-System_Ext(ext002, "ext-002", "REQ: REQ_ext002_101, REQ_ext002_102, REQ_ext002_103")
+System_Ext(ext001, "ext-001", "REQ: REQ_ext001_100, REQ_ext001_200")
+System_Ext(ext002, "ext-002", "REQ: REQ_ext002_200, REQ_ext002_300, REQ_ext002_400")
 
-System(sys001, "sys-001", "Req:REQ_sys001_101, REQ_sys001_102, REQ_sys001_103 \n\n SVCS:SVC_sys001_101, SVC_sys001_102, SVC_sys001_103, SVC_sys001_107, SVC_sys001_108, SVC_sys001_109 \n Anno_tests:SVC_sys001_101, SVC_sys001_107, SVC_sys001_109 \n\n MVRS:MVR_sys001_102, MVR_sys001_103, MVR_sys001_104 \n\n Automatic:SVC_sys001_101, SVC_sys001_107, SVC_sys001_109")
+System(sys001, "sys-001", "Req:REQ_sys001_505 \n\n SVCS:SVC_sys001_500, SVC_sys001_000, SVC_sys001_600")
 
-System(ms001, "ms-001", "Req: REQ_ms001_101, REQ_ms001_102\n\n SVCS: SVC_ms001_101, SVC_ms001_102 \n\n Anno impls: REQ_ms001_101, REQ_ms001_102, sys001:REQ_sys001_103 \n\n Anno tests: SVC_ms101_101, SVC_ms101_102, sys001:SVC_sys001_109, \n\n  MVRS:MVR_ms001_102 \n\n Automatic:SVC_ms101_101, SVC_ms101_102, SVC_sys001_109")
+System(ms001, "ms-001", "Req: REQ_ms001_010, REQ_ms001_020\n\n SVCS: SVC_ms001_010, SVC_ms001_020, SVC_ms001_021, SVC_ms001_022, SVC_ms001_025, SVC_ms001_026, SVC_ms001_030 \n\n Anno impls: REQ_ms001_010, REQ_ms001_020, ext-001:REQ_ext001_100, ext-002:REQ_ext002_300, ext-002:REQ_ext002_400 \n\n Anno tests: SVC_010, SVC_020, sys001:SVC_sys001_500, \n\n  MVRS:MVR_201, MVR_202 \n\n Automatic:SVC_ms001_010, SVC_ms001_020, sys-001:SVC_sys001_500")
 
 Rel(sys001,ms001,"")
 Rel(ext001,sys001,"")

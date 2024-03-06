@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: sys-001
+  variant: system
+  title: Some System Requirement Title
+
+imports:
+  local:
+    - path: ./ext-001
+    - path: ./ext-002
+
+filters:
+  ext-001:
+    requirement_ids:
+      includes:
+        - REQ_ext001_100
+  ext-002:
+    requirement_ids:
+      excludes:
+        - REQ_ext002_200
+
+implementations:
+  local:
+    - path: ../ms-001
+
+requirements:
+  - id: REQ_sys001_505
+    title: Title REQ_sys001_505
+    significance: should
+    description: Not implemented requirement, has one passed automated-test and one failed MVR
+    rationale: Rationale REQ_sys001_505
+    categories: ["maintainability", "performance-efficiency"]
+    revision: 0.0.1
+  - id: REQ_sys001_010
+    title: Title REQ_sys001_010
+    significance: shall
+    description: Implemented requirement with two passing and one failed automated-test and one passed MVR
+    rationale: Rationale REQ_sys001_010
+    categories: ["maintainability", "functional-suitability"]
+    revision: 0.0.1
+  - id: REQ_sys001_020
+    title: Implemented requirement with one passed automated-test and one missing MVR
+    significance: may
+    description: Description REQ_sys001_020
+    rationale: Rationale REQ_sys001_020
+    categories: ["reliability", "functional-suitability"]
+    revision: 0.0.1
