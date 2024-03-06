@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from enum import Enum, unique
 from typing import Dict, List, Set
 
+from packaging.version import Version
+
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.filters.requirements_filters import RequirementFilter
 from reqstool.models.implementations import ImplementationDataInterface
@@ -32,15 +34,15 @@ class SIGNIFANCETYPES(Enum):
 
 
 @unique
-class CATEGORYTYPES(Enum):
-    BUSINESS = "business"
-    USER_INTERFACE = "user-interface"
-    SYSTEM_INTERFACE = "system-interface"
-    PERFORMANCE = "performance"
-    IT_SECURITY = "it-security"
-    INFORMATION_SECURITY = "information-security"
+class CATEGORIES(Enum):
+    COMPATIBILITY = "compatibility"
+    FUNCTIONAL_SUITABILITY = "functional-suitability"
+    MAINTAINABILITY = "maintainability"
+    PERFORMANCE_EFFICIENCY = "performance-efficiency"
+    PORTABILITY = "portability"
     RELIABILITY = "reliability"
-    OPERATIONAL = "operational"
+    SECURITY = "security"
+    USABILITY = "usability"
 
 
 @dataclass
@@ -56,8 +58,8 @@ class RequirementData:
     significance: SIGNIFANCETYPES
     description: str
     rationale: str
-    revision: str
-    category: List[str] = field(default_factory=list)
+    revision: Version
+    categories: List[CATEGORIES] = field(default_factory=list)
     references: List[ReferenceData] = field(default_factory=list)
 
 

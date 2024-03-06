@@ -223,7 +223,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
             ),
             UrnId(urn="ext-002", id="REQ_ext002_300"): CombinedRequirementTestItem(
-                completed=True,
+                completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -245,7 +245,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                 ),
             ),
             UrnId(urn="ext-002", id="REQ_ext002_400"): CombinedRequirementTestItem(
-                completed=True,
+                completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -274,9 +274,10 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             nr_of_skipped_tests=0,
             nr_of_passed_tests=5,
             nr_of_total_tests=7,
-            nr_of_completed_requirements=3,
+            nr_of_completed_requirements=1,
             nr_of_total_requirements=6,
             nr_of_reqs_with_implementation=5,
+            nr_of_total_svcs=9,
         ),
     )
     assert result == expected
@@ -335,7 +336,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
             ),
             UrnId(urn="sys-001", id="REQ_sys001_020"): CombinedRequirementTestItem(
-                completed=True,
+                completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -379,7 +380,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
             ),
             UrnId(urn="ext-002", id="REQ_ext002_300"): CombinedRequirementTestItem(
-                completed=True,
+                completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -401,7 +402,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                 ),
             ),
             UrnId(urn="ext-002", id="REQ_ext002_400"): CombinedRequirementTestItem(
-                completed=True,
+                completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -430,9 +431,10 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             nr_of_skipped_tests=0,
             nr_of_passed_tests=5,
             nr_of_total_tests=7,
-            nr_of_completed_requirements=4,
+            nr_of_completed_requirements=1,
             nr_of_total_requirements=6,
             nr_of_reqs_with_implementation=5,
+            nr_of_total_svcs=8,
         ),
     )
     assert result == expected

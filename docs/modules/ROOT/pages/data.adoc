@@ -199,5 +199,41 @@ systems:
 filters:
   sys-001:
     svc_ids:
-      includes: ["SVC_sys001_101", "SVC_sys001_109"]
+      imports: ["SVC_sys001_101", "SVC_sys001_109"]
 ```
+
+== Categories
+
+A requirement is assigned to one, or multiple categories.
+
+.requirements.yml
+```yaml
+requirements:
+  - id: REQ_ms001_101
+    title: Title REQ_ms001_101
+    significance: may
+    description: Description REQ_ms001_101
+    rationale: Rationale REQ_ms001_101
+    categories: ["maintainability", "functional-suitability"]
+    revision: 0.0.1
+```
+
+Categories follow the https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO 25010 0 Product Quality Characteristics].
+
+=== ISO 25010 Product Quality Characteristics
+
+* **Functional Suitability:** Functional Suitability assesses the degree to which the software provides appropriate functions that meet specified needs under specified conditions. It involves evaluating the completeness and appropriateness of the functions provided by the software.
+
+* **Reliability:** Reliability refers to the degree to which the software performs specified functions under specified conditions without failure for a specified period of time. It involves assessing the software's ability to maintain its performance level over time and under varying conditions.
+
+* **Performance Efficiency:** Performance efficiency evaluates the degree to which the software provides appropriate performance relative to the amount of resources used under specified conditions. It includes considerations such as response time, throughput, and resource utilization.
+
+* **Compatibility:** Compatibility assesses the degree to which the software can exchange information and work together with other systems, products, or environments without requiring special effort. It involves evaluating interoperability and integration capabilities.
+
+* **Usability:** Usability refers to the degree to which the software is easy to use, understand, and attractive to the user when used under specified conditions. It involves assessing aspects such as learnability, efficiency, and user satisfaction.
+
+* **Maintainability:** Maintainability evaluates the degree to which the software can be modified effectively and efficiently without introducing defects or degrading performance. It involves assessing aspects such as modifiability, analyzability, and testability.
+
+* **Portability:** Portability assesses the degree to which the software can be transferred from one environment to another, including the necessary adaptation effort. It involves considerations such as adaptability, installability, and coexistence with other software.
+
+* **Security:** Security refers to the degree to which the software protects information and data from unauthorized access, disclosure, alteration, or destruction. It involves assessing aspects such as confidentiality, integrity, authentication, authorization, and non-repudiation.

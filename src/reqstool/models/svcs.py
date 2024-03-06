@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 from enum import Enum, unique
 from typing import Dict, List
+from packaging.version import Version
 
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.filters.svcs_filters import SVCFilter
@@ -24,7 +25,7 @@ class SVCData:
     description: str
     verification: VERIFICATIONTYPES
     instructions: str
-    revision: str
+    revision: Version
     requirement_ids: List[UrnId] = field(default_factory=list)
 
 

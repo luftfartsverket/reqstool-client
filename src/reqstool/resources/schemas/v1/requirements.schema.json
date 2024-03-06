@@ -231,23 +231,23 @@
                     "type": "string",
                     "description": "Rationale for why the requirement exists"
                 },
-                "category": {
+                "categories": {
                     "type": "array",
                     "items": {
                         "type": "string",
                         "enum": [
-                            "business",
-                            "user-interface",
-                            "system-interface",
-                            "performance",
-                            "it-security",
-                            "information-security",
+                            "compatibility",
+                            "functional-suitability",
+                            "maintainability",
+                            "performance-efficiency",
+                            "portability",
                             "reliability",
-                            "operational"
+                            "security",
+                            "usability"
                         ],
-                        "description": "Enum for requirement category. E.g. business, user-interface, system-interface, performance, it-security, information-security, reliability, operational"
+                        "description": "Enum for requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
                     },
-                    "description": "Array of requirement categories. E.g. business, user-interface, system-interface, performance, it-security, information-security, reliability, operational"
+                    "description": "Array of requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
                 },
                 "references": {
                     "type": "array",
@@ -267,7 +267,7 @@
                 "title",
                 "significance",
                 "description",
-                "category",
+                "categories",
                 "revision"
             ]
         },

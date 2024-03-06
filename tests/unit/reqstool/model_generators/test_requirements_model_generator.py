@@ -5,7 +5,7 @@ from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.model_generators.requirements_model_generator import RequirementsModelGenerator
-from reqstool.models.requirements import SIGNIFANCETYPES, VARIANTS
+from reqstool.models.requirements import CATEGORIES, SIGNIFANCETYPES, VARIANTS
 
 REQUIREMENTS_YML_FILE = "requirements.yml"
 
@@ -95,13 +95,16 @@ def test_system_requirements_model_generator(resource_funcname_rootdir_w_path):
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].significance == SIGNIFANCETYPES.MAY
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].description == "Description REQ_001"
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].rationale == "Rationale REQ_001"
-    assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].category == ["operational", "business"]
+    assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].categories == [
+        CATEGORIES.MAINTAINABILITY,
+        CATEGORIES.FUNCTIONAL_SUITABILITY,
+    ]
 
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].references[0].requirement_ids == [
         UrnId(urn="sys-001", id="REQ_200")
     ]
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].references[0].sources == ["SRC"]
-    assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].revision.base_version == "0.0.1"
 
 
 def test_microservice_requirements_model_generator(resource_funcname_rootdir_w_path):
@@ -149,10 +152,10 @@ def test_microservice_requirements_model_generator(resource_funcname_rootdir_w_p
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].significance == SIGNIFANCETYPES.SHALL
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].description == "Description REQ_001"
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].rationale == "Rationale REQ_001"
-    assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].category == ["business"]
+    assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].categories == [CATEGORIES.FUNCTIONAL_SUITABILITY]
 
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].references == []
-    assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].revision.base_version == "0.0.1"
 
 
 def test_external_requirements_model_generator(resource_funcname_rootdir_w_path):
@@ -180,13 +183,16 @@ def test_external_requirements_model_generator(resource_funcname_rootdir_w_path)
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].significance == SIGNIFANCETYPES.MAY
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].description == "Description REQ_001"
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].rationale == "Rationale REQ_001"
-    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].category == ["operational", "business"]
+    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].categories == [
+        CATEGORIES.MAINTAINABILITY,
+        CATEGORIES.FUNCTIONAL_SUITABILITY,
+    ]
 
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].references[0].requirement_ids == [
         UrnId(urn="ext-001", id="REQ_200")
     ]
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].references[0].sources == ["SRC"]
-    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision.base_version == "0.0.1"
 
 
 def test_rational_optional_model_generator(resource_funcname_rootdir_w_path):
@@ -214,10 +220,13 @@ def test_rational_optional_model_generator(resource_funcname_rootdir_w_path):
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].significance == SIGNIFANCETYPES.MAY
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].description == "Description REQ_001"
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].rationale is None
-    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].category == ["operational", "business"]
+    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].categories == [
+        CATEGORIES.MAINTAINABILITY,
+        CATEGORIES.FUNCTIONAL_SUITABILITY,
+    ]
 
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].references[0].requirement_ids == [
         UrnId(urn="ext-001", id="REQ_200")
     ]
     assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].references[0].sources == ["SRC"]
-    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision == "0.0.1"
+    assert model.requirements[UrnId(urn="ext-001", id="REQ_001")].revision.base_version == "0.0.1"
