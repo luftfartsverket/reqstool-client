@@ -15,7 +15,8 @@ from jinja2 import (
     select_autoescape,
 )
 
-from reqstool.commands.report.criterias.group_and_sort import Grouping, Sorting
+from reqstool.commands.report.criterias.group_by import GroupbyOptions
+from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.statistics_container import StatisticsContainer
 from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.dataclasses.urn_id import UrnId
@@ -45,12 +46,12 @@ class ReportCommand:
     def __init__(
         self,
         location: LocationInterface,
-        group_by: Grouping = Grouping.DEFAULT,
-        sort_by: List[Sorting] = None,
+        group_by: GroupbyOptions = GroupbyOptions.INITIAL_IMPORTS,
+        sort_by: List[SortByOptions] = [SortByOptions.ID],
     ):
         self.__initial_location: LocationInterface = location
         self.group_by = group_by
-        self.sort_by = [Sorting.DEFAULT] if sort_by is None else sort_by
+        self.sort_by = [SortByOptions.ID] if sort_by is None else sort_by
         self.templates = {}
         self.result = self.__run()
 

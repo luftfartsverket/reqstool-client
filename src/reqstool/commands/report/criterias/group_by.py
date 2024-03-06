@@ -15,7 +15,7 @@ from reqstool.models.requirements import RequirementData
 
 
 class GroupbyOptions(Enum):
-    DEFAULT = "initial/imports"
+    INITIAL_IMPORTS = "initial/imports"
     CATEGORY = "category"
 
 

@@ -10,7 +10,8 @@ from importlib.metadata import version
 from typing import List, TextIO, Union
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
-from reqstool.commands.report.criterias.group_and_sort import Grouping, Sorting
+from reqstool.commands.report.criterias.group_by import GroupbyOptions
+from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
 
 if __package__ is None:
@@ -69,8 +70,8 @@ class Command:
         argument_parser.add_argument(
             "--group-by",
             type=lambda s: s.split(","),
-            help="group requirements by (default: initial/imported)",
-            default=[Grouping.DEFAULT.value],
+            help=f"group requirements by (default: {GroupbyOptions.INITIAL_IMPORTS.value})",
+            default=[GroupbyOptions.INITIAL_IMPORTS.value],
         )
         return argument_parser
 
@@ -78,8 +79,8 @@ class Command:
         argument_parser.add_argument(
             "--sort-by",
             type=lambda s: s.split(","),
-            help="sort requirements by (default: id-alphanumerical)",
-            default=[Sorting.DEFAULT.value],
+            help=f"sort requirements by (default: {SortByOptions.ID.value})",
+            default=[SortByOptions.ID.value],
         )
         return argument_parser
 
@@ -204,10 +205,10 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
     def _resolve_group_and_sort(self, report_args: argparse.Namespace):
         group_by = self.__get_enum_value(
-            input_string=report_args.group_by, the_enum=Grouping, default_value=Grouping.DEFAULT
+            input_string=report_args.group_by, the_enum=GroupbyOptions, default_value=GroupbyOptions.INITIAL_IMPORTS
         )
         sort_by = self.__get_enum_value(
-            input_string=report_args.sort_by, the_enum=Sorting, default_value=Sorting.DEFAULT
+            input_string=report_args.sort_by, the_enum=SortByOptions, default_value=SortByOptions.DEFAULT
         )
 
         return group_by, sort_by
