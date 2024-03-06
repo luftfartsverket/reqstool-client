@@ -2,7 +2,13 @@
 
 import pytest
 
-from reqstool.models.requirements import VARIANTS, MetaData, ReferenceData, RequirementData, RequirementsData
+from reqstool.models.requirements import (
+    VARIANTS,
+    MetaData,
+    ReferenceData,
+    RequirementData,
+    RequirementsData,
+)
 
 
 @pytest.fixture

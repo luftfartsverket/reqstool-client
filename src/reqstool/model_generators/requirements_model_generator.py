@@ -298,7 +298,7 @@ class RequirementsModelGenerator:
                     significance=SIGNIFANCETYPES(req["significance"]),
                     description=req["description"],
                     rationale=rationale,
-                    categories=[CATEGORIES.safe_get(c) for c in req["categories"]],
+                    categories=[CATEGORIES(c) for c in req["categories"]],
                     references=refs_data,
                     revision=self.__parse_req_version(version=req["revision"], urn_id=urn_id),
                 )
