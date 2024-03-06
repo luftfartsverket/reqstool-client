@@ -1,6 +1,5 @@
 # Copyright © LFV
 
-import pytest
 from reqstool.commands.status.statistics_container import (
     CombinedRequirementTestItem,
     StatisticsContainer,
@@ -127,7 +126,6 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
     assert result == expected
 
 
-@pytest.mark.skip(reason="Might be testdata error. Need to investigate")
 def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
     result: StatisticsContainer = StatisticsGenerator(
         initial_location=LocalLocation(path=local_testdata_resources_rootdir_w_path("test_standard/baseline/ms-001")),
@@ -136,16 +134,16 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
 
     expected = StatisticsContainer(
         _requirement_statistics={
-            UrnId(urn="ms-001", id="REQ_ms001_101"): CombinedRequirementTestItem(
-                completed=True,
+            UrnId(urn="ms-001", id="REQ_010"): CombinedRequirementTestItem(
+                completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
+                    nr_of_failed_tests=1,
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=2,
-                    nr_of_total_tests=2,
+                    nr_of_total_tests=3,
                     not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
@@ -153,12 +151,12 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
                 ),
             ),
-            UrnId(urn="ms-001", id="REQ_ms001_102"): CombinedRequirementTestItem(
+            UrnId(urn="ms-001", id="REQ_020"): CombinedRequirementTestItem(
                 completed=False,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
@@ -166,9 +164,9 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
@@ -180,19 +178,32 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                     not_applicable=False,
                 ),
             ),
-            UrnId(urn="sys-001", id="REQ_sys001_103"): CombinedRequirementTestItem(
+            UrnId(urn="sys-001", id="REQ_sys001_505"): CombinedRequirementTestItem(
                 completed=False,
-                nr_of_implementations=1,
+                nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=1,
+                    nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
-                    nr_of_total_tests=2,
+                    nr_of_total_tests=1,
                     not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=1,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=0,
+                    not_applicable=False,
+                ),
+            ),
+            UrnId(urn="ext-001", id="REQ_ext001_100"): CombinedRequirementTestItem(
+                completed=True,
+                nr_of_implementations=1,
+                automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
@@ -201,17 +212,26 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                     nr_of_total_tests=0,
                     not_applicable=True,
                 ),
+                mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
+                ),
             ),
-            UrnId(urn="ext-001", id="REQ_ext001_101"): CombinedRequirementTestItem(
-                completed=False,
+            UrnId(urn="ext-002", id="REQ_ext002_300"): CombinedRequirementTestItem(
+                completed=True,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=1,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=1,
-                    nr_of_total_tests=2,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=0,
                     not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
@@ -224,89 +244,44 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
                     not_applicable=True,
                 ),
             ),
-            UrnId(urn="ext-002", id="REQ_ext002_101"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
+            UrnId(urn="ext-002", id="REQ_ext002_400"): CombinedRequirementTestItem(
+                completed=True,
+                nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
+                    nr_of_missing_manual_tests=1,
                     nr_of_skipped_tests=0,
                     nr_of_passed_tests=0,
                     nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-            ),
-            UrnId(urn="ext-002", id="REQ_ext002_102"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-            ),
-            UrnId(urn="ext-002", id="REQ_ext002_103"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
+                    not_applicable=False,
                 ),
             ),
         },
         _total_statistics=TotalStatisticsItem(
             nr_of_failed_tests=2,
-            nr_of_missing_automated_tests=2,
-            nr_of_missing_manual_tests=0,
+            nr_of_missing_automated_tests=1,
+            nr_of_missing_manual_tests=2,
             nr_of_skipped_tests=0,
-            nr_of_passed_tests=4,
-            nr_of_total_tests=8,
-            nr_of_completed_requirements=1,
-            nr_of_total_requirements=7,
-            nr_of_reqs_with_implementation=4,
+            nr_of_passed_tests=5,
+            nr_of_total_tests=7,
+            nr_of_completed_requirements=3,
+            nr_of_total_requirements=6,
+            nr_of_reqs_with_implementation=5,
         ),
     )
     assert result == expected
 
 
-@pytest.mark.skip(reason="Might be testdata error. Need to investigate")
 def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path):
     result: StatisticsContainer = StatisticsGenerator(
         initial_location=LocalLocation(path=local_testdata_resources_rootdir_w_path("test_standard/empty_ms/ms-001")),
@@ -315,7 +290,51 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
 
     expected = StatisticsContainer(
         _requirement_statistics={
-            UrnId(urn="sys-001", id="REQ_sys001_101"): CombinedRequirementTestItem(
+            UrnId(urn="sys-001", id="REQ_sys001_505"): CombinedRequirementTestItem(
+                completed=False,
+                nr_of_implementations=0,
+                automated_tests_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
+                ),
+                mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=1,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
+                ),
+            ),
+            UrnId(urn="sys-001", id="REQ_sys001_010"): CombinedRequirementTestItem(
+                completed=False,
+                nr_of_implementations=1,
+                automated_tests_stats=TestStatisticsItem(
+                    nr_of_failed_tests=1,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=2,
+                    nr_of_total_tests=3,
+                    not_applicable=False,
+                ),
+                mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
+                ),
+            ),
+            UrnId(urn="sys-001", id="REQ_sys001_020"): CombinedRequirementTestItem(
                 completed=True,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
@@ -323,11 +342,24 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=2,
-                    nr_of_total_tests=2,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
                     not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=1,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=0,
+                    not_applicable=False,
+                ),
+            ),
+            UrnId(urn="ext-001", id="REQ_ext001_100"): CombinedRequirementTestItem(
+                completed=True,
+                nr_of_implementations=1,
+                automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
@@ -336,30 +368,39 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                     nr_of_total_tests=0,
                     not_applicable=True,
                 ),
+                mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=0,
+                    nr_of_skipped_tests=0,
+                    nr_of_passed_tests=1,
+                    nr_of_total_tests=1,
+                    not_applicable=False,
+                ),
             ),
-            UrnId(urn="sys-001", id="REQ_sys001_102"): CombinedRequirementTestItem(
-                completed=False,
+            UrnId(urn="ext-002", id="REQ_ext002_300"): CombinedRequirementTestItem(
+                completed=True,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=1,
+                    nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=1,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=1,
-                    nr_of_total_tests=3,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=0,
                     not_applicable=False,
                 ),
                 mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=2,
+                    nr_of_failed_tests=0,
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=1,
-                    nr_of_total_tests=3,
-                    not_applicable=False,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=0,
+                    not_applicable=True,
                 ),
             ),
-            UrnId(urn="sys-001", id="REQ_sys001_103"): CombinedRequirementTestItem(
+            UrnId(urn="ext-002", id="REQ_ext002_400"): CombinedRequirementTestItem(
                 completed=True,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
@@ -367,141 +408,31 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
                     nr_of_missing_automated_tests=0,
                     nr_of_missing_manual_tests=0,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
                     nr_of_passed_tests=1,
                     nr_of_total_tests=1,
                     not_applicable=False,
                 ),
-            ),
-            UrnId(urn="ext-001", id="REQ_ext001_101"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=1,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=1,
-                    nr_of_missing_automated_tests=2,
-                    nr_of_missing_manual_tests=0,
+                mvrs_stats=TestStatisticsItem(
+                    nr_of_failed_tests=0,
+                    nr_of_missing_automated_tests=0,
+                    nr_of_missing_manual_tests=1,
                     nr_of_skipped_tests=0,
-                    nr_of_passed_tests=2,
-                    nr_of_total_tests=5,
+                    nr_of_passed_tests=0,
+                    nr_of_total_tests=0,
                     not_applicable=False,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=1,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=1,
-                    not_applicable=False,
-                ),
-            ),
-            UrnId(urn="ext-001", id="REQ_ext001_103"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-            ),
-            UrnId(urn="ext-002", id="REQ_ext002_101"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-            ),
-            UrnId(urn="ext-002", id="REQ_ext002_102"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-            ),
-            UrnId(urn="ext-002", id="REQ_ext002_103"): CombinedRequirementTestItem(
-                completed=False,
-                nr_of_implementations=0,
-                automated_tests_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
-                ),
-                mvrs_stats=TestStatisticsItem(
-                    nr_of_failed_tests=0,
-                    nr_of_missing_automated_tests=0,
-                    nr_of_missing_manual_tests=0,
-                    nr_of_skipped_tests=0,
-                    nr_of_passed_tests=0,
-                    nr_of_total_tests=0,
-                    not_applicable=True,
                 ),
             ),
         },
         _total_statistics=TotalStatisticsItem(
-            nr_of_failed_tests=3,
-            nr_of_missing_automated_tests=2,
-            nr_of_missing_manual_tests=0,
+            nr_of_failed_tests=2,
+            nr_of_missing_automated_tests=1,
+            nr_of_missing_manual_tests=2,
             nr_of_skipped_tests=0,
-            nr_of_passed_tests=6,
-            nr_of_total_tests=11,
-            nr_of_completed_requirements=2,
-            nr_of_total_requirements=8,
-            nr_of_reqs_with_implementation=4,
+            nr_of_passed_tests=5,
+            nr_of_total_tests=7,
+            nr_of_completed_requirements=4,
+            nr_of_total_requirements=6,
+            nr_of_reqs_with_implementation=5,
         ),
     )
     assert result == expected

@@ -3,24 +3,47 @@
 filters:
   sys-001:
     svc_ids:
-      includes: ["SVC_sys001_109"]
+      includes: ["SVC_sys001_500", "SVC_sys001_600"]
+
 cases:
-  - id: SVC_ms001_101
-    requirement_ids: ["REQ_ms001_101"]
-    title: "Some Title SVC_ms001_101"
+  - id: SVC_010
+    requirement_ids: ["REQ_010"]
+    title: "Some Title SVC_010"
     verification: automated-test
     revision: "0.0.1"
 
-  - id: SVC_ms001_102
-    requirement_ids: ["REQ_ms001_102"]
-    title: "Some Title SVC_ms001_102"
+  - id: SVC_020
+    requirement_ids: ["REQ_020", "ext-002:REQ_ext002_400"]
+    title: "Some Title SVC_102"
+    verification: automated-test
+    revision: "0.0.1"
+
+  - id: SVC_021
+    requirement_ids: ["REQ_010", "ext-001:REQ_ext001_100"]
+    title: "Some Title SVC_021"
     verification: manual-test
     revision: "0.0.1"
 
-  - id: SVC_ms001_103
-    requirement_ids: ["sys-001:REQ_sys001_103"]
-    title: "Some Title SVC_ms001_103"
-    description: "Some Description SVC_ms001_103"
+  - id: SVC_022
+    requirement_ids: ["REQ_020"]
+    title: "Some Title SVC_022"
+    verification: manual-test
+    revision: "0.0.1"
+
+  - id: SVC_025
+    requirement_ids: ["ext-002:REQ_ext002_300"]
+    title: "SVC with missing automated-test"
     verification: automated-test
-    instructions: "Some instructions"
-    revision: "0.0.2"
+    revision: "0.0.1"
+
+  - id: SVC_026
+    requirement_ids: ["ext-002:REQ_ext002_400"]
+    title: "SVC with missing MVR"
+    verification: manual-test
+    revision: "0.0.1"
+
+  - id: SVC_030
+    requirement_ids: ["sys-001:REQ_sys001_505"]
+    title: "SVC with passing imported automated-test but not implemented"
+    verification: automated-test
+    revision: "0.0.1"
