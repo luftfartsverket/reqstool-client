@@ -2,17 +2,10 @@
 # Copyright © LFV
 
 import argparse
-import enum
-import logging
 import os
 import sys
 from importlib.metadata import version
-from typing import List, TextIO, Union
-
-from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
-from reqstool.commands.report.criterias.group_by import GroupbyOptions
-from reqstool.commands.report.criterias.sort_by import SortByOptions
-from reqstool.common.validators.syntax_validator import JsonSchemaItem
+from typing import TextIO, Union
 
 if __package__ is None:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -20,9 +13,13 @@ if __package__ is None:
 else:
     from reqstool.locations.location import LocationInterface
 
+from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
 from reqstool.commands.generate_json.generate_json import GenerateJsonCommand
 from reqstool.commands.report import report
+from reqstool.commands.report.criterias.group_by import GroupbyOptions
+from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.status import StatusCommand
+from reqstool.common.validators.syntax_validator import JsonSchemaItem
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.maven_location import MavenLocation
@@ -69,8 +66,9 @@ class Command:
     def _add_grouping_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--group-by",
-            type=lambda s: s.split(","),
-            help=f"group requirements by (default: {GroupbyOptions.INITIAL_IMPORTS.value})",
+            type=str,
+            help="Grouping option (default: %(default)s)",
+            choices=[c.value for c in GroupbyOptions],
             default=[GroupbyOptions.INITIAL_IMPORTS.value],
         )
         return argument_parser
@@ -78,8 +76,10 @@ class Command:
     def _add_sorting_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--sort-by",
-            type=lambda s: s.split(","),
-            help=f"sort requirements by (default: {SortByOptions.ID.value})",
+            type=str,
+            nargs="+",
+            choices=[s.value for s in SortByOptions],
+            help="List of sorting options (default: %(default)s)",
             default=[SortByOptions.ID.value],
         )
         return argument_parser
@@ -203,37 +203,15 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         return location
 
-    def _resolve_group_and_sort(self, report_args: argparse.Namespace):
-        group_by = self.__get_enum_value(
-            input_string=report_args.group_by, the_enum=GroupbyOptions, default_value=GroupbyOptions.INITIAL_IMPORTS
-        )
-        sort_by = self.__get_enum_value(
-            input_string=report_args.sort_by, the_enum=SortByOptions, default_value=SortByOptions.DEFAULT
-        )
-
-        return group_by, sort_by
-
-    def __get_enum_value(self, input_string: List[str], the_enum: enum, default_value: str):
-        matching_values = [
-            enum_value
-            for enum_value in the_enum
-            if any(enum_value.value == string_value for string_value in input_string)
-        ]
-
-        if matching_values:
-            return matching_values
-        else:
-            logging.warning(
-                f"{input_string} is not a valid value for {the_enum.__name__}. Defaulting to: {default_value.value}"
-            )
-            return default_value
-
     def command_report(self, report_args: argparse.Namespace):
         initial_source = self._get_initial_source(report_args)
-        group_by, sort_by = self._resolve_group_and_sort(report_args)
 
         output = report_args.output  # where to put the generated report
-        result = report.ReportCommand(location=initial_source, group_by=group_by, sort_by=sort_by)
+        result = report.ReportCommand(
+            location=initial_source,
+            group_by=GroupbyOptions(report_args.group_by),
+            sort_by=[SortByOptions(s) for s in report_args.sort_by],
+        )
 
         output.write(result.result)
 

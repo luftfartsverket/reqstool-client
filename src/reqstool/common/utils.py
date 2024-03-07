@@ -11,6 +11,7 @@ import requests
 from requests_file import FileAdapter
 
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.raw_datasets import RawDataset
 from reqstool.models.requirements import VARIANTS, RequirementData
 from reqstool.models.svcs import SVCData
@@ -201,6 +202,14 @@ def convert_id_to_urn_id(urn: str, id: str) -> UrnId:
         urn_id = UrnId(urn=urn, id=id)
 
     return urn_id
+
+
+def get_mvr_urn_ids_for_svcs_urn_id(self, cid: CombinedIndexedDataset, svcs_urn_ids: List[UrnId]) -> List[UrnId]:
+    mvr_urn_ids: List[UrnId] = []
+    for svc_urn_id in svcs_urn_ids:
+        mvr_urn_ids.extend(cid.mvrs_from_svc[svc_urn_id])
+
+    return mvr_urn_ids
 
 
 # Checks conditions for filtered ids and logs an error if they are not properly formatted

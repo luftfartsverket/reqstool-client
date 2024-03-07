@@ -1,7 +1,7 @@
 # Copyright © LFV
 
-from reqstool.commands.report.criterias.group_by.group_by_category import GroupByCategory
-from reqstool.commands.report.criterias.sort_by.sort_by import SORT_BY_OPTIONS
+from reqstool.commands.report.criterias.group_by import GroupbyOptions, GroupByOrganizor
+from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.local_location import LocalLocation
@@ -19,7 +19,11 @@ def test_basic_baseline(resource_funcname_rootdir, local_testdata_resources_root
 
     cid = CombinedIndexedDatasetGenerator(_crd=crd).combined_indexed_dataset
 
-    gbc = GroupByCategory(cid=cid, sort_by=[SORT_BY_OPTIONS.ID, SORT_BY_OPTIONS.REVISION, SORT_BY_OPTIONS.SIGNIFICANCE])
+    gbc = GroupByOrganizor(
+        cid=cid,
+        group_by=GroupbyOptions.INITIAL_IMPORTS,
+        sort_by=[SortByOptions.ID, SortByOptions.REVISION, SortByOptions.SIGNIFICANCE],
+    )
 
     for key, value in gbc:
         print(f"{key}: {[cid.requirements[urn_id]for urn_id in value]}")

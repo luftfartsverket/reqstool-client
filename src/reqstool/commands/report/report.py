@@ -1,6 +1,7 @@
 # Copyright © LFV
 
 import logging
+from collections import defaultdict
 from enum import Enum
 from pathlib import Path
 from typing import Dict, List
@@ -15,11 +16,12 @@ from jinja2 import (
     select_autoescape,
 )
 
-from reqstool.commands.report.criterias.group_by import GroupbyOptions
+from reqstool.commands.report.criterias.group_by import GroupbyOptions, GroupByOrganizor
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.statistics_container import StatisticsContainer
 from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.common.utils import get_mvr_urn_ids_for_svcs_urn_id
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.location import LocationInterface
@@ -46,13 +48,21 @@ class ReportCommand:
     def __init__(
         self,
         location: LocationInterface,
-        group_by: GroupbyOptions = GroupbyOptions.INITIAL_IMPORTS,
-        sort_by: List[SortByOptions] = [SortByOptions.ID],
+        group_by: GroupbyOptions,
+        sort_by: List[SortByOptions],
     ):
         self.__initial_location: LocationInterface = location
         self.group_by = group_by
-        self.sort_by = [SortByOptions.ID] if sort_by is None else sort_by
-        self.templates = {}
+        self.sort_by = sort_by
+        self.templates = {
+            TemplateNames.REQUIREMENTS: self.__create_template("requirements.j2"),
+            TemplateNames.SVCS: self.__create_template("svcs.j2"),
+            TemplateNames.ANNOTATION_TESTS: self.__create_template("annotation_tests.j2"),
+            TemplateNames.ANNOTATION_IMPLS: self.__create_template("annotation_impls.j2"),
+            TemplateNames.MVRS: self.__create_template("mvrs.j2"),
+            TemplateNames.REQ_REFERENCES: self.__create_template("req_references.j2"),
+            TemplateNames.TOTAL_STATISTICS: self.__create_template("total_statistics.j2"),
+        }
         self.result = self.__run()
 
     # call on Jinja2 template with reportmodel
@@ -110,20 +120,12 @@ class ReportCommand:
         statistics: StatisticsContainer = StatisticsGenerator(
             initial_location=self.__initial_location, semantic_validator=semantic_validator
         ).result
-        # build templates
-        self.templates[TemplateNames.REQUIREMENTS] = self.__create_template("requirements.j2")
-        self.templates[TemplateNames.SVCS] = self.__create_template("svcs.j2")
-        self.templates[TemplateNames.ANNOTATION_TESTS] = self.__create_template("annotation_tests.j2")
-        self.templates[TemplateNames.ANNOTATION_IMPLS] = self.__create_template("annotation_impls.j2")
-        self.templates[TemplateNames.MVRS] = self.__create_template("mvrs.j2")
-        self.templates[TemplateNames.REQ_REFERENCES] = self.__create_template("req_references.j2")
-        self.templates[TemplateNames.TOTAL_STATISTICS] = self.__create_template("total_statistics.j2")
 
-        report = self.__generate_asciidoc_information(all_reqs, statistics)
+        report = self.__generate_asciidoc_information(cid, all_reqs, statistics)
 
         return report
 
-    def __generate_asciidoc_information(self, all_reqs, statistics: StatisticsContainer):
+    def __generate_asciidoc_information(self, cid: CombinedIndexedDataset, all_reqs, statistics: StatisticsContainer):
         """Parses the read data from the imported models and creates a AsciiDoc string
 
         Args:
@@ -134,25 +136,35 @@ class ReportCommand:
         """
         statistics_table = self.__render(statistics._total_statistics, self.templates[TemplateNames.TOTAL_STATISTICS])
 
-        result = "== REQUIREMENT DOCUMENTATION\n"
-        initial = "=== INITIAL REQUIREMENTS\n"
-        imported = "=== IMPORTED REQUIREMENTS\n"
-        # we should start to generate requirements defined in inital source
-        for req_template in all_reqs["templates"]:
-            if all_reqs["initial_model"] == req_template["urn"]:
-                initial += self.__extract_template_data(req_template=req_template)
-            else:
-                imported += self.__extract_template_data(req_template=req_template)
-        return result + statistics_table + initial + imported
+        grouped_requirements: Dict[str, List[UrnId]] = GroupByOrganizor(
+            cid=cid, group_by=self.group_by, sort_by=self.sort_by
+        ).grouped_requirements
+
+        # category, List(asciidoc for each req)
+        template_data: Dict[str, List[str]] = defaultdict(list)
+
+        for category, urn_id in grouped_requirements:
+            template_data[category].append(self.__extract_template_data(req_template=all_reqs["templates"][urn_id]))
+
+        asciidoc: str = "== REQUIREMENTS DOCUMENTATION\n" + statistics_table
+
+        for category in template_data.keys():
+            asciidoc += f"=== {category}\n"
+
+            for template in template_data[category]:
+
+                asciidoc += template
+
+        return asciidoc
 
     def __extract_template_data(self, req_template) -> str:
-        requirement_as_asciidoc = ""
+        asciidoc = ""
         req_as_ascii = self.__render(req_template["requirement"], self.templates[TemplateNames.REQUIREMENTS])
         annot_impls_as_ascii = self.__render(req_template["impls"], self.templates[TemplateNames.ANNOTATION_IMPLS])
         annot_tests_as_ascii = self.__render(req_template["tests"], self.templates[TemplateNames.ANNOTATION_TESTS])
         svcs_as_ascii = self.__render(req_template["svcs"], self.templates[TemplateNames.SVCS])
         mvrs_to_ascii = self.__render(req_template["mvrs"], self.templates[TemplateNames.MVRS])
-        requirement_as_asciidoc += (
+        asciidoc += (
             req_as_ascii
             + (annot_impls_as_ascii if annot_impls_as_ascii else "")
             + (svcs_as_ascii if svcs_as_ascii else "")
@@ -160,15 +172,14 @@ class ReportCommand:
             + (mvrs_to_ascii if mvrs_to_ascii else "")
             + "\n"
         )
-        return requirement_as_asciidoc
+
+        return asciidoc
 
     def __create_requirements_container(self, cid: CombinedIndexedDataset) -> List:
         requirement_data = []
         for urn_id, req_data in cid.requirements.items():
             # Get all svc UrnIds related to current requirement
-            svcs_urn_ids: List[UrnId] = self._get_urn_ids_for_svcs(
-                urn_id=urn_id, svcs_from_req=cid.svcs_from_req.items()
-            )
+            svcs_urn_ids: List[UrnId] = cid.svcs_from_req[urn_id]
 
             # Get svcs for current requirement
             svcs: List[SVCData] = [cid.svcs[urn_id] for urn_id in svcs_urn_ids]
@@ -179,10 +190,10 @@ class ReportCommand:
             # get all implementations for current requirement
             impls: List = self._get_annotation_impls(cid=cid, urn_id=urn_id)
 
-            mvr_ids: List[UrnId] = self._get_mvr_ids_for_req(cid=cid, svcs_urn_ids=svcs_urn_ids)
+            mvr_ids: List[UrnId] = get_mvr_urn_ids_for_svcs_urn_id(cid=cid, svcs_urn_ids=svcs_urn_ids)
 
             # Get mvrs for current requirement if there are any (else [])
-            mvrs: List[MVRData] = self._get_mvrs_for_req(mvrs=cid.mvrs, mvr_ids=mvr_ids)
+            mvrs: List[MVRData] = [cid.mvrs[mvr_id] for mvr_id in mvr_ids] if mvr_ids else []
 
             # generate templates for tests related to current requirement
             automated_test_results: List = self._get_annotated_automated_test_results_for_req(
@@ -210,26 +221,6 @@ class ReportCommand:
             requirement_data.append(data_container)
 
         return requirement_data
-
-    def _get_urn_ids_for_svcs(self, urn_id: UrnId, svcs_from_req: Dict[UrnId, List[UrnId]]) -> List[UrnId]:
-        svcs_urn_ids: List[UrnId] = []
-        for req_urn_id, svc_list in svcs_from_req:
-            if urn_id == req_urn_id:
-                for svc in svc_list:
-                    svcs_urn_ids.append(svc)
-        return svcs_urn_ids
-
-    def _get_mvr_ids_for_req(self, cid: CombinedIndexedDataset, svcs_urn_ids: List[UrnId]) -> List[UrnId]:
-        mvr_ids: List[UrnId] = []
-        for svc_urn_id in svcs_urn_ids:
-            for id, value in cid.mvrs_from_svc.items():
-                if id == svc_urn_id:
-                    for urn in value:
-                        mvr_ids.append(urn)
-        return mvr_ids
-
-    def _get_mvrs_for_req(self, mvrs: Dict[UrnId, MVRData], mvr_ids: List[UrnId]) -> List[MVRData]:
-        return [mvrs[mvr_id] for mvr_id in mvr_ids] if mvr_ids else []
 
     def _get_annotated_automated_test_results_for_req(
         self,

@@ -1,12 +1,12 @@
 # Copyright © LFV
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from collections import defaultdict
 from dataclasses import dataclass, field
 from enum import Enum
 from operator import attrgetter
 from types import MappingProxyType
-from typing import Callable, Dict, Iterator, List, Tuple, TypeVar
+from typing import Callable, Dict, Iterator, List, Tuple
 
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.common.dataclasses.urn_id import UrnId
@@ -19,15 +19,13 @@ class GroupbyOptions(Enum):
     CATEGORY = "category"
 
 
-K = TypeVar("K")
-
-
 @dataclass(kw_only=True)
-class GroupByInterface(ABC):
+class GroupByOrganizor(ABC):
     cid: CombinedIndexedDataset
+    group_by: GroupbyOptions
     sort_by: List[SortByOptions]
 
-    grouped_requirements: Dict[K, List[UrnId]] = field(init=False, default_factory=lambda: defaultdict(list))
+    grouped_requirements: Dict[str, List[UrnId]] = field(init=False, default_factory=lambda: defaultdict(list))
 
     def __post_init__(self):
         self._group()
@@ -35,10 +33,10 @@ class GroupByInterface(ABC):
         self.grouped_requirements = MappingProxyType(dict(self.grouped_requirements))
         self._sort()
 
-    def __iter__(self) -> Iterator[Tuple[K, List[UrnId]]]:
+    def __iter__(self) -> Iterator[Tuple[str, List[UrnId]]]:
         return iter(self.grouped_requirements.items())
 
-    def _add_req_to_group(self, group: K, urn_id: UrnId):
+    def _add_req_to_group(self, group: str, urn_id: UrnId):
         self.grouped_requirements[group].append(urn_id)
 
     def _sort(self):
@@ -52,15 +50,10 @@ class GroupByInterface(ABC):
                 )
             )
 
-    @abstractmethod
     def _group(self):
-        pass
-
-    def group(self):
-        group_by = "category"
 
         for urn_id, req_data in self.cid.requirements.items():
-            group = group_by_functions[group_by]()
+            group = group_by_functions[self.group_by]()
 
             self._add_req_to_group(group=group, urn_id=urn_id)
 
@@ -70,7 +63,7 @@ GroupByFunction = Callable[[RequirementData, CombinedIndexedDataset], str]
 
 # Define lambda functions for grouping
 group_by_category: GroupByFunction = lambda req_data, cid: (
-    req_data.category[0] if req_data.category and len(req_data.category) > 0 else None
+    req_data.category[0].value if req_data.category and len(req_data.category) > 0 else "No category"
 )
 
 group_by_initial_imported: GroupByFunction = lambda req_data, cid: (
