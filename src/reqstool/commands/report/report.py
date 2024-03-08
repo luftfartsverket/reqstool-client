@@ -109,7 +109,7 @@ class ReportCommand:
         asciidoc: str = "== REQUIREMENTS DOCUMENTATION\n" + statistics_table
 
         for category in template_data.keys():
-            asciidoc += f"=== {category}\n"
+            asciidoc += f"=== {category.capitalize()}\n"
 
             for template in template_data[category]:
 
@@ -175,11 +175,18 @@ class ReportCommand:
 
             req_temp_data = {
                 "id": urn_id.id,
-                "title": req_data.title,
+                "categories": req_data.categories,
                 "description": req_data.description,
                 "rationale": req_data.rationale,
+                "references": ", ".join(
+                    f"{urn_id.urn}:{urn_id.id}"
+                    for reference in req_data.references
+                    for urn_id in reference.requirement_ids
+                ),
+                "revision": req_data.revision,
+                "significance": req_data.significance.value,
+                "title": req_data.title,
                 "verification": verifications_as_string,
-                "req_refs": req_data.references,
             }
 
             data_container = {

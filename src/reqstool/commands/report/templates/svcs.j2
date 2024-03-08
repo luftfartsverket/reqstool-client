@@ -4,9 +4,8 @@
 {% for svc in data%}
 [cols="1a,1"]
 |===
-|*SVC*|*Title*
-|{{svc.id.urn}}:{{svc.id.id}}
-|{{svc.title}}
+|*Identifier*|*Title*
+|{{svc.id.urn}}:{{svc.id.id}} |{{svc.title}}
 2+|*Description*
 2+|{{svc.description}}
 2+|*Instructions*
@@ -20,7 +19,7 @@
 {%endfor%}
 !===
 |{{svc.verification.value}}
-2+|Revision: {{svc.revision}}
+2+| *Revision* {{svc.revision}}
 |===
 {%endfor%}
 
