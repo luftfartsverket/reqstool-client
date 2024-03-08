@@ -2,7 +2,6 @@
 
 import pytest
 
-from reqstool.commands.report.criterias.group_by import GroupbyOptions
 from reqstool.models.requirements import VARIANTS, MetaData, ReferenceData, RequirementData, RequirementsData
 
 
@@ -66,9 +65,3 @@ def test_requirements_data(
     assert requirements_data.implementations == [implementations_data]
     assert requirements_data.imports == {"system_urn": maven_import_data}
     assert requirements_data.requirements == {"REQ_001": requirement_data}
-
-
-def test_X():
-    choices = ([c.value for c in GroupbyOptions],)
-
-    assert 1 == 1
