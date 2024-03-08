@@ -61,17 +61,17 @@ class Command:
         )
         return argument_parser
 
-    def _add_grouping_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+    def _add_group_by(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--group-by",
             type=str,
             help="Grouping option (default: %(default)s)",
             choices=[c.value for c in GroupbyOptions],
-            default=[GroupbyOptions.INITIAL_IMPORTS.value],
+            default=GroupbyOptions.INITIAL_IMPORTS.value,
         )
         return argument_parser
 
-    def _add_sorting_output(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+    def _add_sort_by(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         argument_parser.add_argument(
             "--sort-by",
             type=str,
@@ -87,8 +87,8 @@ class Command:
         local_report_parser = parser.add_parser("local", help="local source")
         local_report_parser.add_argument("-p", "--path", help="path description", required=True)
         self._add_argument_output(local_report_parser)
-        self._add_grouping_output(local_report_parser)
-        self._add_sorting_output(local_report_parser)
+        self._add_group_by(local_report_parser)
+        self._add_sort_by(local_report_parser)
 
         # Subparser for git report
         git_report_parser = parser.add_parser("git", help="git source")
@@ -97,8 +97,8 @@ class Command:
         git_report_parser.add_argument("-b", "--branch", help="branch description")
         git_report_parser.add_argument("-t", "--env_token", help="env_token description")
         self._add_argument_output(git_report_parser)
-        self._add_grouping_output(git_report_parser)
-        self._add_sorting_output(git_report_parser)
+        self._add_group_by(git_report_parser)
+        self._add_sort_by(git_report_parser)
 
         # Subparser for maven report
         maven_report_parser = parser.add_parser("maven", help="maven source")
@@ -110,8 +110,8 @@ class Command:
         maven_report_parser.add_argument("--version", help="version description", required=True)
         maven_report_parser.add_argument("--classifier", help="classifier description")
         self._add_argument_output(maven_report_parser)
-        self._add_grouping_output(maven_report_parser)
-        self._add_sorting_output(maven_report_parser)
+        self._add_group_by(maven_report_parser)
+        self._add_sort_by(maven_report_parser)
 
     def _add_argument_version(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         ver: str = "local dev" if __package__ is None else f"{version('reqstool')}"

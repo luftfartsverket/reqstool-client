@@ -67,7 +67,7 @@ group_by_category: GroupByFunction = lambda req_data, cid: (
 )
 
 group_by_initial_imported: GroupByFunction = lambda req_data, cid: (
-    "Initial URN" if req_data.id.urn == cid.initial_model_urn else "Imported"
+    f"Initial URN ({cid.initial_model_urn})" if req_data.id.urn == cid.initial_model_urn else "Imported"
 )
 
 # Create a dictionary to map operation names to lambda functions

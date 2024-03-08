@@ -1,6 +1,5 @@
 # Copyright © LFV
 
-from collections import defaultdict
 from enum import Enum
 from typing import Dict, List, Union
 
@@ -98,20 +97,18 @@ class ReportCommand:
             cid=cid, group_by=self.group_by, sort_by=self.sort_by
         ).grouped_requirements
 
-        # category, List(asciidoc for each req)
-        template_data: Dict[str, List[str]] = defaultdict(list)
-
-        template_data = {
-            category: [self.__extract_template_data(req_template=aggregated_data[urn_id]) for urn_id in urn_ids]
-            for category, urn_ids in grouped_requirements.items()
+        # group_by, List(asciidoc for each req)
+        template_data: Dict[str, List[str]] = {
+            group_by: [self.__extract_template_data(req_template=aggregated_data[urn_id]) for urn_id in urn_ids]
+            for group_by, urn_ids in grouped_requirements.items()
         }
 
         asciidoc: str = "== REQUIREMENTS DOCUMENTATION\n" + statistics_table
 
-        for category in template_data.keys():
-            asciidoc += f"=== {category.capitalize()}\n"
+        for group_by in template_data.keys():
+            asciidoc += f"=== {group_by[0].upper() + group_by[1:] }\n"
 
-            for template in template_data[category]:
+            for template in template_data[group_by]:
 
                 asciidoc += template
 

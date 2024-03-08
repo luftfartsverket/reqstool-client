@@ -1,8 +1,8 @@
 # Copyright © LFV
 
 import logging
+from importlib.abc import Traversable
 from importlib.resources import Package, files
-from pathlib import Path
 
 from jinja2 import (
     BaseLoader,
@@ -38,7 +38,7 @@ class Jinja2Utils:
 
         try:
             template_module: Package = reqstool.commands.report.templates
-            template_path: Path = files(template_module).joinpath("")
+            template_path: Traversable = files(template_module).joinpath("")
             fs_loader = FileSystemLoader(searchpath=template_path)
             return load_template(fs_loader)
         except TemplateNotFound:
