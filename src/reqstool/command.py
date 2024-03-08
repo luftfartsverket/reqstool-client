@@ -9,9 +9,6 @@ from typing import TextIO, Union
 
 if __package__ is None:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-    from reqstool.locations.location import LocationInterface
-else:
-    from reqstool.locations.location import LocationInterface
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
 from reqstool.commands.generate_json.generate_json import GenerateJsonCommand
@@ -22,6 +19,7 @@ from reqstool.commands.status.status import StatusCommand
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
+from reqstool.locations.location import LocationInterface
 from reqstool.locations.maven_location import MavenLocation
 
 
