@@ -8,7 +8,7 @@
 
 == Limitations
 
-* Only Java and Maven supported
+TBA
 
 == Contributing
 
