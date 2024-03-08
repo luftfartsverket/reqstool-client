@@ -1,4 +1,4 @@
-## Overview
+== Overview
 
 Reqstool is a tool for managing requirements with related software verification cases (aka tests) and verification results (test results).
 

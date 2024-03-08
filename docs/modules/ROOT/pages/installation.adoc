@@ -1,4 +1,4 @@
-## Installation
+== Installation
 
 You need to have following installed in order to use the tool:
 
