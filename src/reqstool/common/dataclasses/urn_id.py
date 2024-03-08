@@ -25,3 +25,10 @@ class UrnId:
             urn_id = f"{urn}:{id}"
 
         return urn_id
+
+    def __lt__(self, other: "UrnId"):
+        if not isinstance(other, UrnId):
+            return NotImplemented
+        if self.urn != other.urn:
+            return self.urn < other.urn
+        return self.id < other.id

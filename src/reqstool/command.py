@@ -7,21 +7,19 @@ import sys
 from importlib.metadata import version
 from typing import TextIO, Union
 
+if __package__ is None or len(__package__) == 0:
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
-from reqstool.common.validators.syntax_validator import JsonSchemaItem
-
-if __package__ is None:
-    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-    from reqstool.locations.location import LocationInterface
-else:
-    from reqstool.locations.location import LocationInterface
-
 from reqstool.commands.generate_json.generate_json import GenerateJsonCommand
 from reqstool.commands.report import report
+from reqstool.commands.report.criterias.group_by import GroupbyOptions
+from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.status import StatusCommand
+from reqstool.common.validators.syntax_validator import JsonSchemaItem
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
+from reqstool.locations.location import LocationInterface
 from reqstool.locations.maven_location import MavenLocation
 
 
@@ -63,11 +61,34 @@ class Command:
         )
         return argument_parser
 
+    def _add_group_by(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        argument_parser.add_argument(
+            "--group-by",
+            type=str,
+            help="Grouping option (default: %(default)s)",
+            choices=[c.value for c in GroupbyOptions],
+            default=GroupbyOptions.INITIAL_IMPORTS.value,
+        )
+        return argument_parser
+
+    def _add_sort_by(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        argument_parser.add_argument(
+            "--sort-by",
+            type=str,
+            nargs="+",
+            choices=[s.value for s in SortByOptions],
+            help="List of sorting options (default: %(default)s)",
+            default=[SortByOptions.ID.value],
+        )
+        return argument_parser
+
     def _add_subparsers_source(self, parser):
         # Subparser for local report
         local_report_parser = parser.add_parser("local", help="local source")
         local_report_parser.add_argument("-p", "--path", help="path description", required=True)
         self._add_argument_output(local_report_parser)
+        self._add_group_by(local_report_parser)
+        self._add_sort_by(local_report_parser)
 
         # Subparser for git report
         git_report_parser = parser.add_parser("git", help="git source")
@@ -76,6 +97,8 @@ class Command:
         git_report_parser.add_argument("-b", "--branch", help="branch description")
         git_report_parser.add_argument("-t", "--env_token", help="env_token description")
         self._add_argument_output(git_report_parser)
+        self._add_group_by(git_report_parser)
+        self._add_sort_by(git_report_parser)
 
         # Subparser for maven report
         maven_report_parser = parser.add_parser("maven", help="maven source")
@@ -87,6 +110,8 @@ class Command:
         maven_report_parser.add_argument("--version", help="version description", required=True)
         maven_report_parser.add_argument("--classifier", help="classifier description")
         self._add_argument_output(maven_report_parser)
+        self._add_group_by(maven_report_parser)
+        self._add_sort_by(maven_report_parser)
 
     def _add_argument_version(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
         ver: str = "local dev" if __package__ is None else f"{version('reqstool')}"
@@ -180,7 +205,11 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         initial_source = self._get_initial_source(report_args)
 
         output = report_args.output  # where to put the generated report
-        result = report.ReportCommand(location=initial_source)
+        result = report.ReportCommand(
+            location=initial_source,
+            group_by=GroupbyOptions(report_args.group_by),
+            sort_by=[SortByOptions(s) for s in report_args.sort_by],
+        )
 
         output.write(result.result)
 

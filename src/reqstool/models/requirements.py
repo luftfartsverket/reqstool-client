@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 from enum import Enum, unique
 from typing import Dict, List, Set
+
 from packaging.version import Version
 
 from reqstool.common.dataclasses.urn_id import UrnId
@@ -30,6 +31,11 @@ class SIGNIFANCETYPES(Enum):
     SHALL = "shall"
     SHOULD = "should"
     MAY = "may"
+
+    def __lt__(self, other):
+        if self.__class__ is other.__class__:
+            return self._member_names_.index(self.name) < other._member_names_.index(other.name)
+        return NotImplemented
 
 
 @unique
