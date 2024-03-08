@@ -1,6 +1,7 @@
 # Copyright © LFV
 
 import logging
+from importlib.resources import Package, files
 from pathlib import Path
 
 from jinja2 import (
@@ -12,6 +13,8 @@ from jinja2 import (
     TemplateNotFound,
     select_autoescape,
 )
+
+import reqstool.commands.report.templates
 
 
 class Jinja2Utils:
@@ -34,8 +37,9 @@ class Jinja2Utils:
             return template_env.get_template(template_name)
 
         try:
-            p = Path(__file__).parent / "templates"
-            fs_loader = FileSystemLoader(searchpath=p)
+            template_module: Package = reqstool.commands.report.templates
+            template_path: Path = files(template_module).joinpath("")
+            fs_loader = FileSystemLoader(searchpath=template_path)
             return load_template(fs_loader)
         except TemplateNotFound:
             logging.info("Can't find local files. Uses package loader instead.")

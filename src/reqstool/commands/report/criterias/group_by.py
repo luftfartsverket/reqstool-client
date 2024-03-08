@@ -53,7 +53,7 @@ class GroupByOrganizor(ABC):
     def _group(self):
 
         for urn_id, req_data in self.cid.requirements.items():
-            group = group_by_functions[self.group_by]()
+            group = group_by_functions[self.group_by](req_data=req_data, cid=self.cid)
 
             self._add_req_to_group(group=group, urn_id=urn_id)
 
@@ -63,7 +63,7 @@ GroupByFunction = Callable[[RequirementData, CombinedIndexedDataset], str]
 
 # Define lambda functions for grouping
 group_by_category: GroupByFunction = lambda req_data, cid: (
-    req_data.category[0].value if req_data.category and len(req_data.category) > 0 else "No category"
+    req_data.categories[0].value if req_data.categories and len(req_data.categories) > 0 else "No Category"
 )
 
 group_by_initial_imported: GroupByFunction = lambda req_data, cid: (
@@ -72,6 +72,6 @@ group_by_initial_imported: GroupByFunction = lambda req_data, cid: (
 
 # Create a dictionary to map operation names to lambda functions
 group_by_functions = {
-    "category": group_by_category,
-    "initial_imported": group_by_initial_imported,
+    GroupbyOptions.CATEGORY: group_by_category,
+    GroupbyOptions.INITIAL_IMPORTS: group_by_initial_imported,
 }

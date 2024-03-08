@@ -101,8 +101,10 @@ class ReportCommand:
         # category, List(asciidoc for each req)
         template_data: Dict[str, List[str]] = defaultdict(list)
 
-        for category, urn_id in grouped_requirements:
-            template_data[category].append(self.__extract_template_data(req_template=aggregated_data[urn_id]))
+        template_data = {
+            category: [self.__extract_template_data(req_template=aggregated_data[urn_id]) for urn_id in urn_ids]
+            for category, urn_ids in grouped_requirements.items()
+        }
 
         asciidoc: str = "== REQUIREMENTS DOCUMENTATION\n" + statistics_table
 
@@ -117,17 +119,21 @@ class ReportCommand:
 
     def __extract_template_data(self, req_template) -> str:
         asciidoc = ""
-        req_as_ascii = self.__render(
+        req_as_ascii = Jinja2Utils.render(
             data=req_template["requirement"], template=self.jinja2_templates[Jinja2Templates.REQUIREMENTS]
         )
-        annot_impls_as_ascii = self.__render(
+        annot_impls_as_ascii = Jinja2Utils.render(
             data=req_template["impls"], template=self.jinja2_templates[Jinja2Templates.ANNOTATION_IMPLS]
         )
-        annot_tests_as_ascii = self.__render(
+        annot_tests_as_ascii = Jinja2Utils.render(
             data=req_template["tests"], template=self.jinja2_templates[Jinja2Templates.ANNOTATION_TESTS]
         )
-        svcs_as_ascii = self.__render(data=req_template["svcs"], template=self.jinja2_templates[Jinja2Templates.SVCS])
-        mvrs_to_ascii = self.__render(data=req_template["mvrs"], template=self.jinja2_templates[Jinja2Templates.MVRS])
+        svcs_as_ascii = Jinja2Utils.render(
+            data=req_template["svcs"], template=self.jinja2_templates[Jinja2Templates.SVCS]
+        )
+        mvrs_to_ascii = Jinja2Utils.render(
+            data=req_template["mvrs"], template=self.jinja2_templates[Jinja2Templates.MVRS]
+        )
         asciidoc += (
             req_as_ascii
             + (annot_impls_as_ascii if annot_impls_as_ascii else "")
@@ -146,7 +152,7 @@ class ReportCommand:
 
         for urn_id, req_data in cid.requirements.items():
             # Get all svc UrnIds related to current requirement
-            svcs_urn_ids: List[UrnId] = cid.svcs_from_req[urn_id]
+            svcs_urn_ids: List[UrnId] = cid.svcs_from_req.get(urn_id, [])
 
             # Get svcs for current requirement
             svcs: List[SVCData] = [cid.svcs[urn_id] for urn_id in svcs_urn_ids]

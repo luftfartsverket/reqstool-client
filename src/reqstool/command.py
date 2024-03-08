@@ -7,7 +7,7 @@ import sys
 from importlib.metadata import version
 from typing import TextIO, Union
 
-if __package__ is None:
+if __package__ is None or len(__package__) == 0:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
