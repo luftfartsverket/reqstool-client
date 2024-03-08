@@ -32,6 +32,11 @@ class SIGNIFANCETYPES(Enum):
     SHOULD = "should"
     MAY = "may"
 
+    def __lt__(self, other):
+        if self.__class__ is other.__class__:
+            return self._member_names_.index(self.name) < other._member_names_.index(other.name)
+        return NotImplemented
+
 
 @unique
 class CATEGORIES(Enum):
