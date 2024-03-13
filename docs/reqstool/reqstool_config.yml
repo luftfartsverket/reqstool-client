@@ -2,3 +2,8 @@
 
 type: default
 project_root_dir: "../.."
+locations:
+  annotations: ./dist/annotations.yml
+  test_results:
+    surefire: ./dist/
+    failsafe: ./dist/

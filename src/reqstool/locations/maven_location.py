@@ -2,13 +2,17 @@
 
 import logging
 import os
-from dataclasses import dataclass
 import sys
+from dataclasses import dataclass
 from zipfile import ZipFile
-from reqstool.locations.location import LocationInterface
+
 from maven_artifact import Artifact, Downloader, RequestException, Utils
+from reqstool_python_decorators.decorators.decorators import Requirements
+
+from reqstool.locations.location import LocationInterface
 
 
+@Requirements("REQ_003")
 @dataclass(kw_only=True)
 class MavenLocation(LocationInterface):
     url: str

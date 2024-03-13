@@ -1,11 +1,14 @@
 # Copyright © LFV
 
-from dataclasses import dataclass
 import os
+from dataclasses import dataclass
+
+from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.locations.location import LocationInterface
 
 
+@Requirements("REQ_001")
 @dataclass
 class LocalLocation(LocationInterface):
     def _make_available_on_localdisk(self, dst_path: str):

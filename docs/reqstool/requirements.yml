@@ -2,7 +2,7 @@
 
 metadata:
   urn: reqstool-client
-  variant: system
+  variant: microservice
   title: Reqstool client
   url: https://github.com/Luftfartsverket/reqstool-client
 
