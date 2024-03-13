@@ -19,9 +19,7 @@ def test_get_template_medium_ms001(local_testdata_resources_rootdir_w_path):
 def test_get_template_standard_sys001(local_testdata_resources_rootdir_w_path):
     rc = report.ReportCommand(
         location=LocalLocation(
-            path=local_testdata_resources_rootdir_w_path(
-                "/home/u70592/dev/clones/COOPANSSWIM/ED254/sys-ed254/docs/reqstool"
-            ),
+            path=local_testdata_resources_rootdir_w_path("test_standard/baseline/sys-001"),
         ),
         group_by=GroupbyOptions.INITIAL_IMPORTS,
         sort_by=[SortByOptions.SIGNIFICANCE],
