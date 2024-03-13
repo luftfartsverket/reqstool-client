@@ -1,8 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/software_verification_cases.schema.json
 
 cases:
-  - id: SVC_010
-    requirement_ids: ["REQ_010"]
-    title: "Some Title SVC_010"
+  - id: SVC_001
+    requirement_ids: ["REQ_001"]
+    title: "Test that reads yml files from a local directory"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_002
+    requirement_ids: ["REQ_002"]
+    title: "Test that will checkout and read yml files from a git repository"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_003
+    requirement_ids: ["REQ_003"]
+    title: "Test that will download an artifact, unzip the content and read the yml files from the unzipped directory"
     verification: automated-test
     revision: "0.0.1"

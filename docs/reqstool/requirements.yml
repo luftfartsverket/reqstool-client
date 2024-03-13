@@ -7,10 +7,21 @@ metadata:
   url: https://github.com/Luftfartsverket/reqstool-client
 
 requirements:
-  - id: REQ_010
-    title: Title REQ_010
-    significance: may
-    description: Description REQ_010
-    rationale: Rationale REQ_010
-    categories: [compatibility]
+  - id: REQ_001
+    title: Indata from local files
+    significance: shall
+    description: Reqstool should be able to read and parse *.yml files from a local disk.
+    categories: [usability]
+    revision: 0.0.1
+  - id: REQ_002
+    title: Indata from git location
+    significance: shall
+    description: Reqstool should be able to fetch and parse *.yml files from a git repository.
+    categories: [usability]
+    revision: 0.0.1
+  - id: REQ_003
+    title: Indata from maven artifacts
+    significance: shall
+    description: Reqstool should be able to fetch, unzip and parse *.yml files from a maven artifact
+    categories: [usability]
     revision: 0.0.1
