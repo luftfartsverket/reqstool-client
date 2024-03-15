@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: reqstool-client
+  variant: microservice
+  title: Reqstool client
+  url: https://github.com/Luftfartsverket/reqstool-client
+
+requirements:
+  - id: REQ_data_structure_004
+    title: Requirements.yml file must reside under content root
+    significance: shall
+    description: User will have to provide a requirements.yml file in the root of the path provided
+    categories: [functional-suitability]
+    revision: 0.0.1
+  - id: REQ_data_structure_005
+    title: Manual_verificaton_results.yml file must reside under content root
+    significance: shall
+    description: User will have to provide a manual_verificaton_results.yml file in the root of the path provided
+    categories: [functional-suitability]
+    revision: 0.0.1
+  - id: REQ_data_structure_006
+    title: Software_verificaton_cases.yml file must reside under content root
+    significance: shall
+    description: User will have to provide a software_verificaton_cases.yml file in the root of the path provided
+    categories: [functional-suitability]
+    revision: 0.0.1
+  - id: REQ_data_structure_007
+    title: Reqstool_config.yml file must reside under content root
+    significance: may
+    description: User will have to provide a reqstool_config.yml file in the root of the path provided if changes to the default path for dynamic files or project root directory are required
+    categories: [functional-suitability]
+    revision: 0.0.1
+  - id: REQ_data_structure_008
+    title: Both static and dynamically generated files should should honor their respective json schemas
+    significance: shall
+    description: All files that reqstool requires or creates should have a json schema. Reqstool client should validate the content before parsing
+    categories: [functional-suitability, usability]
+    revision: 0.0.1
+  - id: REQ_data_structure_009
+    title: Reqstool client requires a annotations.yml file in order to parse and track implementation and tests
+    significance: should
+    description: A annotations.yml file should be provided for Reqstool client in order to check implementation ans test results. The default path (target/reqstool) could be altered with the requirements_config file. 
+    categories: [functional-suitability, usability]
+    revision: 0.0.1
+  - id: REQ_data_structure_010
+    title: Reqstool client should be able to parse junit test reports 
+    significance: shall
+    description: "Reqstool client should be able to parse test cases from xml data that follows junit xml structure. Sett this link for an example: https://github.com/testmoapp/junitxml#basic-junit-xml-structure"
+    categories: [functional-suitability, usability]
+    revision: 0.0.1
+  - id: REQ_data_structure_011
+    title: Reqstool client should be able to parse data from karate test reports
+    significance: shall
+    description: Reqstool client should be able to parse test reports from karate test cases
+    categories: [functional-suitability, usability]
+    revision: 0.0.1
+  - id: REQ_data_structure_012
+    title: Reqstool client requires directory path(s) to test report files in order to read and parse the test results
+    significance: should
+    description: A directory path to where .xml  test report files  resides should be provided for Reqstool client in order to check implementation ans test results. The default paths (target/failsafe-reports | target/surefire-reports) could be altered with the requirements_config file. 
+    categories: [functional-suitability, usability]
+    revision: 0.0.1
+  - id: REQ_data_structure_013
+    title: Parse requirements from a maven artifact
+    significance: shall
+    description: "Reqstool client should be able to parse requirements data from a Maven artifact that follows the correct structure described in the documentation. See: https://luftfartsverket.github.io/reqstool-client/reqstool-client/0.3.0/data.html#maven-artifact-zip-directory-structure" 
+    categories: [functional-suitability, usability]
+    revision: 0.0.1
+  
+
+
+
+
+    https://luftfartsverket.github.io/reqstool-client/reqstool-client/0.3.0/data.html#maven-artifact-zip-directory-structure

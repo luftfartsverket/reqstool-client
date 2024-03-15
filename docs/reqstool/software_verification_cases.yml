@@ -12,7 +12,7 @@ cases:
     verification: automated-test
     revision: "0.0.1"
   - id: SVC_003
-    requirement_ids: ["REQ_003"]
+    requirement_ids: ["REQ_003", "REQ_data_structure_013"]
     title: "Test that will download an artifact, unzip the content and read the yml files from the unzipped directory"
     verification: automated-test
     revision: "0.0.1"
