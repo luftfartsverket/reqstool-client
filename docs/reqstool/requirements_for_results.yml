@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: reqstool-client
+  variant: microservice
+  title: Reqstool client
+  url: https://github.com/Luftfartsverket/reqstool-client
+
+requirements:
+  - id: REQ_030
+    title: Generate status
+    significance: shall
+    description: Reqstool should be able to generate status from the collected statistics, listing all requirements and their status on implementation and tests.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_031
+    title: Collect statistics for Requirements
+    significance: shall
+    description: Reqstool should collect statistics for each requirement (SVCs, MVRs, implementation).
+    categories: [usability]
+    revision: 0.4.0
+  - id: REQ_032
+    title: Write status to file / stdout
+    significance: shall
+    description: Reqstool should be able to write the status to file or default to stdout if no file specified.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_033
+    title: Generate raw JSON from imported models
+    significance: shall
+    description: Reqstool should be able to generate imported models into raw JSON.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_034
+    title: Write generated JSON to file / stdout
+    significance: shall
+    description: Reqstool should be able to write the JSON to file or default to stdout if no file specified.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_035
+    title: Generate report from collected statistics
+    significance: shall
+    description: Reqstool should be able to generate a report from the collected statistics, listing all requirements and their status.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_036
+    title: Group by in report
+    significance: shall
+    description: Reqstool should be able to generate a report grouped by the categories specified in the requirements or initial/imported urns.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_037
+    title: Sort by in report
+    significance: shall
+    description: Reqstool should be able to sort the generated report.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0
+  - id: REQ_038
+    title: Write report to file / stdout
+    significance: shall
+    description: Reqstool should be able to write the report to file / stdout.
+    categories: [usability, functional-suitability]
+    revision: 0.4.0

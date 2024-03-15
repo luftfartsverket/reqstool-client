@@ -8,6 +8,7 @@ from operator import attrgetter
 from types import MappingProxyType
 from typing import Callable, Dict, Iterator, List, Tuple
 
+from reqstool_python_decorators.decorators.decorators import Requirements
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
@@ -19,6 +20,7 @@ class GroupbyOptions(Enum):
     CATEGORY = "category"
 
 
+@Requirements("REQ_036")
 @dataclass(kw_only=True)
 class GroupByOrganizor(ABC):
     cid: CombinedIndexedDataset
@@ -39,6 +41,7 @@ class GroupByOrganizor(ABC):
     def _add_req_to_group(self, group: str, urn_id: UrnId):
         self.grouped_requirements[group].append(urn_id)
 
+    @Requirements("REQ_037")
     def _sort(self):
         if len(self.sort_by) == 0:
             return

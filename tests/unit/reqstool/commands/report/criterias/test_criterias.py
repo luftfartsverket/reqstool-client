@@ -1,5 +1,6 @@
 # Copyright © LFV
 
+from reqstool_python_decorators.decorators.decorators import SVCs
 from reqstool.commands.report.criterias.group_by import GroupbyOptions, GroupByOrganizor
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.common.validator_error_holder import ValidationErrorHolder
@@ -10,6 +11,7 @@ from reqstool.model_generators.combined_raw_datasets_generator import CombinedRa
 from reqstool.models.raw_datasets import CombinedRawDataset
 
 
+@SVCs("SVC_043")
 def test_basic_baseline(resource_funcname_rootdir, local_testdata_resources_rootdir_w_path):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     crd: CombinedRawDataset = CombinedRawDatasetsGenerator(
