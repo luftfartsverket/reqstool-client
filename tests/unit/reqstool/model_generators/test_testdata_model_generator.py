@@ -3,6 +3,7 @@
 import re
 
 import pytest
+from reqstool_python_decorators.decorators.decorators import SVCs
 
 from reqstool.model_generators.testdata_model_generator import TestDataModelGenerator
 
@@ -18,6 +19,7 @@ unit_method_names = [
 ]
 
 
+@SVCs("SVC_data_structure_002")
 @pytest.mark.parametrize("method_name", karate_method_names)
 def test_karate_method_identifier_regex(method_name):
     karate_match = re.match(TestDataModelGenerator.KARATE_METHOD_IDENTIFIER_REGEX, method_name)
@@ -25,6 +27,7 @@ def test_karate_method_identifier_regex(method_name):
     assert karate_match.group(1) == "Create a subscripiton with filter and receive messages"
 
 
+@SVCs("SVC_data_structure_003")
 @pytest.mark.parametrize("method_name", unit_method_names)
 def test_unit_method_identifier_regex(method_name):
     unit_match = re.match(TestDataModelGenerator.UNIT_METHOD_IDENTIFIER_REGEX, method_name)

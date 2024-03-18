@@ -19,7 +19,7 @@ cases:
     title: "Test that will parse junit test reports"
     verification: automated-test
     revision: "0.0.1"
-  - id: SVC_data_structure_002
+  - id: SVC_data_structure_004
     requirement_ids: ["REQ_data_structure_013"]
     title: "Test that will parse requirements from a Maven artifact"
     verification: automated-test
