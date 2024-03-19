@@ -3,6 +3,8 @@
 from dataclasses import dataclass, field
 from pathlib import PurePath
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 
 @dataclass(kw_only=True)
 class RequirementsIndataStructureItem:
@@ -10,6 +12,7 @@ class RequirementsIndataStructureItem:
     exists: bool = False
 
 
+@Requirements("REQ_data_structure_012")
 @dataclass(kw_only=True)
 class RequirementsIndataPaths:
     # static

@@ -5,6 +5,7 @@ cases:
     requirement_ids:
       [
         "REQ_data_structure_004, REQ_data_structure_005, REQ_data_structure_006, REQ_data_structure_007",
+        "REQ_data_structure_008",
       ]
     title: "Verify that reqstool client reads yml files from the path provided"
     verification: automated-test

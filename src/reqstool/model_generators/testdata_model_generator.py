@@ -6,6 +6,8 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Dict
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.models.test_data import TestData, TestRunStatus, TestsData
 
@@ -25,6 +27,7 @@ class TestDataModelGenerator:
 
         return TestsData(tests=tests)
 
+    @Requirements("REQ_data_structure_010", "REQ_data_structure_011")
     def __parse_test_data(self, path: str, urn: str) -> Dict[str, TestData]:
         r_testdata: Dict[str, TestData] = {}
 

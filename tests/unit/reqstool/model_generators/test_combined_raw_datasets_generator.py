@@ -1,6 +1,5 @@
 # Copyright © LFV
 
-import pytest
 from reqstool_python_decorators.decorators.decorators import SVCs
 
 from reqstool.common.validator_error_holder import ValidationErrorHolder
@@ -30,7 +29,6 @@ def test_basic_requirements_config(resource_funcname_rootdir, local_testdata_res
 
 
 @SVCs("SVC_001")
-@pytest.mark.skip(reason="Test should target combined indexed data set instead of CombinedRawDataset")
 def test_standard_ms001_initial(local_testdata_resources_rootdir_w_path):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
 

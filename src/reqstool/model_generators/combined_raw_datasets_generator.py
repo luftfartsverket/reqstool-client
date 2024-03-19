@@ -4,6 +4,8 @@ import logging
 import sys
 from typing import Dict, List
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.common import utils
 from reqstool.common.utils import TempDirectoryUtil
 from reqstool.common.validators.semantic_validator import SemanticValidator
@@ -150,6 +152,7 @@ class CombinedRawDatasetsGenerator:
 
         return parsed_urns
 
+    @Requirements("REQ_data_structure_004")
     def __parse_source(self, current_location_handler: LocationResolver) -> RawDataset:
         annotations_data = None
         svcs_data = None
@@ -201,6 +204,7 @@ class CombinedRawDatasetsGenerator:
 
         return raw_dataset
 
+    @Requirements("REQ_data_structure_005", "REQ_data_structure_006")
     def __parse_source_other(self, requirements_indata: RequirementsIndata, rmg: RequirementsModelGenerator):
         annotations_data: AnnotationsData = None
         svcs_data: SVCsData = None

@@ -12,7 +12,7 @@ from reqstool_python_decorators.decorators.decorators import Requirements
 from reqstool.locations.location import LocationInterface
 
 
-@Requirements("REQ_003")
+@Requirements("REQ_003", "REQ_data_structure_013")
 @dataclass(kw_only=True)
 class MavenLocation(LocationInterface):
     url: str

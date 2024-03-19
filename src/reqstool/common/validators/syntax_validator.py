@@ -8,6 +8,7 @@ from importlib.resources import files
 
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
+from reqstool_python_decorators.decorators.decorators import Requirements
 
 import reqstool.resources.schemas.v1
 
@@ -40,6 +41,7 @@ class SyntaxValidator:
     registry = resource @ registry
     registry = registry.with_resource(uri="common.schema.json", resource=resource)
 
+    @Requirements("REQ_data_structure_008")
     @staticmethod
     def is_valid_data(json_schema_type: JsonSchemaTypes, data: dict, urn: str) -> bool:
         jsonvalidator_draft202012 = Draft202012Validator(
