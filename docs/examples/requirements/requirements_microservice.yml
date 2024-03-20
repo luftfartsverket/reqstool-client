@@ -25,13 +25,13 @@ imports: #Optional
 filters:
   sys001:
     requirement_ids:
-      imports: ["REQ_002"] # list of requirement ids
+      includes: ["REQ_002"] # list of requirement ids
   sys002:
     requirement_ids:
       excludes: ["REQ_002"] # list of requirement ids
   sys003:
     custom:
-      import: ids == "REQ_001"
+      exclude: ids == "REQ_001"
   sys004:
     custom:
       exclude: ids == "REQ_001", "REQ_002"" # list of requirement ids
@@ -42,9 +42,9 @@ filters:
       exclude: ids == "REQ_003" # list of requirement ids
   sys006:
     requirement_ids:
-      imports: ["REQ_001"]
+      excludes: ["REQ_001"]
     custom:
-      imports: ids == "REQ_003" # list of requirement ids
+      exclude: ids == "REQ_003" # list of requirement ids
 
 requirements:
   - id: id # alphanumerical
@@ -53,9 +53,7 @@ requirements:
     description: description # text
     rationale: rationale # text
     categories: [functional-suitability]
-    references: # links, source
-      - requirement_ids: [REQ123] # links to another requirement in this document
-        sources: [FSB] # FSB, SAF, SWAL
-      - requirement_ids: [REQ123] # links to another requirement in this document
-        sources: [FSB] # FSB, SAF, SWAL
+    references:
+      requirement_ids:
+        - "REQ123"
     revision: 0.0.0 # requirement added from revision number, e.g. 1.0.2

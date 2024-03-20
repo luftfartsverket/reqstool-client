@@ -53,7 +53,6 @@ class CATEGORIES(Enum):
 @dataclass
 class ReferenceData:
     requirement_ids: Set[UrnId] = set[UrnId]
-    sources: Set[str] = set[str]
 
 
 @dataclass

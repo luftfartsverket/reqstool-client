@@ -7,7 +7,7 @@ from reqstool.models.requirements import VARIANTS, MetaData, ReferenceData, Requ
 
 @pytest.fixture
 def reference_data():
-    return ReferenceData(requirement_ids={"REQ_001", "REQ_002"}, sources={"FSB", "SWIM-YP"})
+    return ReferenceData(requirement_ids={"REQ_001", "REQ_002"})
 
 
 @pytest.fixture
@@ -41,7 +41,6 @@ def requirements_data(requirement_data, implementations_data, maven_import_data)
 
 def test_reference_data(reference_data):
     assert reference_data.requirement_ids.issubset({"REQ_001", "REQ_002"})
-    assert reference_data.sources.issubset({"FSB", "SWIM-YP"})
 
 
 def test_requirement_data(requirement_data, reference_data):

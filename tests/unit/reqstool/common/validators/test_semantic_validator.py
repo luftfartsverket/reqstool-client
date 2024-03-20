@@ -79,7 +79,7 @@ def get_requirements_data_raw():
                 "description": "Some description REQ_ms001_102",
                 "rationale": "Rationale REQ_ms001_102",
                 "categories": ["maintainability", "functional-suitability"],
-                "references": [{"requirement_ids": ["sys-001:REQ_sys001_101"], "sources": ["SRC"]}],
+                "references": {"requirement_ids": ["sys-001:REQ_sys001_101"]},
                 "revision": "0.0.1",
             },
         ],
