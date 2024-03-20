@@ -285,7 +285,15 @@ class RequirementsModelGenerator:
                 urn = data["metadata"]["urn"]
 
                 if "references" in req:
-                    self.__parse_requirements_reference(refs_data, req["references"]["requirement_ids"], urn)
+                    refs_data.extend(
+                        [
+                            ReferenceData(
+                                requirement_ids=utils.convert_ids_to_urn_id(
+                                    ids=req["references"]["requirement_ids"], urn=urn
+                                )
+                            )
+                        ]
+                    )
 
                 # Check if rationale is defined, or set it to None
                 rationale = req["rationale"] if "rationale" in req else None
@@ -306,15 +314,6 @@ class RequirementsModelGenerator:
                     r_reqs[req_data.id] = req_data
 
         return r_reqs
-
-    def __parse_requirements_reference(
-        self, refs_data: List[ReferenceData], reference: List[str], urn: str
-    ) -> ReferenceData:
-        ref_data = ReferenceData(
-            requirement_ids=(None if not reference else utils.convert_ids_to_urn_id(ids=reference, urn=urn))
-        )
-
-        refs_data.append(ref_data)
 
     def __parse_req_version(self, version: str, urn_id: UrnId) -> Version:
         try:
