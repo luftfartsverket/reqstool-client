@@ -14,6 +14,5 @@ requirements:
     rationale: Rationale REQ_001
     categories: ["maintainability", "functional-suitability"]
     references:
-      - requirement_ids: ["REQ_200"]
-        sources: ["SRC"]
+      requirement_ids: ["REQ_200"]
     revision: 0.0.1

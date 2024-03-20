@@ -3,8 +3,8 @@
 import re
 import sys
 from typing import Dict, List, Set
-from packaging.version import InvalidVersion, Version
 
+from packaging.version import InvalidVersion, Version
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
@@ -20,13 +20,13 @@ from reqstool.locations.maven_location import MavenLocation
 from reqstool.models.implementations import GitImplData, ImplementationDataInterface, LocalImplData, MavenImplData
 from reqstool.models.imports import GitImportData, ImportDataInterface, LocalImportData, MavenImportData
 from reqstool.models.requirements import (
+    CATEGORIES,
     SIGNIFANCETYPES,
     VARIANTS,
     MetaData,
     ReferenceData,
     RequirementData,
     RequirementsData,
-    CATEGORIES,
 )
 
 
@@ -285,8 +285,15 @@ class RequirementsModelGenerator:
                 urn = data["metadata"]["urn"]
 
                 if "references" in req:
-                    for reference in req["references"]:
-                        self.__parse_requirements_reference(refs_data, reference, urn)
+                    refs_data.extend(
+                        [
+                            ReferenceData(
+                                requirement_ids=utils.convert_ids_to_urn_id(
+                                    ids=req["references"]["requirement_ids"], urn=urn
+                                )
+                            )
+                        ]
+                    )
 
                 # Check if rationale is defined, or set it to None
                 rationale = req["rationale"] if "rationale" in req else None
@@ -307,20 +314,6 @@ class RequirementsModelGenerator:
                     r_reqs[req_data.id] = req_data
 
         return r_reqs
-
-    def __parse_requirements_reference(
-        self, refs_data: List[ReferenceData], reference: Dict[str, List[str]], urn: str
-    ) -> ReferenceData:
-        ref_data = ReferenceData(
-            requirement_ids=(
-                None
-                if "requirement_ids" not in reference
-                else utils.convert_ids_to_urn_id(ids=reference["requirement_ids"], urn=urn)
-            ),
-            sources=None if "sources" not in reference else reference["sources"],
-        )
-
-        refs_data.append(ref_data)
 
     def __parse_req_version(self, version: str, urn_id: UrnId) -> Version:
         try:
