@@ -26,6 +26,7 @@ from reqstool.models.test_data import TestsData
 from reqstool.requirements_indata.requirements_indata import RequirementsIndata
 
 
+@Requirements("REQ_data_existence_001", "REQ_data_existence_002", "REQ_data_existence_003")
 class CombinedRawDatasetsGenerator:
     def __init__(self, initial_location: LocationInterface, semantic_validator: SemanticValidator):
         self.__level: int = 0
