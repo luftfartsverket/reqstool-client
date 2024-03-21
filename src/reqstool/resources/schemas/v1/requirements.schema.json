@@ -250,11 +250,22 @@
                     "description": "Array of requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
                 },
                 "references": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/$defs/reference"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "requirement_ids": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "common.schema.json#/$defs/reqid",
+                                "description": "Requirement id that links to another requirement in this document"
+                            },
+                            "description": "Array of requirements related to this requirement"
+                        }
                     },
-                    "description": "Array of references related requirements"
+                    "required": [
+                        "requirement_ids"
+                    ],
+                    "description": "References to related requirements"
                 },
                 "revision": {
                     "type": "string",
@@ -270,28 +281,6 @@
                 "categories",
                 "revision"
             ]
-        },
-        "reference": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "requirement_ids": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "common.schema.json#/$defs/reqid",
-                        "description": "Requirement id that links to another requirement in this document"
-                    },
-                    "description": "Array of requirement ids that links to another requirement in this document"
-                },
-                "sources": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "description": "Requirement source. E.g. FSB, SAF, SWAL"
-                    },
-                    "description": "Array of requirement sources. E.g. FSB, SAF, SWAL"
-                }
-            }
         },
         "url": {
             "type": "string"
