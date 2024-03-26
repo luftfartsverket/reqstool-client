@@ -236,14 +236,15 @@
                     "items": {
                         "type": "string",
                         "enum": [
-                            "compatibility",
                             "functional-suitability",
-                            "maintainability",
                             "performance-efficiency",
-                            "portability",
+                            "compatibility",
+                            "interaction-capability",
                             "reliability",
                             "security",
-                            "usability"
+                            "maintainability",
+                            "flexibility",
+                            "safety"
                         ],
                         "description": "Enum for requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
                     },

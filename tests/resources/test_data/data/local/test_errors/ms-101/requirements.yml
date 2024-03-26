@@ -38,5 +38,5 @@ requirements:
     significance: should
     description: Description REQ_202
     rationale: Rationale REQ_201
-    categories: ["reliability", "usability"]
+    categories: ["reliability"]
     revision: 0.0.1

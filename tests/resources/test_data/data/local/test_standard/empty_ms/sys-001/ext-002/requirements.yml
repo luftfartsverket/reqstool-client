@@ -20,7 +20,7 @@ requirements:
     significance: may
     description: Implemented requirement with SVC missing automated-test
     rationale: Rationale REQ_ext002_300
-    categories: ["usability", "performance-efficiency"]
+    categories: ["performance-efficiency"]
     revision: 0.0.1
 
   - id: REQ_ext002_400
@@ -28,5 +28,5 @@ requirements:
     significance: shall
     description: Implemented requirement with SVC missing MVR and one passing automated-test
     rationale: Rationale REQ_ext002_400
-    categories: ["security", "usability"]
+    categories: ["security"]
     revision: 0.0.1
