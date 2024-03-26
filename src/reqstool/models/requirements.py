@@ -40,14 +40,15 @@ class SIGNIFANCETYPES(Enum):
 
 @unique
 class CATEGORIES(Enum):
-    COMPATIBILITY = "compatibility"
     FUNCTIONAL_SUITABILITY = "functional-suitability"
-    MAINTAINABILITY = "maintainability"
     PERFORMANCE_EFFICIENCY = "performance-efficiency"
-    PORTABILITY = "portability"
+    COMPATIBILITY = "compatibility"
+    INTERACTION_CAPABILITY = "interaction-capability"
     RELIABILITY = "reliability"
     SECURITY = "security"
-    USABILITY = "usability"
+    MAINTAINABILITY = "maintainability"
+    FLEXIBILITY = "flexibility"
+    SAFETY = "safety"
 
 
 @dataclass
