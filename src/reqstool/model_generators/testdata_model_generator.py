@@ -28,7 +28,7 @@ class TestDataModelGenerator:
     def __parse_test_data(self, path: str, urn: str) -> Dict[str, TestData]:
         r_testdata: Dict[str, TestData] = {}
 
-        xml_files = list(Path(path).glob("*.xml"))
+        xml_files = list(Path(path).glob("**/*.xml"))
 
         for xml_file in xml_files:
             tree = ET.parse(xml_file)
