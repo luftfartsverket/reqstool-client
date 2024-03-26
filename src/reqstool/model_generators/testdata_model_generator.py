@@ -28,13 +28,13 @@ class TestDataModelGenerator:
     def __parse_test_data(self, path: str, urn: str) -> Dict[str, TestData]:
         r_testdata: Dict[str, TestData] = {}
 
-        xml_files = list(Path(path).glob("*.xml"))
+        xml_files = list(Path(path).glob("**/*.xml"))
 
         for xml_file in xml_files:
             tree = ET.parse(xml_file)
             root = tree.getroot()
 
-            for testcase in root.findall("./testcase"):
+            for testcase in root.findall(".//testcase"):
                 # Check if there is a match
                 match_unit = re.match(self.UNIT_METHOD_IDENTIFIER_REGEX, testcase.attrib["name"])
                 match_karate = re.match(self.KARATE_METHOD_IDENTIFIER_REGEX, testcase.attrib["name"])

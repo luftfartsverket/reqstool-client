@@ -36,18 +36,19 @@ def test_prepend_paths_with_none_properties(default_instance):
     assert a.svcs_yml.path == b.svcs_yml.path
     assert a.mvrs_yml.path == b.mvrs_yml.path
     assert a.annotations_yml.path == str(PurePath(prepend_str, b.annotations_yml.path))
-    assert a.test_results_failsafe_dir.path == str(PurePath(prepend_str, b.test_results_failsafe_dir.path))
-    assert a.test_results_surefire_dir.path == str(PurePath(prepend_str, b.test_results_surefire_dir.path))
+    assert len(a.test_results_dirs) == 1
 
 
 # Test the merge method with properties that can be None
 def test_merge_with_none_properties(default_instance, java_instance):
     java_instance.ra_tests_yml = None
-    merged_instance = default_instance.merge(java_instance)
+    java_merged_instance = default_instance.merge(java_instance)
 
-    assert merged_instance.requirements_yml.path == "requirements.yml"
-    assert merged_instance.svcs_yml.path == "software_verification_cases.yml"
-    assert merged_instance.mvrs_yml.path == "manual_verification_results.yml"
-    assert merged_instance.annotations_yml.path == "target/reqstool/annotations.yml"
-    assert merged_instance.test_results_failsafe_dir.path == "target/failsafe-reports"
-    assert merged_instance.test_results_surefire_dir.path == "target/surefire-reports"
+    assert java_merged_instance.requirements_yml.path == "requirements.yml"
+    assert java_merged_instance.svcs_yml.path == "software_verification_cases.yml"
+    assert java_merged_instance.mvrs_yml.path == "manual_verification_results.yml"
+    assert java_merged_instance.annotations_yml.path == "target/reqstool/annotations.yml"
+    assert len(java_merged_instance.test_results_dirs) == 2
+
+    expected_paths = ["target/failfire-reports", "target/surefire-reports"]
+    assert all(item.path in expected_paths for item in java_merged_instance.test_results_dirs)
