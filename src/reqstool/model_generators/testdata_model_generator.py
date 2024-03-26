@@ -34,7 +34,7 @@ class TestDataModelGenerator:
             tree = ET.parse(xml_file)
             root = tree.getroot()
 
-            for testcase in root.findall("./testcase"):
+            for testcase in root.findall(".//testcase"):
                 # Check if there is a match
                 match_unit = re.match(self.UNIT_METHOD_IDENTIFIER_REGEX, testcase.attrib["name"])
                 match_karate = re.match(self.KARATE_METHOD_IDENTIFIER_REGEX, testcase.attrib["name"])
