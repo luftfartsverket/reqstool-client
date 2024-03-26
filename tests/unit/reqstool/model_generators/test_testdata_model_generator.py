@@ -40,3 +40,5 @@ def test_testdata_model_generator(local_testdata_resources_rootdir_w_path):
     tdmg = (
         TestDataModelGenerator(path=local_testdata_resources_rootdir_w_path("test_basic/baseline/ms-101"), urn="test"),
     )
+
+    assert tdmg is not None
