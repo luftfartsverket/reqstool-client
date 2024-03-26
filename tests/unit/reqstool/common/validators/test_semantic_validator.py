@@ -1,6 +1,7 @@
 # Copyright © LFV
 
 import pytest
+from reqstool_python_decorators.decorators.decorators import SVCs
 
 from reqstool.common.validators.semantic_validator import SemanticValidator, ValidationErrorHolder
 from reqstool.locations.local_location import LocalLocation
@@ -139,6 +140,7 @@ def test_basic_validation(resource_funcname_rootdir, local_testdata_resources_ro
     assert len(errors) == 7
 
 
+@SVCs("SVC_data_validation_002")
 def test_validate_no_duplicate_reqs(get_requirements_data_raw):
     holder = ValidationErrorHolder()
     semantic_validator = SemanticValidator(validation_error_holder=holder)
@@ -146,6 +148,7 @@ def test_validate_no_duplicate_reqs(get_requirements_data_raw):
     assert has_errors is True
 
 
+@SVCs("SVC_data_validation_003")
 def test_validate_no_duplicate_svcs(get_svc_data):
     holder = ValidationErrorHolder()
     semantic_validator = SemanticValidator(validation_error_holder=holder)
@@ -153,6 +156,7 @@ def test_validate_no_duplicate_svcs(get_svc_data):
     assert has_errors is True
 
 
+@SVCs("SVC_data_validation_004")
 def test_validate_svc_to_existing_reqs(get_validation):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     errors = semantic_validator._validate_svc_refers_to_existing_requirement_ids(get_validation)
@@ -161,6 +165,7 @@ def test_validate_svc_to_existing_reqs(get_validation):
     assert expected_error in errors[0].msg
 
 
+@SVCs("SVC_data_validation_004")
 def test_validate_impls_to_existing_reqs(get_validation):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     errors = semantic_validator._validate_annotation_impls_refers_to_existing_requirement_ids(get_validation)
@@ -169,6 +174,7 @@ def test_validate_impls_to_existing_reqs(get_validation):
     assert expected_error in errors[0].msg
 
 
+@SVCs("SVC_data_validation_005")
 def test_validate_tests_to_existing_svcs(get_validation):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     errors = semantic_validator._validate_annotation_tests_refers_to_existing_svc_ids(get_validation)
@@ -178,6 +184,7 @@ def test_validate_tests_to_existing_svcs(get_validation):
     assert expected_error_2 in errors[1].msg
 
 
+@SVCs("SVC_data_validation_005")
 def test_validate_mvrs_to_existing_svcs(get_validation):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     errors = semantic_validator._validate_mvr_refers_to_existing_svc_ids(get_validation)

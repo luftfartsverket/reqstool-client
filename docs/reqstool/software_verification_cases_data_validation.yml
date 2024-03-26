@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/software_verification_cases.schema.json
+
+cases:
+  - id: SVC_data_validation_001
+    requirement_ids: ["REQ_data_validation_001"]
+    title: "Tests that will check that all files follow their respective schema files"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_data_validation_002
+    requirement_ids: ["REQ_data_validation_002"]
+    title: "Test that will check if duplicate requirement id's are detected during parsing"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_data_validation_003
+    requirement_ids: ["REQ_data_validation_003"]
+    title: "Test that will check if duplicate svc id's are detected during parsing"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_data_validation_004
+    requirement_ids: ["REQ_data_validation_004"]
+    title: "Test that will check if references to missing requirement id's are detected during parsing"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_data_validation_001
+    requirement_ids: ["REQ_data_validation_005"]
+    title: "Test that will check if references to missing requirement id's are detected during parsing"
+    verification: automated-test
+    revision: "0.0.1"
+  - id: SVC_data_validation_006
+    requirement_ids:
+      [
+        "REQ_data_validation_006"
+      ]
+    title: "Test that will make sure that the application exits and the user gets a message about failing to provide a requirements.yml file
+    verification: automated-test
+    revision: "0.0.1"
