@@ -6,6 +6,6 @@ project_root_dir: "../../baseline/ms-101-maven"
 
 locations:
   annotations: annotations.yml
-  test_results:
-    failsafe: target/failsafe
-    surefire: target/surefire
+  test_results_dirs:
+    - target/failsafe
+    - target/surefire

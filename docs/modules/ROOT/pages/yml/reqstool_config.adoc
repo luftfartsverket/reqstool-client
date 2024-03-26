@@ -8,9 +8,9 @@
 type: custom # custom|java-maven|java-maven-docs|python-pyproject
 
 locations:
-  test_results:
-    failsafe: target/failsafe
-    surefire: target/surefire
+  test_results_dirs:
+    - target/failsafe
+    - target/surefire
   annotations:
     implementations: requirements_annotations_impls.yml
     tests: requirements_annotations_tests.yml

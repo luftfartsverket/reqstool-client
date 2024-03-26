@@ -18,17 +18,11 @@
     "locations": {
       "type": "object",
       "properties": {
-        "test_results": {
-          "type": "object",
-          "properties": {
-            "failsafe": {
-              "type": "string",
-              "description": "Path to Failsafe test results"
-            },
-            "surefire": {
-              "type": "string",
-              "description": "Path to Surefire test results"
-            }
+        "test_results_dirs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Path to test result directory"
           },
           "additionalProperties": false,
           "description": "Paths to test results directories"

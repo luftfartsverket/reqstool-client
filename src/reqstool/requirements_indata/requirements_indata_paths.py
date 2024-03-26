@@ -2,10 +2,11 @@
 
 from dataclasses import dataclass, field
 from pathlib import PurePath
+from typing import List
 
 
 @dataclass(kw_only=True)
-class RequirementsIndataStructureItem:
+class RequirementsIndataPathItem:
     path: str
     exists: bool = False
 
@@ -13,33 +14,30 @@ class RequirementsIndataStructureItem:
 @dataclass(kw_only=True)
 class RequirementsIndataPaths:
     # static
-    requirements_yml: RequirementsIndataStructureItem = field(
-        default_factory=lambda: RequirementsIndataStructureItem(path="requirements.yml")
+    requirements_yml: RequirementsIndataPathItem = field(
+        default_factory=lambda: RequirementsIndataPathItem(path="requirements.yml")
     )
 
-    svcs_yml: RequirementsIndataStructureItem = field(
-        default_factory=lambda: RequirementsIndataStructureItem(path="software_verification_cases.yml")
+    svcs_yml: RequirementsIndataPathItem = field(
+        default_factory=lambda: RequirementsIndataPathItem(path="software_verification_cases.yml")
     )
-    mvrs_yml: RequirementsIndataStructureItem = field(
-        default_factory=lambda: RequirementsIndataStructureItem(path="manual_verification_results.yml")
+    mvrs_yml: RequirementsIndataPathItem = field(
+        default_factory=lambda: RequirementsIndataPathItem(path="manual_verification_results.yml")
     )
 
     # dynamic
-    annotations_yml: RequirementsIndataStructureItem = field(
-        default_factory=lambda: RequirementsIndataStructureItem(path="annotations.yml")
+    annotations_yml: RequirementsIndataPathItem = field(
+        default_factory=lambda: RequirementsIndataPathItem(path="annotations.yml")
     )
-    test_results_failsafe_dir: RequirementsIndataStructureItem = field(
-        default_factory=lambda: RequirementsIndataStructureItem(path="test_results/failsafe")
-    )
-    test_results_surefire_dir: RequirementsIndataStructureItem = field(
-        default_factory=lambda: RequirementsIndataStructureItem(path="test_results/surefire")
+    test_results_dirs: List[RequirementsIndataPathItem] = field(
+        default_factory=lambda: [RequirementsIndataPathItem(path="test_results")]
     )
 
     def prepend_paths(self, prepend_dir):
         for prop in dir(self):
             if (
                 not prop.startswith("__")
-                and isinstance(getattr(self, prop), RequirementsIndataStructureItem)
+                and isinstance(getattr(self, prop), RequirementsIndataPathItem)
                 and prop not in ["requirements_yml", "svcs_yml", "mvrs_yml"]
             ):
                 path_item = getattr(self, prop)
