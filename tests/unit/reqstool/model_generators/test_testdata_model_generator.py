@@ -35,9 +35,13 @@ def test_unit_method_identifier_regex(method_name):
     assert unit_match.group(1) == "testFlightIdAircraftId"
 
 
-@pytest.mark.skip(reason="Awaiting testdata update")
-def test_testdata_model_generator():
+def test_testdata_model_generator(local_testdata_resources_rootdir_w_path):
     # TODO:
     # * Test the different variants: passed, skipped, failure etc
     # * Test different types of file structure (Java, Python, Frontend Typescript)
-    pass
+
+    tdmg = (
+        TestDataModelGenerator(path=local_testdata_resources_rootdir_w_path("test_basic/baseline/ms-101"), urn="test"),
+    )
+
+    assert tdmg is not None

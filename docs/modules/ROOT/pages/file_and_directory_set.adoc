@@ -36,9 +36,9 @@ Below is an example on how to change the default paths to the required *.yml fil
 
 type: custom 
 locations:
-  test_results:
-    failsafe: ../target/some_folder/failsafe
-    surefire: ../target/my_folder/surefire
+  test_results_dirs:
+    - ../target/some_folder/failsafe
+    - ../target/my_folder/surefire
   annotations:
     implementations: ../target/hello/requirements_annotations_impls.yml
     tests: ../target/demo/requirements_annotations_tests.yml

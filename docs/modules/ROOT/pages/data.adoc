@@ -288,16 +288,18 @@ Categories follow the https://iso25000.com/index.php/en/iso-25000-standards/iso-
 
 * **Functional Suitability:** Functional Suitability assesses the degree to which the software provides appropriate functions that meet specified needs under specified conditions. It involves evaluating the completeness and appropriateness of the functions provided by the software.
 
-* **Reliability:** Reliability refers to the degree to which the software performs specified functions under specified conditions without failure for a specified period of time. It involves assessing the software's ability to maintain its performance level over time and under varying conditions.
-
 * **Performance Efficiency:** Performance efficiency evaluates the degree to which the software provides appropriate performance relative to the amount of resources used under specified conditions. It includes considerations such as response time, throughput, and resource utilization.
 
 * **Compatibility:** Compatibility assesses the degree to which the software can exchange information and work together with other systems, products, or environments without requiring special effort. It involves evaluating interoperability and integration capabilities.
 
-* **Usability:** Usability refers to the degree to which the software is easy to use, understand, and attractive to the user when used under specified conditions. It involves assessing aspects such as learnability, efficiency, and user satisfaction.
+* **Interaction Capability:** Describes to which degree a product or system can be interacted with by specified users to exchange information.
+
+* **Reliability:** Reliability refers to the degree to which the software performs specified functions under specified conditions without failure for a specified period of time. It involves assessing the software's ability to maintain its performance level over time and under varying conditions.
+
+* **Security:** Security refers to the degree to which the software protects information and data from unauthorized access, disclosure, alteration, or destruction. It involves assessing aspects such as confidentiality, integrity, authentication, authorization, and non-repudiation.
 
 * **Maintainability:** Maintainability evaluates the degree to which the software can be modified effectively and efficiently without introducing defects or degrading performance. It involves assessing aspects such as modifiability, analyzability, and testability.
 
-* **Portability:** Portability assesses the degree to which the software can be transferred from one environment to another, including the necessary adaptation effort. It involves considerations such as adaptability, installability, and coexistence with other software.
+* **Flexibility:** Portability assesses the degree to which the software can be transferred from one environment to another, including the necessary adaptation effort. It involves considerations such as adaptability, installability, and coexistence with other software.
 
-* **Security:** Security refers to the degree to which the software protects information and data from unauthorized access, disclosure, alteration, or destruction. It involves assessing aspects such as confidentiality, integrity, authentication, authorization, and non-repudiation.
+* **Safety:** This characteristic represents the degree to which a product under defined conditions to avoid a state in which human life, health, property, or the environment is endangered. 

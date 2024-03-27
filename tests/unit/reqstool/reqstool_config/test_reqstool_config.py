@@ -16,10 +16,10 @@ def rc_yaml_config_all() -> dict:
     project_root_dir: /some_root_dir
 
     locations:
-        annotations: custom_annotations.yml
-        test_results:
-            failsafe: target/failsafe
-            surefire: target/surefire
+      annotations: custom_annotations.yml
+      test_results_dirs:
+        - target/failsafe
+        - target/surefire
     """
     yaml = YAML(typ="safe")
     data = yaml.load(YAML_STR)
@@ -55,8 +55,8 @@ def test_all(rc_yaml_config_all):
     assert rc.type == TYPES.JAVA_MAVEN
     assert rc.project_root_dir == "/some_root_dir"
     assert rc.locations.annotations == "custom_annotations.yml"
-    assert rc.locations.test_results.failsafe == "target/failsafe"
-    assert rc.locations.test_results.surefire == "target/surefire"
+    assert rc.locations.test_results[0] == "target/failsafe"
+    assert rc.locations.test_results[1] == "target/surefire"
 
 
 def test_minimal(rc_yaml_config_minimal):

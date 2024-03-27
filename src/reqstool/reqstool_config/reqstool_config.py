@@ -1,25 +1,20 @@
 # Copyright © LFV
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum, unique
-from typing import Optional
+from typing import List, Optional
 
 
 @unique
 class TYPES(Enum):
     DEFAULT = "default"
     JAVA_MAVEN = "java-maven"
-
-
-@dataclass
-class TestResults:
-    failsafe: Optional[str] = None
-    surefire: Optional[str] = None
+    PYTHON = "python"
 
 
 @dataclass
 class Locations:
-    test_results: TestResults
+    test_results: List[str] = field(default_factory=lambda: [])
     annotations: Optional[str] = None
 
 
@@ -35,25 +30,18 @@ class ReqstoolConfig:
 
         r_project_root_dir = "." if "project_root_dir" not in yaml_data else yaml_data["project_root_dir"]
 
-        r_locations = Locations(annotations=None, test_results=TestResults())
+        r_locations = Locations(annotations=None, test_results=[])
 
-        if "locations" not in yaml_data:
-            return ReqstoolConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)
+        if "locations" in yaml_data:
 
-        locations = yaml_data["locations"]
+            locations = yaml_data["locations"]
 
-        if "annotations" in locations:
-            annotations = locations["annotations"]
+            if "annotations" in locations:
+                annotations = locations["annotations"]
 
-            r_locations.annotations = annotations
+                r_locations.annotations = annotations
 
-        if "test_results" in locations:
-            test_results = locations["test_results"]
-
-            if "failsafe" in test_results:
-                r_locations.test_results.failsafe = test_results["failsafe"]
-
-            if "surefire" in test_results:
-                r_locations.test_results.surefire = test_results["surefire"]
+            if "test_results_dirs" in locations:
+                r_locations.test_results = locations["test_results_dirs"]
 
         return ReqstoolConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)

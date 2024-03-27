@@ -224,19 +224,12 @@ class CombinedRawDatasetsGenerator:
 
         # handle automated test results
 
-        if requirements_indata.requirements_indata_paths.test_results_failsafe_dir.exists:
-            automated_tests_failsafe = TestDataModelGenerator(
-                path=requirements_indata.requirements_indata_paths.test_results_failsafe_dir.path, urn=current_urn
-            ).model
+        for test_results_dir in requirements_indata.requirements_indata_paths.test_results_dirs:
 
-            tests |= automated_tests_failsafe.tests
+            if test_results_dir.exists:
+                automated_tests_results = TestDataModelGenerator(path=test_results_dir.path, urn=current_urn).model
 
-        if requirements_indata.requirements_indata_paths.test_results_surefire_dir.exists:
-            automated_tests_surefire = TestDataModelGenerator(
-                path=requirements_indata.requirements_indata_paths.test_results_surefire_dir.path, urn=current_urn
-            ).model
-
-            tests |= automated_tests_surefire.tests
+                tests |= automated_tests_results.tests
 
         automated_tests = TestsData(tests=tests)
 
