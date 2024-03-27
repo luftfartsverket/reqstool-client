@@ -72,7 +72,7 @@ def test_standard_sys001_initial(local_testdata_resources_rootdir_w_path):
     )
 
 
-def test_missing_requirements_file(resource_funcname_rootdir, local_testdata_resources_rootdir_w_path):
+def test_missing_requirements_file(local_testdata_resources_rootdir_w_path):
     with pytest.raises(SystemExit) as excinfo:
         semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
         combined_raw_datasets_generator.CombinedRawDatasetsGenerator(

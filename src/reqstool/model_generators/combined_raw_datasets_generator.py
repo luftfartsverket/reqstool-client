@@ -153,7 +153,7 @@ class CombinedRawDatasetsGenerator:
 
         return parsed_urns
 
-    @Requirements("REQ_data_structure_004")
+    @Requirements("REQ_data_structure_004", "REQ_data_validation_006")
     def __parse_source(self, current_location_handler: LocationResolver) -> RawDataset:
         annotations_data = None
         svcs_data = None

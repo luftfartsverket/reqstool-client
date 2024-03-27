@@ -11,17 +11,17 @@ requirements:
     title: Indata from local files
     significance: shall
     description: Reqstool should be able to read and parse *.yml files from a local disk.
-    categories: [usability]
+    categories: [functional-suitability]
     revision: 0.0.1
   - id: REQ_002
     title: Indata from git location
     significance: shall
     description: Reqstool should be able to fetch and parse *.yml files from a git repository.
-    categories: [usability]
+    categories: [functional-suitability]
     revision: 0.0.1
   - id: REQ_003
     title: Indata from maven artifacts
     significance: shall
     description: Reqstool should be able to fetch, unzip and parse *.yml files from a maven artifact
-    categories: [usability]
+    categories: [functional-suitability]
     revision: 0.0.1
