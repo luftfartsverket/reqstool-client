@@ -4,6 +4,8 @@ import logging
 from dataclasses import dataclass, field, replace
 from typing import Dict, List, Set, Tuple
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.utils import append_data_item_to_dict_list_entry, create_accessible_nodes_dict
 from reqstool.expression_languages.requirements_el import RequirementsELTransformer
@@ -294,6 +296,7 @@ class CombinedIndexedDatasetGenerator:
         self.__process_req_filters()
         self.__process_svc_filters()
 
+    @Requirements("REQ_data_filters_001")
     def __process_req_filters(self):
         logging.debug(f"Starting filtering of requirements from {self._crd.initial_model_urn}")
 
@@ -383,6 +386,7 @@ class CombinedIndexedDatasetGenerator:
 
         return kept_requirements, filtered_out_reqs
 
+    @Requirements("REQ_data_filters_003")
     def __get_filtered_out_requirements_for_filter_urn(  # noqa C901 # NOSONAR
         self, accessible_requirements: set[UrnId], urn: str, req_filter: RequirementFilter
     ) -> List[UrnId]:
@@ -443,6 +447,7 @@ class CombinedIndexedDatasetGenerator:
 
         return filtered_out_requirements
 
+    @Requirements("REQ_data_filters_002")
     def __process_svc_filters(self):
         logging.debug(f"Starting filtering of svcs from {self._crd.initial_model_urn}")
 
@@ -516,6 +521,7 @@ class CombinedIndexedDatasetGenerator:
 
         return kept_svcs, filtered_out_svcs
 
+    @Requirements("REQ_data_filters_003")
     def __get_filtered_out_svcs_for_filter_urn(  # noqa C901 # NOSONAR
         self, accessible_svcs: set[UrnId], urn: str, svc_filter: SVCFilter
     ) -> List[UrnId]:

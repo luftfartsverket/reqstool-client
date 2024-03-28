@@ -1,6 +1,7 @@
 # Copyright © LFV
 
 import pytest
+from reqstool_python_decorators.decorators.decorators import SVCs
 
 from reqstool.expression_languages.svcs_el import SVCsELTransformer
 from reqstool.models.svcs import VERIFICATIONTYPES, SVCData
@@ -55,6 +56,7 @@ def test_comp_id_not_equals(create_tree, svc_data):
     assert SVCsELTransformer(urn="urn", data=svc_data("urn:SVC_101")).transform(tree) is True
 
 
+@SVCs("SVC_data_filters_006")
 def test_comp_id_regex_equals(create_tree, svc_data):
     el = "ids == /urn\\:SVC_(\\d{2,3}|123)$/"
     tree = create_tree(el)
