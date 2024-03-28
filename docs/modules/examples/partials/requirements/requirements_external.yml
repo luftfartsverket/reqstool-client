@@ -15,8 +15,6 @@ requirements:
     rationale: # text
     categories: # [functional-suitability, User Interface, System Interface, performance-efficiency, IT Security, Information Security, Reliability, maintainability]
     references: # links, source
-      - requirement_ids: [REQ123] # links to another requirement in this document
-        sources: [FSB] # FSB, SAF, SWAL
-      - requirement_ids: [REQ123] # links to another requirement in this document
-        sources: [FSB] # FSB, SAF, SWAL
+      requirement_ids:
+        - REQ123 # links to another requirement in this document
     revision: # requirement added from revision number, e.g. 1.0.2

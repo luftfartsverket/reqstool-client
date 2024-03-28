@@ -1,11 +1,11 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
-type: custom # custom|java-maven|java-maven-docs|python-pyproject
+type: java-maven # custom|java-maven|java-maven-docs|python-pyproject
 
 locations:
   test_results_dirs:
     - target/failsafe
-    - target/surefire
+    - target/surefire-reports
   annotations:
-    implementations: requirements_annotations_impls.yml
-    tests: requirements_annotations_tests.yml
+    implementations: target/generated-sources/annotations/resources/annotations.yml
+    tests: target/generated-test-sources/test-annotations/resources/annotations.yml
