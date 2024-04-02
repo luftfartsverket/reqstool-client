@@ -16,3 +16,7 @@ results:
     svc_ids: ["SVC_035"]
     comment: "Verify report written to file"
     pass: true
+  - id: MVR_005
+    svc_ids: ["SVC_036"]
+    comment: "Verify working custom path to annotations.yml"
+    pass: true

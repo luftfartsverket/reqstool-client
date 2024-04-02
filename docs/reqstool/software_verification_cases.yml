@@ -176,4 +176,8 @@ cases:
     title: "Manual test of report written to file"
     verification: manual-test
     revision: "0.4.0"
-  
+  - id: SVC_036
+    requirement_ids: ["REQ_013"]
+    title: "Manual test of altering the default path for annotations.yml "
+    verification: manual-test
+    revision: "0.4.1"
