@@ -2,7 +2,7 @@
 
 cases:
   - id: SVC_data_validation_001
-    requirement_ids: ["REQ_data_validation_001"]
+    requirement_ids: ["REQ_data_validation_001, REQ_004"]
     title: "Tests that will check that all files follow their respective schema files"
     verification: automated-test
     revision: "0.0.1"

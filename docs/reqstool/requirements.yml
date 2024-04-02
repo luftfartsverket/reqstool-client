@@ -25,3 +25,9 @@ requirements:
     description: Reqstool should be able to fetch, unzip and parse *.yml files from a maven artifact
     categories: [functional-suitability]
     revision: 0.0.1
+  - id: REQ_004
+    title: Requirement categories from ISO standard
+    significance: shall
+    description: Requirements shall be categorized using this ISO25000 standard for product quality. See link for further information https://iso25000.com/index.php/en/iso-25000-standards/iso-25010
+    categories: [reliability]
+    revision: 0.0.1
