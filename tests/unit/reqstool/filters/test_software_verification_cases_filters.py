@@ -10,7 +10,7 @@ from reqstool.model_generators.combined_raw_datasets_generator import CombinedRa
 from reqstool.models.raw_datasets import CombinedRawDataset
 
 
-@SVCs("SVC_data_filters_003", "SVC_data_filters_004")
+@SVCs("SVC_011", "SVC_012")
 def test_include_exclude_for_svcs(local_testdata_resources_rootdir_w_path):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     crd: CombinedRawDataset = CombinedRawDatasetsGenerator(

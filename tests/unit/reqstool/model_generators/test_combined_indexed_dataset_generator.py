@@ -35,7 +35,7 @@ def test_standard_baseline_ms001_no_filtering(resource_funcname_rootdir, local_t
     assert len(cids.requirements) == 8
 
 
-@SVCs("SVC_data_structure_001")
+@SVCs("SVC_005")
 def test_standard_baseline_ms001(resource_funcname_rootdir, local_testdata_resources_rootdir_w_path):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     crd: CombinedRawDataset = CombinedRawDatasetsGenerator(

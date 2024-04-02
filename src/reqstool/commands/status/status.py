@@ -3,9 +3,9 @@
 from typing import List, Tuple
 
 from colorama import Fore, Style
+from reqstool_python_decorators.decorators.decorators import Requirements
 from tabulate import tabulate
 
-from reqstool_python_decorators.decorators.decorators import Requirements
 from reqstool.commands.status.statistics_container import StatisticsContainer, TestStatisticsItem
 from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.validator_error_holder import ValidationErrorHolder
@@ -13,7 +13,7 @@ from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.location import LocationInterface
 
 
-@Requirements("REQ_030")
+@Requirements("REQ_027")
 class StatusCommand:
     def __init__(self, location: LocationInterface):
         self.__initial_location: LocationInterface = location

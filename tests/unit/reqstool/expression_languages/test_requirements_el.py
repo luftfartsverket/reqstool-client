@@ -73,7 +73,7 @@ def test_comp_id_not_equals(create_tree, requirement_data):
     assert RequirementsELTransformer(urn="urn", data=requirement_data("urn:REQ_101")).transform(tree) is True
 
 
-@SVCs("SVC_data_filters_005")
+@SVCs("SVC_013")
 def test_comp_id_regex_equals(create_tree, requirement_data):
     el = "ids == /urn\\:REQ_(\\d{2,3}|123)$/"
     tree = create_tree(el)

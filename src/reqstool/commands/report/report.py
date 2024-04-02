@@ -4,8 +4,8 @@ from enum import Enum
 from typing import Dict, List, Union
 
 from jinja2 import Template
-
 from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.commands.report.criterias.group_by import GroupbyOptions, GroupByOrganizor
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.statistics_container import StatisticsContainer
@@ -42,7 +42,7 @@ class Jinja2Templates(Enum):
         return obj
 
 
-@Requirements("REQ_035")
+@Requirements("REQ_032")
 class ReportCommand:
     def __init__(
         self,

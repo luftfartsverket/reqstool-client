@@ -27,7 +27,7 @@ class TestDataModelGenerator:
 
         return TestsData(tests=tests)
 
-    @Requirements("REQ_data_structure_010", "REQ_data_structure_011")
+    @Requirements("REQ_014", "REQ_015")
     def __parse_test_data(self, path: str, urn: str) -> Dict[str, TestData]:
         r_testdata: Dict[str, TestData] = {}
 

@@ -27,7 +27,7 @@ requirement_annotations:
     SVC_025:
       - elementKind: "METHOD"
         fullyQualifiedName: "package.example.SVCsTest.testMethod1"
-    SVC_040:
+    SVC_031:
       - elementKind: "METHOD"
         fullyQualifiedName: "package.example.SVCsTest.testMethod2"
 ----

@@ -3,10 +3,11 @@
 from dataclasses import dataclass, field
 
 from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.common.dataclasses.urn_id import UrnId
 
 
-@Requirements("REQ_031")
+@Requirements("REQ_028")
 @dataclass(kw_only=True)
 class TestStatisticsItem:
     nr_of_failed_tests: int = 0
@@ -23,7 +24,7 @@ class TestStatisticsItem:
         return self.nr_of_total_tests == self.nr_of_passed_tests
 
 
-@Requirements("REQ_031")
+@Requirements("REQ_028")
 @dataclass(kw_only=True, frozen=True)
 class CombinedRequirementTestItem:
     completed: bool = field(default=bool)
@@ -32,7 +33,7 @@ class CombinedRequirementTestItem:
     mvrs_stats: TestStatisticsItem = field(default_factory=TestStatisticsItem)
 
 
-@Requirements("REQ_031")
+@Requirements("REQ_028")
 @dataclass(kw_only=True)
 class TotalStatisticsItem:
     nr_of_failed_tests: int = 0
@@ -56,7 +57,7 @@ class TotalStatisticsItem:
             self.nr_of_completed_requirements += 1
 
 
-@Requirements("REQ_031")
+@Requirements("REQ_028")
 @dataclass(kw_only=True, frozen=True)
 class StatisticsContainer:
     _requirement_statistics: dict[str, CombinedRequirementTestItem] = field(default_factory=lambda: {})

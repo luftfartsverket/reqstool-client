@@ -42,7 +42,7 @@ cases:
     verification: manual-test
     revision: "0.0.1"
 
-  - id: SVC_030
+  - id: SVC_021
     requirement_ids: ["sys-001:REQ_sys001_505"]
     title: "SVC with passing imported automated-test but not implemented"
     verification: automated-test

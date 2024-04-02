@@ -13,7 +13,7 @@ class RequirementsIndataPathItem:
     exists: bool = False
 
 
-@Requirements("REQ_data_structure_012")
+@Requirements("REQ_016")
 @dataclass(kw_only=True)
 class RequirementsIndataPaths:
     # static

@@ -38,7 +38,7 @@ def test_basic_git():
     )
 
 
-@SVCs("SVC_003", "SVC_data_structure_004")
+@SVCs("SVC_003", "SVC_008")
 @pytest.mark.skipif(
     not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
     reason="Test needs GITLAB_TOKEN or GITHUB_TOKEN environment variable to be set",

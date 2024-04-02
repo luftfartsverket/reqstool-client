@@ -296,7 +296,7 @@ class CombinedIndexedDatasetGenerator:
         self.__process_req_filters()
         self.__process_svc_filters()
 
-    @Requirements("REQ_data_filters_001")
+    @Requirements("REQ_018")
     def __process_req_filters(self):
         logging.debug(f"Starting filtering of requirements from {self._crd.initial_model_urn}")
 
@@ -386,7 +386,7 @@ class CombinedIndexedDatasetGenerator:
 
         return kept_requirements, filtered_out_reqs
 
-    @Requirements("REQ_data_filters_003")
+    @Requirements("REQ_020")
     def __get_filtered_out_requirements_for_filter_urn(  # noqa C901 # NOSONAR
         self, accessible_requirements: set[UrnId], urn: str, req_filter: RequirementFilter
     ) -> List[UrnId]:
@@ -447,7 +447,7 @@ class CombinedIndexedDatasetGenerator:
 
         return filtered_out_requirements
 
-    @Requirements("REQ_data_filters_002")
+    @Requirements("REQ_019")
     def __process_svc_filters(self):
         logging.debug(f"Starting filtering of svcs from {self._crd.initial_model_urn}")
 
@@ -521,7 +521,7 @@ class CombinedIndexedDatasetGenerator:
 
         return kept_svcs, filtered_out_svcs
 
-    @Requirements("REQ_data_filters_003")
+    @Requirements("REQ_020")
     def __get_filtered_out_svcs_for_filter_urn(  # noqa C901 # NOSONAR
         self, accessible_svcs: set[UrnId], urn: str, svc_filter: SVCFilter
     ) -> List[UrnId]:

@@ -30,7 +30,7 @@ def test_basic_requirements_config(resource_funcname_rootdir, local_testdata_res
     )
 
 
-@SVCs("SVC_001", "SVC_data_existence_001")
+@SVCs("SVC_001", "SVC_004")
 def test_standard_ms001_initial(local_testdata_resources_rootdir_w_path):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
 
