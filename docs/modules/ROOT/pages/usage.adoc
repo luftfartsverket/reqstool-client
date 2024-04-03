@@ -30,22 +30,33 @@ Example:
 STATUS RESULT
 
 |===
-| Req id | Implementation| Automated Test | Manual Test
-| REQ_ms001_101 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:green">Pass</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_ms001_102 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:red">Fail</span>+++
-| REQ_sys001_101 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:green">Pass</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_sys001_102 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_sys001_103 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:red">Fail</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_ext001_101 | +++<span style="color:green">Implemented</span>+++ | +++<span style="color:green">Pass</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_ext001_103 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_ext002_101 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_ext002_102 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
-| REQ_ext002_103 | +++<span style="color:red">Lacks implementation</span>+++ | +++<span style="color:blue">N/A</span>+++ | +++<span style="color:blue">N/A</span>+++
+| URN | Req id | Implementation| Automated Test | Manual Test
+| ms001 | +++<span style="color:green">REQ_ms001_101</span>+++ | +++<span style="color:green">Implemented</span>+++ | T2 +++<span style="color:green">P2</span>+++ | N/A
+| ms001 | +++<span style="color:red">REQ_ms001_102</span>+++ | +++<span style="color:green">Implemented</span>+++ | N/A | T1 +++<span style="color:red">F1</span>+++
+| sys001 | +++<span style="color:red">REQ_sys001_101</span>+++ | +++<span style="color:red">Missing</span>+++ | T1 +++<span style="color:green">P1</span>+++ | N/A
+| sys001 | +++<span style="color:red">REQ_sys001_102</span>+++ | +++<span style="color:red">Missing</span>+++ | N/A | N/A
+| sys001 | +++<span style="color:red">REQ_sys001_103</span>+++ | +++<span style="color:green">Implemented</span>+++ | T0 +++<span style="color:red">M1</span>+++ | N/A
+| ext001 | +++<span style="color:green">REQ_ext001_101</span>+++ | +++<span style="color:green">Implemented</span>+++ | T3 +++<span style="color:green">P3</span>+++ | T1 +++<span style="color:green">P1</span>+++
+| ext001 | +++<span style="color:red">REQ_ext001_103</span>+++ | +++<span style="color:red">Missing</span>+++ | N/A | N/A
+| ext002 | +++<span style="color:red">REQ_ext002_101</span>+++ | +++<span style="color:red">Missing</span>+++ | N/A | N/A
+| ext002 | +++<span style="color:red">REQ_ext002_102</span>+++ | +++<span style="color:red">Missing</span>+++ | N/A | N/A
+| ext002 | +++<span style="color:red">REQ_ext002_103</span>+++ | +++<span style="color:red">Missing</span>+++ | N/A | N/A
 |===
 
 |===
-|Total requirements|Not implemented|Missing tests|Failing tests
-| 3 | 0 (0.00%) | 0 (0.00%) | 2 (66.67%)
+| Total Requirements: 10
+|===
+|===
+| Implemented and Verified | Implemented | Not implemented
+| 2 (20.00%) | 2 (20.00%) | 6 (60.00%)
+|===
+
+|===
+| Total Tests: 8 | Total SVCs: 9
+|===
+|===
+| Passed tests | Failed tests | Skipped tests | SVCs missing tests | SVCs missing MVRs
+| 7 (87.50%) | 1 (12.50%) | 0 (60.00%) | 1 (11.11%) | 0 (0.00%)
 |===
 
 [[report]]

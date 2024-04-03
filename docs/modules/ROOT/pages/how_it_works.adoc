@@ -4,7 +4,7 @@ Reqstool generates reports and updates on progression of requirement implementat
 
 In order to use the reqstool, you will need to create a requirements.yml file along with a software_verification_cases.yml and/or a manual_verification_results.yml. 
 
-* Examples: https://github.com/Luftfartsverket/reqstool-client/docs/modules/examples/partials/requirements
+* Examples: https://github.com/Luftfartsverket/reqstool-client/tree/main/docs/modules/examples/partials/requirements
 * Demo: https://github.com/Luftfartsverket/reqstool-demo
 
 === How it works
@@ -84,14 +84,15 @@ When the initial source's requirement file are processed, Reqstool will then con
 For example, if you want to exclude one requirement from ext-001, then you specify it like this in the requirements.yml file in ms-001 project:
 
 ```yaml
-systems:
+imports:
   local:
     - path: ./ext-001
-      filters:
-        ext-001:
-          requirement_ids:
-            excludes:
-              - REQ_101
+      
+filters:
+  ext-001:
+    requirement_ids:
+      excludes:
+        - REQ_101
 
 ```
 

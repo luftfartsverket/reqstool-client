@@ -128,7 +128,7 @@ The tree below shows where the dynamic files will reside after the project has b
 [[maven-artifact-zip-directory-structure]]
 === Maven Artifact Zip Directory Structure
 
-In order to produce a Maven Artifact Zip, you will need to incorporate the https://github.com/Luftfartsverket/requirements-tool-maven-assembly[Maven Assembly Plugin] into your build process. 
+In order to produce a Maven Artifact Zip, you will need to incorporate the https://github.com/Luftfartsverket/reqstool-java-maven-plugin[Reqstool Java Maven Plugin] into your build process. 
 
 During the build process, the plugin creates a zipfile with the static and dynamic files. The zipfile will be named like <<project-id>>-<<version>>-reqstool.zip and will be published under the target/reqstool folder.
 The plugin will also combine the svcs_annotations.yml and the equirements_annotations.yml into one yml file called annotations.yml.
@@ -181,7 +181,7 @@ To import content from other sources (systems) on the same file system as your c
 .requirements.yml
 ```yaml
 
-systems:
+imports:
   local:
     - path: ../sys-001
 
@@ -200,7 +200,7 @@ If no authentication is required in order to access the repository, the field `e
 
 .requirements.yml
 ```yaml
-systems:
+imports:
   git:
     - url: https://github.com/Luftfartsverket/reqstool-demo
       branch: main
@@ -216,7 +216,7 @@ To import content from other sources (systems) using Maven.
 
 .requirements.yml
 ```yaml
-systems:
+imports:
   maven:
     - url: https://maven.pkg.github.com/Luftfartsverket/reqstool-client
       group_id: se.lfv.reqstool.testdata
@@ -231,7 +231,7 @@ It is also possible to import files from different types of sources.
 
 .requirements.yml
 ```yaml
-systems:
+imports:
   local:
     - path: ../sys-001
   git:
@@ -243,18 +243,17 @@ systems:
 [[filters]]
 == Filters
 
-Filters can be applied on both requirements.yml and software_verification_cases.yml in order to exclude or include certain requirements or software verification cases. Note that the `filter` key is on different levels in the two files
+Filters can be applied on both requirements.yml and software_verification_cases.yml in order to exclude or include certain requirements or software verification cases. 
 
 
 .requiremens.yml
 ```yaml
-systems:
-  local:
-    - path: ../sys-001
-      filters:
-        sys-001:
-          requirement_ids:
-            includes: ["REQ_sys001_103", "ext-001:REQ_ext001_101"]
+filters:
+  sys-001:
+    requirement_ids:
+      includes: 
+        - REQ_sys001_103
+        - ext-001:REQ_ext001_101
 ```
 
 
@@ -263,7 +262,9 @@ systems:
 filters:
   sys-001:
     svc_ids:
-      imports: ["SVC_sys001_101", "SVC_sys001_109"]
+      includes: 
+        - SVC_sys001_101
+        - SVC_sys001_109
 ```
 
 == Categories

@@ -2,12 +2,12 @@
 
 filters:
   sys001:
-    svcs_ids:
-      imports: ["SVC_123", "SVC_124"]
+    svc_ids:
+      includes: ["SVC_123", "SVC_124"]
     custom:
-      imports: 'ids == "SVC_123", "SVC_124"'
+      includes: 'ids == "SVC_123", "SVC_124"'
   sys002:
-    svcs_ids:
+    svc_ids:
       excludes: ["SVC_123", "SVC_124"]
     custom:
       exclude: 'ids == "SVC_123", "SVC_124"'
