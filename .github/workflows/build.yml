@@ -32,6 +32,11 @@ jobs:
         run: hatch run test:pytest --cov=reqstool-client --cov-report=xml --cov-report=html -o junit_family=xunit2 --junitxml=build/junit.xml
       - name: Build project
         run: hatch build
+      - name: Install and run reqstool-client from build
+        run: |
+          WHL_FILE=$(ls dist/*.whl)
+          pip install $WHL_FILE
+          reqstool status local -p docs/reqstool
       # Upload artifacts for later use
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
