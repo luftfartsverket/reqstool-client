@@ -1,6 +1,6 @@
 name: Build PyPI
 on:
-  workflow_call: 
+  workflow_call:
   workflow_dispatch:
   push:
   pull_request:
@@ -28,10 +28,8 @@ jobs:
           python-version: "3.10"
       - name: Install dependencies
         run: pip install hatch
-      - name: Make required file path
-        run: mkdir -p dist
       - name: Run unit and integrations tests
-        run: hatch run test:pytest --cov=reqstool-client --cov-report=xml --cov-report=html -o junit_family=xunit2 --junitxml=dist/test_results.xml 
+        run: hatch run test:pytest --cov=reqstool-client --cov-report=xml --cov-report=html -o junit_family=xunit2 --junitxml=build/junit.xml
       - name: Build project
         run: hatch build
       # Upload artifacts for later use

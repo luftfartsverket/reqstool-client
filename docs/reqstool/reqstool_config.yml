@@ -3,6 +3,6 @@
 type: default
 project_root_dir: "../.."
 locations:
-  annotations: ./dist/annotations.yml
+  annotations: "build/reqstool/annotations.yml"
   test_results_dirs:
-    - "../../dist"
+    - "../../build/"
