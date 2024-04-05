@@ -72,6 +72,7 @@ def test_standard_sys001_initial(local_testdata_resources_rootdir_w_path):
     )
 
 
+@SVCs("SVC_020")
 def test_missing_requirements_file(local_testdata_resources_rootdir_w_path):
     with pytest.raises(SystemExit) as excinfo:
         semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
