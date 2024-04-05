@@ -3,6 +3,8 @@
 from enum import Enum
 from typing import Dict, List, Sequence
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.commands.status.statistics_container import StatisticsContainer, TestStatisticsItem
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.validators.semantic_validator import SemanticValidator
@@ -31,6 +33,7 @@ class StatsTestStatus(Enum):
     NA = "N/A"
 
 
+@Requirements("REQ_028")
 class StatisticsGenerator:
     def __init__(self, initial_location: LocationInterface, semantic_validator: SemanticValidator, apply_filter=True):
         self.cid: CombinedIndexedDataset = self._get_combined_index_data(

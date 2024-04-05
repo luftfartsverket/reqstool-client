@@ -5,6 +5,7 @@ import re
 from enum import Enum
 
 import jsonpickle
+from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.validator_error_holder import ValidationErrorHolder
@@ -34,6 +35,7 @@ class JsonEnumHandler(jsonpickle.handlers.BaseHandler):
         return obj.value
 
 
+@Requirements("REQ_030")
 class GenerateJsonCommand:
     def __init__(self, location: LocationInterface, filter_data: bool):
         self.__initial_location: LocationInterface = location

@@ -246,9 +246,9 @@
                             "flexibility",
                             "safety"
                         ],
-                        "description": "Enum for requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
+                        "description": "Enum for requirement categories. E.g. functional-suitability, performance-efficiency, security, reliability, maintainability"
                     },
-                    "description": "Array of requirement categories. E.g. functional-suitability, usability, performance-efficiency, security, reliability, maintainability"
+                    "description": "Array of requirement categories. E.g. functional-suitability, performance-efficiency, security, reliability, maintainability"
                 },
                 "references": {
                     "type": "object",

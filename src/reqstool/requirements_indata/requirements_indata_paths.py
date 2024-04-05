@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from pathlib import PurePath
 from typing import List
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 
 @dataclass(kw_only=True)
 class RequirementsIndataPathItem:
@@ -11,6 +13,7 @@ class RequirementsIndataPathItem:
     exists: bool = False
 
 
+@Requirements("REQ_016")
 @dataclass(kw_only=True)
 class RequirementsIndataPaths:
     # static

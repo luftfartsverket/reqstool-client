@@ -1,14 +1,16 @@
 # Copyright © LFV
 
-from dataclasses import dataclass
 import logging
 import os
+from dataclasses import dataclass
+
+from pygit2 import RemoteCallbacks, UserPass, clone_repository
+from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.locations.location import LocationInterface
 
-from pygit2 import clone_repository, UserPass, RemoteCallbacks
 
-
+@Requirements("REQ_002")
 @dataclass(kw_only=True)
 class GitLocation(LocationInterface):
     url: str

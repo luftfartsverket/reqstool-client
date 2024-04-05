@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field, fields
 from typing import List, Union
 
+from reqstool_python_decorators.decorators.decorators import Requirements
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
@@ -32,6 +33,7 @@ class RequirementsIndata:
         self._handle_requirements_config()
         self._ensure_absolute_paths_and_check_existance()
 
+    @Requirements("REQ_011")
     def _handle_requirements_config(self):
 
         if os.path.exists(os.path.join(self.dst_path, "reqstool_config.yml")):

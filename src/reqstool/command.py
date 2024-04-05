@@ -10,6 +10,8 @@ from typing import TextIO, Union
 if __package__ is None or len(__package__) == 0:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+from reqstool_python_decorators.decorators.decorators import Requirements
+
 from reqstool.commands.exit_codes import EXIT_CODE_ALL_REQS_NOT_IMPLEMENTED
 from reqstool.commands.generate_json.generate_json import GenerateJsonCommand
 from reqstool.commands.report import report
@@ -201,6 +203,7 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         return location
 
+    @Requirements("REQ_035")
     def command_report(self, report_args: argparse.Namespace):
         initial_source = self._get_initial_source(report_args)
 
@@ -213,6 +216,7 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         output.write(result.result)
 
+    @Requirements("REQ_031")
     def command_generate_json(self, generate_json_args: argparse.Namespace):
         initial_source = self._get_initial_source(generate_json_args)
 
@@ -223,6 +227,7 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         output = generate_json_args.output  # where to put the generated report
         output.write(result.result)
 
+    @Requirements("REQ_029")
     def command_status(self, status_args: argparse.Namespace) -> int:
         initial_source = self._get_initial_source(status_args)
         output = status_args.output  # where to put the generated report

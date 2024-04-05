@@ -3,6 +3,7 @@
 import os
 
 import pytest
+from reqstool_python_decorators.decorators.decorators import SVCs
 
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
@@ -18,6 +19,7 @@ def choose_token() -> str:
         return "GITLAB_TOKEN"
 
 
+@SVCs("SVC_002")
 @pytest.mark.skipif(
     not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
     reason="Test needs GITLAB_TOKEN or GITLAB environment variable to be set",
@@ -36,6 +38,7 @@ def test_basic_git():
     )
 
 
+@SVCs("SVC_003", "SVC_008")
 @pytest.mark.skipif(
     not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
     reason="Test needs GITLAB_TOKEN or GITHUB_TOKEN environment variable to be set",

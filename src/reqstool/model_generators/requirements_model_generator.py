@@ -5,6 +5,7 @@ import sys
 from typing import Dict, List, Set
 
 from packaging.version import InvalidVersion, Version
+from reqstool_python_decorators.decorators.decorators import Requirements
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
@@ -274,6 +275,7 @@ class RequirementsModelGenerator:
 
         return r_filters
 
+    @Requirements("REQ_004")
     def __parse_requirements(self, data):  # NOSONAR
         r_reqs = {}
 
