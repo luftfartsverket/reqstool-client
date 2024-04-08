@@ -9,7 +9,7 @@ from typing import Dict
 from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.common.dataclasses.urn_id import UrnId
-from reqstool.models.test_data import TestData, TestRunStatus, TestsData
+from reqstool.models.test_data import TEST_RUN_STATUS, TestData, TestsData
 
 
 class TestDataModelGenerator:
@@ -50,14 +50,14 @@ class TestDataModelGenerator:
                     logging.error(f"{testcase.attrib['name']} is not a valid method name\n")
                     methodname = "invalid_method_name"
 
-                test_run_status: TestRunStatus
+                test_run_status: TEST_RUN_STATUS
 
                 if testcase.find("./failure") is not None:
-                    test_run_status = TestRunStatus.FAILED
+                    test_run_status = TEST_RUN_STATUS.FAILED
                 elif testcase.find("./skipped") is not None:
-                    test_run_status = TestRunStatus.SKIPPED
+                    test_run_status = TEST_RUN_STATUS.SKIPPED
                 else:
-                    test_run_status = TestRunStatus.PASSED
+                    test_run_status = TEST_RUN_STATUS.PASSED
 
                 fqn = f"{testcase.attrib['classname']}.{methodname}"
 
