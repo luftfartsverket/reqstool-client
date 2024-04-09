@@ -5,6 +5,7 @@ import re
 from enum import Enum
 
 import jsonpickle
+from packaging.version import Version
 from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.common.dataclasses.urn_id import UrnId
@@ -14,23 +15,23 @@ from reqstool.locations.location import LOCATIONTYPES, LocationInterface
 from reqstool.model_generators.combined_indexed_dataset_generator import CombinedIndexedDatasetGenerator
 from reqstool.model_generators.combined_raw_datasets_generator import CombinedRawDatasetsGenerator
 from reqstool.models.raw_datasets import CombinedRawDataset
-from reqstool.models.requirements import SIGNIFANCETYPES, TYPES, VARIANTS
+from reqstool.models.requirements import CATEGORIES, SIGNIFANCETYPES, TYPES, VARIANTS
 from reqstool.models.svcs import VERIFICATIONTYPES
+from reqstool.models.test_data import TEST_RUN_STATUS
 
 
 class UrnIdHandler(jsonpickle.handlers.BaseHandler):
-    def flatten(self, obj, data):
+    def flatten(self, obj, data) -> str:
         return UrnId.assure_urn_id(obj.urn, obj.id)
 
-    def restore(self, obj):
-        urn_id_str = obj
-        return UrnId.instance(urn_id_str)
+
+class RevisionHandler(jsonpickle.handlers.BaseHandler):
+    def flatten(self, obj, data):
+        version: Version = obj
+        return {"major": version.major, "minor": version.minor, "patch": version.micro}
 
 
 class JsonEnumHandler(jsonpickle.handlers.BaseHandler):
-    def restore(self, obj):
-        pass
-
     def flatten(self, obj: Enum, data):
         return obj.value
 
@@ -61,11 +62,14 @@ class GenerateJsonCommand:
         # Register the custom handler for enumerations
 
         jsonpickle.handlers.registry.register(UrnId, UrnIdHandler)
-        jsonpickle.handlers.registry.register(SIGNIFANCETYPES, JsonEnumHandler)
-        jsonpickle.handlers.registry.register(VERIFICATIONTYPES, JsonEnumHandler)
-        jsonpickle.handlers.registry.register(VARIANTS, JsonEnumHandler)
+        jsonpickle.handlers.registry.register(Version, RevisionHandler)
+        jsonpickle.handlers.registry.register(CATEGORIES, JsonEnumHandler)
         jsonpickle.handlers.registry.register(LOCATIONTYPES, JsonEnumHandler)
+        jsonpickle.handlers.registry.register(SIGNIFANCETYPES, JsonEnumHandler)
         jsonpickle.handlers.registry.register(TYPES, JsonEnumHandler)
+        jsonpickle.handlers.registry.register(VARIANTS, JsonEnumHandler)
+        jsonpickle.handlers.registry.register(VERIFICATIONTYPES, JsonEnumHandler)
+        jsonpickle.handlers.registry.register(TEST_RUN_STATUS, JsonEnumHandler)
 
         json_data = jsonpickle.encode(cids, make_refs=False, keys=True, unpicklable=False)
 

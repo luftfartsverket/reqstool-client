@@ -19,7 +19,7 @@ from reqstool.models.mvrs import MVRData
 from reqstool.models.raw_datasets import CombinedRawDataset
 from reqstool.models.requirements import VARIANTS, RequirementData, RequirementsData
 from reqstool.models.svcs import SVCData, SVCsData
-from reqstool.models.test_data import TestData, TestRunStatus
+from reqstool.models.test_data import TEST_RUN_STATUS, TestData
 
 
 @dataclass(kw_only=True)
@@ -256,7 +256,8 @@ class CombinedIndexedDatasetGenerator:
                         # since there is an annotation we are missing automated test result
                         else:
                             test_data = TestData(
-                                fully_qualified_name=annotation_data.fully_qualified_name, status=TestRunStatus.MISSING
+                                fully_qualified_name=annotation_data.fully_qualified_name,
+                                status=TEST_RUN_STATUS.MISSING,
                             )
 
                         append_data_item_to_dict_list_entry(
@@ -265,7 +266,7 @@ class CombinedIndexedDatasetGenerator:
 
     def __process_class_annotated_test_results(self, urn: str, fqn: str):
         # get all test results that includes the class fqn
-        get_all_test_res: [TestRunStatus] = [
+        get_all_test_res: [TEST_RUN_STATUS] = [
             self._crd.raw_datasets[urn].automated_tests.tests[urn_id].status
             for urn_id in self._crd.raw_datasets[urn].automated_tests.tests
             if fqn in urn_id.id
@@ -276,18 +277,18 @@ class CombinedIndexedDatasetGenerator:
         if not get_all_test_res:
             test_data = TestData(
                 fully_qualified_name=fqn,
-                status=TestRunStatus.MISSING,
+                status=TEST_RUN_STATUS.MISSING,
             )
         # if any test in list is failed, then the test should be marked as failed
-        elif all(test_res == TestRunStatus.PASSED for test_res in get_all_test_res):
+        elif all(test_res == TEST_RUN_STATUS.PASSED for test_res in get_all_test_res):
             test_data = TestData(
                 fully_qualified_name=fqn,
-                status=TestRunStatus.PASSED,
+                status=TEST_RUN_STATUS.PASSED,
             )
         else:
             test_data = TestData(
                 fully_qualified_name=fqn,
-                status=TestRunStatus.FAILED,
+                status=TEST_RUN_STATUS.FAILED,
             )
 
         return test_data

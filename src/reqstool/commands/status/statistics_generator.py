@@ -14,7 +14,7 @@ from reqstool.model_generators.combined_raw_datasets_generator import CombinedRa
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.mvrs import MVRData
 from reqstool.models.svcs import VERIFICATIONTYPES, SVCData
-from reqstool.models.test_data import TestData, TestRunStatus
+from reqstool.models.test_data import TEST_RUN_STATUS, TestData
 
 EXPECTS_MVRS = [
     VERIFICATIONTYPES.MANUAL_TEST,
@@ -132,13 +132,13 @@ class StatisticsGenerator:
         # as each test could relate to several svc's
         for test in tests:
             match (test.status):
-                case TestRunStatus.PASSED:
+                case TEST_RUN_STATUS.PASSED:
                     stats_item.nr_of_passed_tests += 1
-                case TestRunStatus.FAILED:
+                case TEST_RUN_STATUS.FAILED:
                     stats_item.nr_of_failed_tests += 1
-                case TestRunStatus.SKIPPED:
+                case TEST_RUN_STATUS.SKIPPED:
                     stats_item.nr_of_skipped_tests += 1
-                case TestRunStatus.MISSING:
+                case TEST_RUN_STATUS.MISSING:
                     stats_item.nr_of_missing_automated_tests += 1
 
         return stats_item
@@ -181,7 +181,7 @@ class StatisticsGenerator:
     def _get_annotated_automated_test_results_for_req(
         self,
         svcs_urn_ids: List[UrnId],
-    ) -> List[TestRunStatus]:
+    ) -> List[TEST_RUN_STATUS]:
         automated_test_results: List[TestData] = []
         for urn_id in svcs_urn_ids:
             if urn_id in self.cid.annotations_tests:
@@ -196,8 +196,8 @@ class StatisticsGenerator:
 
     def _get_automated_test_results_for_req(
         self, automated_test_fqn: List[str], automated_test_result: Dict[UrnId, List[TestData]]
-    ) -> List[TestRunStatus]:
-        test_results: List[TestRunStatus] = []
+    ) -> List[TEST_RUN_STATUS]:
+        test_results: List[TEST_RUN_STATUS] = []
         for fqn in automated_test_fqn:
             for test_id, test_result in automated_test_result:
                 if test_id.id == fqn:
@@ -251,8 +251,8 @@ class StatisticsGenerator:
             else:
                 stats_container._total_statistics.nr_of_failed_tests += 1
 
-    def __get_results_from_annotated_tests(self) -> List[TestRunStatus]:
-        test_results: List[TestRunStatus] = []
+    def __get_results_from_annotated_tests(self) -> List[TEST_RUN_STATUS]:
+        test_results: List[TEST_RUN_STATUS] = []
         parsed_test_annotation_urns: List[UrnId] = []
         for urn_id, annotation_data in self.cid.annotations_tests.items():
             for annotation_test in annotation_data:
@@ -267,8 +267,8 @@ class StatisticsGenerator:
                         test_results.extend(results)
         return test_results
 
-    def __get_annotated_test_results(self, urn_id: UrnId) -> List[TestRunStatus]:
-        test_results: List[TestRunStatus] = []
+    def __get_annotated_test_results(self, urn_id: UrnId) -> List[TEST_RUN_STATUS]:
+        test_results: List[TEST_RUN_STATUS] = []
         # do lookup for each test from previous method, and if result is missing, add a Missing status
         if urn_id in self.cid.automated_test_result:
             tests = self.cid.automated_test_result[urn_id]
@@ -277,21 +277,21 @@ class StatisticsGenerator:
                 if test not in test_results:
                     test_results.append(test)
         else:
-            test_results.append(TestRunStatus.MISSING)
+            test_results.append(TEST_RUN_STATUS.MISSING)
 
         return test_results
 
     def __calculate_total_automated_test_statistics(
-        self, test_results: List[TestRunStatus], stats_container: StatisticsContainer
+        self, test_results: List[TEST_RUN_STATUS], stats_container: StatisticsContainer
     ):
         for test in test_results:
             match test.status:
-                case TestRunStatus.PASSED:
+                case TEST_RUN_STATUS.PASSED:
                     stats_container._total_statistics.nr_of_passed_tests += 1
-                case TestRunStatus.FAILED:
+                case TEST_RUN_STATUS.FAILED:
                     stats_container._total_statistics.nr_of_failed_tests += 1
-                case TestRunStatus.SKIPPED:
+                case TEST_RUN_STATUS.SKIPPED:
                     stats_container._total_statistics.nr_of_skipped_tests += 1
-                case TestRunStatus.MISSING:
+                case TEST_RUN_STATUS.MISSING:
                     stats_container._total_statistics.nr_of_missing_automated_tests += 1
                     stats_container._total_statistics.nr_of_total_tests -= 1

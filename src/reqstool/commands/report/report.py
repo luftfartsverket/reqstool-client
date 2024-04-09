@@ -22,7 +22,7 @@ from reqstool.models.annotations import AnnotationData
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.mvrs import MVRData
 from reqstool.models.svcs import SVCData
-from reqstool.models.test_data import TestRunStatus
+from reqstool.models.test_data import TEST_RUN_STATUS
 
 
 class Jinja2Templates(Enum):
@@ -225,15 +225,15 @@ class ReportCommand:
 
         return automated_test_results
 
-    def __get_annotated_test_results(self, cid: CombinedIndexedDataset, urn_id: UrnId) -> List[TestRunStatus]:
-        test_results: List[TestRunStatus] = []
+    def __get_annotated_test_results(self, cid: CombinedIndexedDataset, urn_id: UrnId) -> List[TEST_RUN_STATUS]:
+        test_results: List[TEST_RUN_STATUS] = []
         # do lookup for each test from previous method, and if result is missing, add a Missing status
         if urn_id in cid.automated_test_result:
             tests = cid.automated_test_result[urn_id]
             for test in tests:
                 test_results.append(test)
         else:
-            test_results.append(TestRunStatus.MISSING)
+            test_results.append(TEST_RUN_STATUS.MISSING)
 
         return test_results
 

@@ -7,7 +7,7 @@ from typing import Dict
 from reqstool.common.dataclasses.urn_id import UrnId
 
 
-class TestRunStatus(Enum):
+class TEST_RUN_STATUS(Enum):
     PASSED = "passed"
     FAILED = "failed"
     SKIPPED = "skipped"
@@ -17,7 +17,7 @@ class TestRunStatus(Enum):
 @dataclass
 class TestData:
     fully_qualified_name: str
-    status: TestRunStatus
+    status: TEST_RUN_STATUS
 
 
 @dataclass
