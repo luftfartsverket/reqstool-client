@@ -227,7 +227,7 @@ class RequirementsModelGenerator:
     def __parse_requirement_filters(self, data) -> Dict[str, RequirementFilter]:  # NOSONAR
         r_filters = {}
 
-        self.semantic_validator._validate_req_imports_filter_has_exclude_xor_imports(data)
+        self.semantic_validator._validate_req_imports_filter_has_excludes_xor_includes(data)
 
         if "filters" in data:
             for urn in data["filters"].keys():
@@ -261,8 +261,8 @@ class RequirementsModelGenerator:
                     if "includes" in urn_filter["custom"]:
                         custom_includes = urn_filter["custom"]["includes"]
 
-                    if "exclude" in urn_filter["custom"]:
-                        custom_exclude = urn_filter["custom"]["exclude"]
+                    if "excludes" in urn_filter["custom"]:
+                        custom_exclude = urn_filter["custom"]["excludes"]
 
                 req_filter = RequirementFilter(
                     urn_ids_imports=req_urn_ids_imports,

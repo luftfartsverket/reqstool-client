@@ -208,11 +208,11 @@ class SemanticValidator:
 
         return errors
 
-    def _validate_svc_imports_filter_has_exclude_xor_imports(self, svc_data: SVCsData) -> List[ValidationError]:
+    def _validate_svc_imports_filter_has_excludes_xor_includes(self, svc_data: SVCsData) -> List[ValidationError]:
         if "filters" in svc_data:
             for urn in svc_data["filters"].keys():
                 urn_filter = svc_data["filters"][urn]
-                if "imports" in urn_filter["svc_ids"] and "excludes" in urn_filter["svc_ids"]:
+                if "includes" in urn_filter["svc_ids"] and "excludes" in urn_filter["svc_ids"]:
                     self._validation_error_holder.add_error(
                         ValidationError(
                             msg=f"""Both imports and exclude filters applied to svc! (urn: {urn})
@@ -221,7 +221,7 @@ class SemanticValidator:
                         )
                     )
                 if "custom" in urn_filter:
-                    if "imports" in urn_filter["custom"] and "excludes" in urn_filter["custom"]:
+                    if "includes" in urn_filter["custom"] and "excludes" in urn_filter["custom"]:
                         self._validation_error_holder.add_error(
                             ValidationError(
                                 msg=f"""Both custom imports and exclude filters applied to svc! (urn: {urn})
@@ -232,11 +232,11 @@ class SemanticValidator:
 
         return self._validation_error_holder.get_no_of_errors() > 0
 
-    def _validate_req_imports_filter_has_exclude_xor_imports(self, req_data: ImportDataInterface) -> bool:
+    def _validate_req_imports_filter_has_excludes_xor_includes(self, req_data: ImportDataInterface) -> bool:
         if "filters" in req_data:
             for urn in req_data["filters"].keys():
                 urn_filter = req_data["filters"][urn]
-                if "imports" in urn_filter["requirement_ids"] and "excludes" in urn_filter["requirement_ids"]:
+                if "includes" in urn_filter["requirement_ids"] and "excludes" in urn_filter["requirement_ids"]:
                     self._validation_error_holder.add_error(
                         ValidationError(
                             msg=f"""Both imports and exclude filters applied to req! (urn: {urn})
@@ -245,7 +245,7 @@ class SemanticValidator:
                         )
                     )
                 if "custom" in urn_filter:
-                    if "imports" in urn_filter["custom"] and "excludes" in urn_filter["custom"]:
+                    if "includes" in urn_filter["custom"] and "excludes" in urn_filter["custom"]:
                         self._validation_error_holder.add_error(
                             ValidationError(
                                 msg=f"""Both custom imports and exclude filters applied to req! (urn: {urn})

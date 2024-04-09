@@ -25,13 +25,13 @@ imports:
 filters:
   ext-001:
     requirement_ids:
-      imports: [REQ_001]
+      includes: [REQ_001]
   ext-002:
     requirement_ids:
-      imports: [REQ_001]
+      includes: [REQ_001]
   ext-003:
     requirement_ids:
-      imports: [REQ_001]
+      includes: [REQ_001]
 
 implementations: # only used with type = system
   git:
@@ -57,8 +57,6 @@ requirements:
     rationale: test # text
     categories: [functional-suitability]
     references: # links, source
-      - requirement_ids: [REQ123] # links to another requirement in this document
-      - sources: [FSB] # FSB, SAF, SWAL
-      - requirement_ids: [REQ123] # links to another requirement in this document
-        sources: [FSB] # FSB, SAF, SWAL
+      requirement_ids:
+        - REQ123 # links to another requirement in this document
     revision: 0.0.0 # requirement added from revision number, e.g. 1.0.2

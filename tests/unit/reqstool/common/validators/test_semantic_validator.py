@@ -25,7 +25,7 @@ def get_svcs_data_raw():
     # Data is raw since it's parsed directly from yaml data at runtime
     data = {
         "filters": {
-            "sys-001": {"svc_ids": {"imports": ["SVC_sys001_101", "SVC_sys001_109"], "excludes": ["SVC_sys001_101"]}}
+            "sys-001": {"svc_ids": {"includes": ["SVC_sys001_101", "SVC_sys001_109"], "excludes": ["SVC_sys001_101"]}}
         },
         "cases": {},
     }
@@ -37,7 +37,7 @@ def get_systems_data_raw():
     # Data is raw since it's parsed directly from yaml data at runtime
     data = {
         "path": "../sys-001",
-        "filters": {"sys-001": {"requirement_ids": {"imports": ["REQ_sys001_101"], "excludes": ["REQ_sys001_102"]}}},
+        "filters": {"sys-001": {"requirement_ids": {"includes": ["REQ_sys001_101"], "excludes": ["REQ_sys001_102"]}}},
     }
 
     return data
@@ -58,7 +58,7 @@ def get_requirements_data_raw():
                 {
                     "path": "../sys-001",
                     "filters": {
-                        "sys-001": {"requirement_ids": {"imports": ["REQ_sys001_103", "ext001:REQ_ext003_101"]}}
+                        "sys-001": {"requirement_ids": {"includes": ["REQ_sys001_103", "ext001:REQ_ext003_101"]}}
                     },
                 }
             ]
@@ -93,7 +93,7 @@ def get_requirements_data_raw():
 def get_svc_data():
     # Data is raw since it's parsed directly from yaml data at runtime
     data = {
-        "filters": {"sys-001": {"svc_ids": {"imports": ["SVC_sys001_101", "SVC_sys001_109"]}}},
+        "filters": {"sys-001": {"svc_ids": {"includes": ["SVC_sys001_101", "SVC_sys001_109"]}}},
         "cases": [
             {
                 "id": "SVC_ms001_101",
@@ -194,7 +194,7 @@ def test_validate_mvrs_to_existing_svcs(get_validation):
 
 def test_validate_svc_filter_exlude_xor_import(get_svcs_data_raw):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
-    has_errors = semantic_validator._validate_svc_imports_filter_has_exclude_xor_imports(get_svcs_data_raw)
+    has_errors = semantic_validator._validate_svc_imports_filter_has_excludes_xor_includes(get_svcs_data_raw)
     expected_error = "Both imports and exclude filters applied to svc! (urn: sys-001)"
     errors = semantic_validator._validation_error_holder.get_errors()
     assert has_errors > 0
@@ -203,7 +203,7 @@ def test_validate_svc_filter_exlude_xor_import(get_svcs_data_raw):
 
 def test_validate_req_filter_exlude_xor_import(get_systems_data_raw):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
-    has_errors = semantic_validator._validate_req_imports_filter_has_exclude_xor_imports(get_systems_data_raw)
+    has_errors = semantic_validator._validate_req_imports_filter_has_excludes_xor_includes(get_systems_data_raw)
     expected_error = "Both imports and exclude filters applied to req! (urn: sys-001)"
     errors = semantic_validator._validation_error_holder.get_errors()
     assert has_errors > 0
