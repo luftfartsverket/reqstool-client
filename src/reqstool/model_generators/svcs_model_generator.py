@@ -68,7 +68,7 @@ class SVCsModelGenerator:
     def __parse_svc_filters(self, data) -> Dict[str, SVCFilter]:  # NOSONAR
         r_filters = {}
 
-        self.semantic_validator._validate_svc_imports_filter_has_exclude_xor_imports(data)
+        self.semantic_validator._validate_svc_imports_filter_has_excludes_xor_includes(data)
 
         if "filters" in data:
             for urn in data["filters"].keys():
@@ -96,8 +96,8 @@ class SVCsModelGenerator:
                     if "includes" in urn_filter["custom"]:
                         custom_includes = urn_filter["custom"]["includes"]
 
-                    if "exclude" in urn_filter["custom"]:
-                        custom_exclude = urn_filter["custom"]["exclude"]
+                    if "excludes" in urn_filter["custom"]:
+                        custom_exclude = urn_filter["custom"]["excludes"]
 
                 svc_filter = SVCFilter(
                     urn_ids_imports=svc_urn_ids_includes,

@@ -34,12 +34,12 @@ filters:
       includes: ids == "REQ_sys003_001"
   sys004:
     custom:
-      exclude: ids == "REQ_sys004_001", "REQ_sys004_002"" # list of requirement ids
+      excludes: ids == "REQ_sys004_001", "REQ_sys004_002"" # list of requirement ids
   sys005:
     requirement_ids:
       excludes: ["REQ_sys005_002"] # list of requirement ids
     custom:
-      exclude: ids == "REQ_sys005_003" # list of requirement ids
+      excludes: ids == "REQ_sys005_003" # list of requirement ids
   sys006:
     requirement_ids:
       includes: ["REQ_sys006_001"]
