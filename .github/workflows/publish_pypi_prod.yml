@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: https://pypi.org/p/reqstool-client
+      url: https://pypi.org/p/reqstool
     permissions:
       id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
