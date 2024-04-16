@@ -105,10 +105,10 @@ class ReportCommand:
             for group_by, urn_ids in grouped_requirements.items()
         }
 
-        asciidoc: str = "== REQUIREMENTS DOCUMENTATION\n" + statistics_table
+        asciidoc: str = "= REQUIREMENTS DOCUMENTATION\n" + statistics_table
 
         for group_by in template_data.keys():
-            asciidoc += f"=== {group_by[0].upper() + group_by[1:] }\n"
+            asciidoc += f"== {group_by[0].upper() + group_by[1:] }\n"
 
             for template in template_data[group_by]:
 
