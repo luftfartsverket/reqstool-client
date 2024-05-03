@@ -217,6 +217,11 @@
         "reqid": {
             "type": "string"
         },
+        "urnid": {
+            "type": "string",
+            "pattern": "^[^:].*",
+            "description": "Field that can either be written with a system prefix like 'SYSTEM:ID' or just like an id, omitting the system prefix if the id is located in the same system as the current file you are writing in."
+        },
         "expressionLang": {
             "type": "string",
             "description": "Use the expression language. Example: ids == \"REQ_100\", \"REQ_101\""

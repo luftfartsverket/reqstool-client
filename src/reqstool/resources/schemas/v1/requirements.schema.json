@@ -257,8 +257,7 @@
                         "requirement_ids": {
                             "type": "array",
                             "items": {
-                                "$ref": "common.schema.json#/$defs/reqid",
-                                "description": "Requirement id that links to another requirement in this document"
+                                "$ref": "common.schema.json#/$defs/urnid"
                             },
                             "description": "Array of requirements related to this requirement"
                         }
