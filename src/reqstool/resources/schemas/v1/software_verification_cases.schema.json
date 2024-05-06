@@ -30,8 +30,7 @@
                 "requirement_ids": {
                     "type": "array",
                     "items": {
-                        "type": "string",
-                        "description": "Requirement id"
+                        "$ref": "common.schema.json#/$defs/urnid"
                     },
                     "description": "Array of related Requirement ids"
                 },

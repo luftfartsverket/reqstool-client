@@ -220,7 +220,7 @@
         "urnid": {
             "type": "string",
             "pattern": "^[^:].*",
-            "description": "Field that can either be written with a system prefix like 'SYSTEM:ID' or just like an id, omitting the system prefix if the id is located in the same system as the current file you are writing in."
+            "description": "An identifier that can be on the form 'SYSTEM:ID' or 'ID'. If the system urn is omitted then it defaults to the system urn that the the current file is part of."
         },
         "expressionLang": {
             "type": "string",
