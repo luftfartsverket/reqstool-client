@@ -217,6 +217,11 @@
         "reqid": {
             "type": "string"
         },
+        "urnid": {
+            "type": "string",
+            "pattern": "^[^:].*",
+            "description": "An identifier that can be on the form 'SYSTEM:ID' or 'ID'. If the system urn is omitted then it defaults to the system urn that the the current file is part of."
+        },
         "expressionLang": {
             "type": "string",
             "description": "Use the expression language. Example: ids == \"REQ_100\", \"REQ_101\""
