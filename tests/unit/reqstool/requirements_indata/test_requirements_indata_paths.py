@@ -50,5 +50,5 @@ def test_merge_with_none_properties(default_instance, java_instance):
     assert java_merged_instance.annotations_yml.path == "target/reqstool/annotations.yml"
     assert len(java_merged_instance.test_results_dirs) == 2
 
-    expected_paths = ["target/failfire-reports", "target/surefire-reports"]
+    expected_paths = ["target/failsafe-reports", "target/surefire-reports"]
     assert all(item.path in expected_paths for item in java_merged_instance.test_results_dirs)
