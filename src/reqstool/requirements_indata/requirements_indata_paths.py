@@ -1,9 +1,8 @@
 # Copyright © LFV
 
-import logging
 from dataclasses import dataclass, field
 from pathlib import PurePath
-from typing import List
+from typing import List, Union
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
@@ -47,19 +46,42 @@ class RequirementsIndataPaths:
                 path_item = getattr(self, prop)
                 self.check_type_and_prepend_path(path_item=path_item, prepend_dir=prepend_dir)
 
-    # prepend path for each entry in a list of RequirementsIndataPathItem(s) or just on a single entity of the class
-    def check_type_and_prepend_path(self, path_item, prepend_dir: str):
+    def check_type_and_prepend_path(
+        self, path_item: Union[RequirementsIndataPathItem, List[RequirementsIndataPathItem]], prepend_dir: str
+    ):
+        """Prepend path for each entry in a list of RequirementsIndataPathItem(s)
+           or just on a single entity of the class
+
+        Args:
+            path_item (RequirementsIndataPathItem, [RequirementsIndataPathItem]): Either a RequirementsIndataPathItem
+            or a list of RequirementsIndataPathItem
+            prepend_dir (str): the root dir of the project specified in the reqstool_config.yml.
+
+        Raises:
+            TypeError: if there is a mismatch with path_item type or a path of a RequirementsIndataPathItem is missing.
+        """
         if type(path_item) is list:
             for entry in path_item:
-                if type(entry) is RequirementsIndataPathItem and entry.path is not None:
+                if entry.path is not None:
                     entry.path = str(PurePath(prepend_dir, entry.path))
-                else:
-                    logging.error("Cannot prepend path on object of type: " + type(entry))
         else:
             if path_item.path is not None:
                 path_item.path = str(PurePath(prepend_dir, path_item.path))
 
-    # other has precedence
+    def check_type_and_prepend_path2(self, path_item, prepend_dir: str):
+        if isinstance(path_item, list):
+            path_item = [
+                (
+                    entry
+                    if entry is None or entry.path is None
+                    else entry._replace(path=str(PurePath(prepend_dir, entry.path)))
+                )
+                for entry in path_item
+            ]
+        elif path_item is not None and path_item.path is not None:
+            path_item.path = str(PurePath(prepend_dir, path_item.path))
+        return path_item
+
     def merge(self, other):
         merged_instance = self.__class__()
         for prop in dir(self):
@@ -72,11 +94,9 @@ class RequirementsIndataPaths:
 
     def attribute_is_instance_or_list_of_class(self, prop_name, the_class):
         prop = getattr(self, prop_name)
-        if isinstance(prop, the_class):  # Check if the prop is an instance of the class
+        if isinstance(prop, the_class):
             return True
-        elif isinstance(prop, list):  # Check if the prop is a list
-            return all(
-                isinstance(item, the_class) for item in prop
-            )  # Check if all items in the list are instances of the class
+        elif isinstance(prop, list):
+            return all(isinstance(item, the_class) for item in prop)
         else:
             return False
