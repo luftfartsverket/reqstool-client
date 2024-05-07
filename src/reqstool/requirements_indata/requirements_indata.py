@@ -107,7 +107,7 @@ class RequirementsIndata:
     def _handle_custom(self):
         # replace default values with custom if specified
 
-        if self.reqstool_config.locations:
+        if self.reqstool_config.locations.test_results:
             test_results = self.reqstool_config.locations.test_results
 
             if isinstance(test_results, Sequence):
@@ -118,7 +118,7 @@ class RequirementsIndata:
 
                 self.requirements_indata_paths.test_results_dirs = r_test_results
 
-            if self.reqstool_config.locations.annotations:
-                self.requirements_indata_paths.annotations_yml = RequirementsIndataPathItem(
-                    path=self.reqstool_config.locations.annotations
-                )
+        if self.reqstool_config.locations.annotations:
+            self.requirements_indata_paths.annotations_yml = RequirementsIndataPathItem(
+                path=self.reqstool_config.locations.annotations
+            )

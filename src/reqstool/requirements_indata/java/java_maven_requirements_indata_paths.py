@@ -13,6 +13,6 @@ class JavaMavenRequirementsIndataPaths(RequirementsIndataPaths):
         self.annotations_yml = RequirementsIndataPathItem(path="target/reqstool/annotations.yml")
 
         self.test_results_dirs = [
-            RequirementsIndataPathItem(path="target/failfire-reports"),
+            RequirementsIndataPathItem(path="target/failsafe-reports"),
             RequirementsIndataPathItem(path="target/surefire-reports"),
         ]

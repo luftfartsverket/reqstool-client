@@ -5,4 +5,4 @@ project_root_dir: "../.."
 locations:
   annotations: "build/reqstool/annotations.yml"
   test_results_dirs:
-    - "../../build/"
+    - "build/"
