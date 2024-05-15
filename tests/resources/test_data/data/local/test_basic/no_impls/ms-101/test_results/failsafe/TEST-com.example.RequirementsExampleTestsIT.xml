@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-failsafe-plugin/xsd/failsafe-test-report-3.0.xsd"
+  version="3.0" name="com.example.RequirementsExampleTests" time="0.389" tests="1"
+  errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="git.tags" value="" />
+    <property name="java.specification.version" value="17" />
+    <property name="git.build.version" value="0.1.0-SNAPSHOT" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="java.class.path"
+      value="some.jar" />
+    <property name="git.branch" value="main" />
+    <property name="git.build.host" value="DCL0004" />
+    <property name="java.vm.vendor" value="Eclipse Adoptium" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="java.vendor.url" value="https://adoptium.net/" />
+    <property name="user.timezone" value="Europe/Stockholm" />
+    <property name="java.vm.specification.version" value="17" />
+    <property name="os.name" value="Linux" />
+    <property name="git.commit.author.time" value="2023-02-23T13:42:35+0100" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="user.country" value="US" />
+    <property name="git.build.user.name" value="John Doe" />
+    <property name="sun.boot.library.path" value="/opt/dev/sdkman/candidates/java/17.0.4.1-tem/lib" />
+    <property name="sun.java.command"
+      value="/home/user/dev/target/surefire/surefirebooter-20230224154529920_3.jar /home/user/dev/target/surefire 2023-02-24T15-45-29_897-jvmRun1 surefire-20230224154529920_1tmp surefire_0-20230224154529920_2tmp" />
+    <property name="jdk.debug" value="release" />
+    <property name="surefire.test.class.path"
+      value="some.jar" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="user.home" value="/home/guest" />
+    <property name="user.language" value="en" />
+    <property name="git.closest.tag.commit.count" value="" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="java.version.date" value="2022-08-12" />
+    <property name="java.home" value="/opt/dev/sdkman/candidates/java/17.0.4.1-tem" />
+    <property name="spring.profiles.active" value="dev" />
+    <property name="git.total.commit.count" value="85" />
+    <property name="file.separator" value="/" />
+    <property name="basedir"
+      value="/home/user/dev" />
+    <property name="java.vm.compressedOopsMode" value="Zero based" />
+    <property name="line.separator" value="&#10;" />
+    <property name="git.build.user.email" value="john@doe.com" />
+    <property name="git.commit.committer.time" value="2023-02-23T13:42:35+0100" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="FILE_LOG_CHARSET" value="UTF-8" />
+    <property name="git.commit.id.full" value="7f5a902c68a5a1eb8270b16abb7029a777988d69" />
+    <property name="java.awt.headless" value="true" />
+    <property name="git.closest.tag.name" value="" />
+    <property name="git.local.branch.ahead" value="0" />
+    <property name="git.build.time" value="2023-02-24T15:45:16+0100" />
+    <property name="surefire.real.class.path"
+      value="/home/user/dev/target/surefire/surefirebooter-20230224154529920_3.jar" />
+    <property name="git.commit.message.full" value="feat: Fix topsky request json" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="java.runtime.version" value="17.0.4.1+1" />
+    <property name="user.name" value="guest" />
+    <property name="path.separator" value=":" />
+    <property name="os.version" value="6.1.0-1006-oem" />
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="git.commit.user.email" value="john@doe.com" />
+    <property name="spring.beaninfo.ignore" value="true" />
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM" />
+    <property name="java.vendor.version" value="Temurin-17.0.4.1+1" />
+    <property name="git.local.branch.behind" value="0" />
+    <property name="git.dirty" value="true" />
+    <property name="localRepository" value="/home/guest/.m2/repository" />
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues" />
+    <property name="java.io.tmpdir" value="/tmp" />
+    <property name="java.version" value="17.0.4.1" />
+    <property name="user.dir"
+      value="/home/user/dev" />
+    <property name="os.arch" value="amd64" />
+    <property name="git.commit.user.name" value="John Doe" />
+    <property name="git.commit.id.abbrev" value="7f5a902" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="PID" value="654021" />
+    <property name="git.commit.id.describe-short" value="7f5a902-dirty" />
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8" />
+    <property name="git.commit.id.describe" value="7f5a902-dirty" />
+    <property name="native.encoding" value="UTF-8" />
+    <property name="java.library.path"
+      value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib" />
+    <property name="git.commit.message.short" value="feat: Fix topsky request json" />
+    <property name="java.vm.info" value="mixed mode, sharing" />
+    <property name="java.vendor" value="Eclipse Adoptium" />
+    <property name="java.vm.version" value="17.0.4.1+1" />
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle" />
+    <property name="java.class.version" value="61.0" />
+    <property name="git.commit.time" value="2023-02-23T13:42:35+0100" />
+    <property name="git.remote.origin.url"
+      value="https://git.exampe.com/repo.git" />
+  </properties>
+  <testcase name="testSVC101" classname="com.example.RequirementsExampleTestsIT" time="0.362">
+    <system-out>some output to stdout
+</system-out>
+  </testcase>
+</testsuite>

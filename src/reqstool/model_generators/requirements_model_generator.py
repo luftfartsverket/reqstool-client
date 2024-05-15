@@ -275,7 +275,7 @@ class RequirementsModelGenerator:
 
         return r_filters
 
-    @Requirements("REQ_004")
+    @Requirements("REQ_004", "REQ_036")
     def __parse_requirements(self, data):  # NOSONAR
         r_reqs = {}
 
@@ -299,6 +299,8 @@ class RequirementsModelGenerator:
 
                 # Check if rationale is defined, or set it to None
                 rationale = req["rationale"] if "rationale" in req else None
+                # Check if implemented_in_src is defined, or set it to True
+                implemeted_in_src = req["implemented_in_src"] if "implemented_in_src" in req else True
 
                 urn_id = UrnId(urn=urn, id=req["id"])
                 req_data = RequirementData(
@@ -307,6 +309,7 @@ class RequirementsModelGenerator:
                     significance=SIGNIFANCETYPES(req["significance"]),
                     description=req["description"],
                     rationale=rationale,
+                    implemented_in_src=implemeted_in_src,
                     categories=[CATEGORIES(c) for c in req["categories"]],
                     references=refs_data,
                     revision=self.__parse_req_version(version=req["revision"], urn_id=urn_id),

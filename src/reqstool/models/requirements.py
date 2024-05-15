@@ -64,6 +64,7 @@ class RequirementData:
     description: str
     rationale: str
     revision: Version
+    implemented_in_src: bool = field(default=True)  # Defaults to true, needs to be set to false explicitly
     categories: List[CATEGORIES] = field(default_factory=list)
     references: List[ReferenceData] = field(default_factory=list)
 

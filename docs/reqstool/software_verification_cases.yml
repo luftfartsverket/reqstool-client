@@ -181,3 +181,9 @@ cases:
     title: "Manual test of altering the default path for annotations.yml "
     verification: manual-test
     revision: "0.4.1"
+  - id: SVC_037
+    requirement_ids: ["REQ_036"]
+    title: "Test to make sure that reqstool client supports requirements without any source code implementation"
+    verification: automated-test
+    revision: "0.4.5"
+

@@ -271,6 +271,11 @@
                     "type": "string",
                     "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
                     "description": "Revision that the requirement was added"
+                },
+                "implemented_in_src": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "boolean value to indicate if requirement can be implemented in source code. Defaults to True"
                 }
             },
             "required": [

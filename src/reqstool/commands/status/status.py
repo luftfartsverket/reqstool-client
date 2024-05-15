@@ -38,8 +38,15 @@ def _build_table(req_id: str, urn: str, impls: int, tests: str, mvrs: str, compl
     # add color to requirement if it's completed or not
     req_id_color = f"{Fore.GREEN}" if completed else f"{Fore.RED}"
     row.append(f"{req_id_color}{req_id}{Style.RESET_ALL}")
-    # perform check for impls
-    row.extend([Fore.GREEN + "Implemented" + Style.RESET_ALL if impls > 0 else Fore.RED + "Missing" + Style.RESET_ALL])
+
+    # Perform check for implementations
+    # Case when requirement does not require a source implementation but is considered completed
+    if completed and impls == 0:
+        row.extend(["N/A"])
+    else:
+        row.extend(
+            [Fore.GREEN + "Implemented" + Style.RESET_ALL if impls > 0 else Fore.RED + "Missing" + Style.RESET_ALL]
+        )
     _extend_row(tests, row)
     _extend_row(mvrs, row)
     return row
@@ -71,7 +78,10 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         nr_of_completed_reqs=stats_container._total_statistics.nr_of_completed_requirements,
         implemented=stats_container._total_statistics.nr_of_reqs_with_implementation,
         left_to_implement=stats_container._total_statistics.nr_of_total_requirements
-        - stats_container._total_statistics.nr_of_reqs_with_implementation,
+        - (
+            stats_container._total_statistics.nr_of_reqs_with_implementation
+            + stats_container._total_statistics.nr_of_reqs_no_implementation_expected
+        ),
         total_tests=stats_container._total_statistics.nr_of_total_tests,
         passed_tests=stats_container._total_statistics.nr_of_passed_tests,
         failed_tests=stats_container._total_statistics.nr_of_failed_tests,
@@ -119,8 +129,7 @@ def _summarize_statisics(
         [
             str(nr_of_completed_reqs)
             + __numbers_as_percentage(numerator=nr_of_completed_reqs, denominator=nr_of_total_reqs),
-            str(implemented - nr_of_completed_reqs)
-            + __numbers_as_percentage(numerator=implemented - nr_of_completed_reqs, denominator=nr_of_total_reqs),
+            str(implemented) + __numbers_as_percentage(numerator=implemented, denominator=nr_of_total_reqs),
             str(left_to_implement) + __numbers_as_percentage(numerator=left_to_implement, denominator=nr_of_total_reqs),
         ]
     ]
