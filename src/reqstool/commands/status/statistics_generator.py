@@ -1,6 +1,5 @@
 # Copyright © LFV
 
-import logging
 from enum import Enum
 from typing import Dict, List, Sequence
 
@@ -108,6 +107,7 @@ class StatisticsGenerator:
                 completed=completed,
                 automated_tests_stats=automated_test_stats,
                 mvrs_stats=mvr_stats,
+                expects_implementation=self.cid.requirements[urn_id].implemented_in_src,
             )
 
         return self.stats_container
@@ -129,8 +129,7 @@ class StatisticsGenerator:
             implementation_ok = True
         elif nr_of_implementations > 0 and this_req_implementation_in_src is False:
             # Throw error if there are implementations of a requirement that does not expect it
-            logging.error(f"Requirement{urn_id} should not have an implementation")
-            # raise TypeError(f"Requirement {urn_id} should not have an implementation")
+            raise TypeError(f"Requirement {urn_id} should not have an implementation")
 
         return implementation_ok
 

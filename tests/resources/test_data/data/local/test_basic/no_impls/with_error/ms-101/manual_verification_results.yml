@@ -3,14 +3,9 @@
 results:
   - id: MVR_201
     svc_ids: ["SVC_201"]
+    pass: true
+
+  - id: MVR_205
+    svc_ids: ["SVC_033"]
+    comment: passed
     pass: false
-
-  - id: MVR_203
-    svc_ids: ["SVC_031"]
-    comment: passed
-    pass: true
-
-  - id: MVR_204
-    svc_ids: ["SVC_032"]
-    comment: passed
-    pass: true

@@ -16,6 +16,7 @@ def test_total_statistics_item_update():
         req_urn_id=UrnId(urn="ms-101", id="REQ_101"),
         impls=1,
         completed=True,
+        expects_implementation=True,
         automated_tests_stats=TestStatisticsItem(
             nr_of_failed_tests=0,
             nr_of_missing_automated_tests=0,
@@ -42,6 +43,7 @@ def test_total_statistics_item_update():
         _requirement_statistics={
             UrnId(urn="ms-101", id="REQ_101"): CombinedRequirementTestItem(
                 completed=True,
+                expects_impl=True,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,

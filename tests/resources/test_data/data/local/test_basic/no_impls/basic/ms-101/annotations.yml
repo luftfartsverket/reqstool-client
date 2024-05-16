@@ -5,9 +5,6 @@ requirement_annotations:
     REQ_201:
       - elementKind: "METHOD"
         fullyQualifiedName: "com.example.RequirementsExample.someMethod"
-    REQ_1338:
-      - elementKind: "METHOD"
-        fullyQualifiedName: "com.example.RequirementsExample.someFakeMethod"
   tests:
     SVC_101:
       - elementKind: "METHOD"

@@ -12,7 +12,7 @@ requirements:
     title: Title REQ_101
     significance: may
     description: Requirement with automated test and should have no implementation
-    rationale: Rationale REQ_001
+    rationale: This requirement should be considered implemented and verified
     categories: ["maintainability", "functional-suitability"]
     implemented_in_src: false
     revision: 0.0.1
@@ -29,16 +29,17 @@ requirements:
 
   - id: REQ_1337
     title: My new requirement
-    description: This requirement is not supposed to have an impl
-    rationale: Rationale
+    description: This requirement is not supposed to have an impl and a passing test
+    rationale: This requirement should be considered implemented and verified
     significance: shall
     implemented_in_src: false
     categories: ["maintainability", "functional-suitability"]
     revision: 0.0.1
 
-  - id: REQ_1338
-    title: My new requirement
-    description: This requirement is not supposed to have an impl, but has one
+  - id: REQ_1339
+    title: My other new requirement
+    description: This requirement is not supposed to have an impl and a failing test
+    rationale: This requirement should not be considered implemented and verified
     significance: shall
     implemented_in_src: false
     categories: ["maintainability", "functional-suitability"]

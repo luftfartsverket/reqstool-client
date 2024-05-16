@@ -33,7 +33,9 @@ class StatusCommand:
         )
 
 
-def _build_table(req_id: str, urn: str, impls: int, tests: str, mvrs: str, completed: bool) -> List[str]:
+def _build_table(
+    req_id: str, urn: str, impls: int, tests: str, mvrs: str, completed: bool, expects_impl: bool
+) -> List[str]:
     row = [urn]
     # add color to requirement if it's completed or not
     req_id_color = f"{Fore.GREEN}" if completed else f"{Fore.RED}"
@@ -41,7 +43,7 @@ def _build_table(req_id: str, urn: str, impls: int, tests: str, mvrs: str, compl
 
     # Perform check for implementations
     # Case when requirement does not require a source implementation but is considered completed
-    if completed and impls == 0:
+    if not expects_impl:
         row.extend(["N/A"])
     else:
         row.extend(
@@ -67,6 +69,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
                 tests=stats.automated_tests_stats,
                 mvrs=stats.mvrs_stats,
                 completed=stats.completed,
+                expects_impl=stats.expects_impl,
             )
         )
 
@@ -80,7 +83,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         left_to_implement=stats_container._total_statistics.nr_of_total_requirements
         - (
             stats_container._total_statistics.nr_of_reqs_with_implementation
-            + stats_container._total_statistics.nr_of_reqs_no_implementation_expected
+            + stats_container._total_statistics.nr_of_completed_reqs_no_implementation_expected
         ),
         total_tests=stats_container._total_statistics.nr_of_total_tests,
         passed_tests=stats_container._total_statistics.nr_of_passed_tests,
