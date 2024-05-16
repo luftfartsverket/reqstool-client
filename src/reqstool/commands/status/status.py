@@ -42,7 +42,6 @@ def _build_table(
     row.append(f"{req_id_color}{req_id}{Style.RESET_ALL}")
 
     # Perform check for implementations
-    # Case when requirement does not require a source implementation but is considered completed
     if not expects_impl:
         row.extend(["N/A"])
     else:
@@ -83,7 +82,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         left_to_implement=stats_container._total_statistics.nr_of_total_requirements
         - (
             stats_container._total_statistics.nr_of_reqs_with_implementation
-            + stats_container._total_statistics.nr_of_completed_reqs_no_implementation_expected
+            + stats_container._total_statistics.nr_of_total_reqs_no_implementation_expected
         ),
         total_tests=stats_container._total_statistics.nr_of_total_tests,
         passed_tests=stats_container._total_statistics.nr_of_passed_tests,
@@ -92,6 +91,9 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         missing_automated_tests=stats_container._total_statistics.nr_of_missing_automated_tests,
         missing_manual_tests=stats_container._total_statistics.nr_of_missing_manual_tests,
         nr_of_total_svcs=stats_container._total_statistics.nr_of_total_svcs,
+        nr_of_reqs_without_expected_implementation=(
+            stats_container._total_statistics.nr_of_total_reqs_no_implementation_expected
+        ),
     )
 
     legend = [
@@ -123,6 +125,7 @@ def _summarize_statisics(
     missing_automated_tests: int,
     missing_manual_tests: int,
     nr_of_total_svcs: int,
+    nr_of_reqs_without_expected_implementation: int,
 ) -> str:
     header_req_data = ("\b" * len(str(nr_of_total_reqs))) + f"Total Requirements: {str(nr_of_total_reqs)}"
     header_test_data = ("\b" * len(str(total_tests))) + f"Total Tests: {str(total_tests)}"
@@ -132,8 +135,14 @@ def _summarize_statisics(
         [
             str(nr_of_completed_reqs)
             + __numbers_as_percentage(numerator=nr_of_completed_reqs, denominator=nr_of_total_reqs),
-            str(implemented) + __numbers_as_percentage(numerator=implemented, denominator=nr_of_total_reqs),
-            str(left_to_implement) + __numbers_as_percentage(numerator=left_to_implement, denominator=nr_of_total_reqs),
+            str(implemented)
+            + __numbers_as_percentage(
+                numerator=implemented, denominator=(nr_of_total_reqs - nr_of_reqs_without_expected_implementation)
+            ),
+            str(left_to_implement)
+            + __numbers_as_percentage(
+                numerator=left_to_implement, denominator=(nr_of_total_reqs - nr_of_reqs_without_expected_implementation)
+            ),
         ]
     ]
     table_svc_data = [
