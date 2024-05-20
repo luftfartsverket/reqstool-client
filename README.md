@@ -45,7 +45,7 @@ Use `-h/--help` for more information about each command and location.
 
 ## Documentation
 
-For full documentation see [xxx](https://somelink).
+For full documentation cane be found [https://luftfartsverket.github.io/reqstool-docs/reqstool-client/0.3.0/index.html](here).
 
 ## Contributing
 
