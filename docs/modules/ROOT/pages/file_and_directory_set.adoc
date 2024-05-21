@@ -65,7 +65,7 @@ requirements:
     description: Requirement with automated test and should have no implementation
     rationale: Rationale REQ_001
     categories: ["maintainability", "functional-suitability"]
-    implemented_in_src: false
+    implementation: N/A
     revision: 0.0.1
 ```
 
@@ -85,7 +85,7 @@ in the `requirements` section, an array of requirements can be specified. Some o
 ==== Optional fields
 
 * rationale: Why this requirement is important.
-* implemented_in_src: If this requirement requires a source code implementation or not. This defaults to `true` if omitted. 
+* implementation: If this requirement requires a source code implementation or not. Currently, there are two acceptable values: in-code or N/A. This defaults to `in-code` if omitted. 
 
 
 === software_verification_cases.yml

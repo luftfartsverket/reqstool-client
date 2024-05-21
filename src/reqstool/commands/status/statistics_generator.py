@@ -13,6 +13,7 @@ from reqstool.model_generators.combined_indexed_dataset_generator import Combine
 from reqstool.model_generators.combined_raw_datasets_generator import CombinedRawDatasetsGenerator
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.mvrs import MVRData
+from reqstool.models.requirements import IMPLEMENTATION
 from reqstool.models.svcs import VERIFICATIONTYPES, SVCData
 from reqstool.models.test_data import TEST_RUN_STATUS, TestData
 
@@ -107,7 +108,7 @@ class StatisticsGenerator:
                 completed=completed,
                 automated_tests_stats=automated_test_stats,
                 mvrs_stats=mvr_stats,
-                expects_implementation=self.cid.requirements[urn_id].implemented_in_src,
+                implementation=self.cid.requirements[urn_id].implementation,
             )
 
         return self.stats_container
@@ -121,13 +122,16 @@ class StatisticsGenerator:
         return svcs_urn_ids
 
     def _check_implementation(self, urn_id: UrnId, nr_of_implementations: int) -> bool:
-        this_req_implementation_in_src = self.cid.requirements[urn_id].implemented_in_src
+        implementation = self.cid.requirements[urn_id].implementation
         implementation_ok = False
-        if (nr_of_implementations > 0 and this_req_implementation_in_src) or (
-            nr_of_implementations == 0 and this_req_implementation_in_src is False
+        if (
+            nr_of_implementations > 0
+            and implementation is IMPLEMENTATION.IN_CODE
+            or nr_of_implementations == 0
+            and implementation is IMPLEMENTATION.NOT_APPLICABLE
         ):
             implementation_ok = True
-        elif nr_of_implementations > 0 and this_req_implementation_in_src is False:
+        elif nr_of_implementations > 0 and implementation is IMPLEMENTATION.NOT_APPLICABLE:
             # Throw error if there are implementations of a requirement that does not expect it
             raise TypeError(f"Requirement {urn_id} should not have an implementation")
 

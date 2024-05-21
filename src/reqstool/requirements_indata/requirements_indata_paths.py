@@ -68,20 +68,6 @@ class RequirementsIndataPaths:
             if path_item.path is not None:
                 path_item.path = str(PurePath(prepend_dir, path_item.path))
 
-    def check_type_and_prepend_path2(self, path_item, prepend_dir: str):
-        if isinstance(path_item, list):
-            path_item = [
-                (
-                    entry
-                    if entry is None or entry.path is None
-                    else entry._replace(path=str(PurePath(prepend_dir, entry.path)))
-                )
-                for entry in path_item
-            ]
-        elif path_item is not None and path_item.path is not None:
-            path_item.path = str(PurePath(prepend_dir, path_item.path))
-        return path_item
-
     def merge(self, other):
         merged_instance = self.__class__()
         for prop in dir(self):

@@ -14,7 +14,7 @@ requirements:
     description: Requirement with automated test and should have no implementation
     rationale: This requirement should be considered implemented and verified
     categories: ["maintainability", "functional-suitability"]
-    implemented_in_src: false
+    implementation: N/A
     revision: 0.0.1
 
   - id: REQ_201
@@ -32,7 +32,7 @@ requirements:
     description: This requirement is not supposed to have an impl and a passing test
     rationale: This requirement should be considered implemented and verified
     significance: shall
-    implemented_in_src: false
+    implementation: N/A
     categories: ["maintainability", "functional-suitability"]
     revision: 0.0.1
 
@@ -41,6 +41,6 @@ requirements:
     description: This requirement is not supposed to have an impl and a failing test
     rationale: This requirement should not be considered implemented and verified
     significance: shall
-    implemented_in_src: false
+    implementation: N/A
     categories: ["maintainability", "functional-suitability"]
     revision: 0.0.1

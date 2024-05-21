@@ -272,10 +272,13 @@
                     "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
                     "description": "Revision that the requirement was added"
                 },
-                "implemented_in_src": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "boolean value to indicate if requirement can be implemented in source code. Defaults to True"
+                "implementation": {
+                    "type": "string",
+                    "enum": [
+                        "in-code",
+                        "N/A"
+                    ],
+                    "description": "Enum value to describe how the requirement is implemented. Defaults to 'in-code' if omitted"
                 }
             },
             "required": [

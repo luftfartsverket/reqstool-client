@@ -11,6 +11,7 @@ from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.location import LocationInterface
+from reqstool.models.requirements import IMPLEMENTATION
 
 
 @Requirements("REQ_027")
@@ -34,7 +35,7 @@ class StatusCommand:
 
 
 def _build_table(
-    req_id: str, urn: str, impls: int, tests: str, mvrs: str, completed: bool, expects_impl: bool
+    req_id: str, urn: str, impls: int, tests: str, mvrs: str, completed: bool, implementation: IMPLEMENTATION
 ) -> List[str]:
     row = [urn]
     # add color to requirement if it's completed or not
@@ -42,7 +43,7 @@ def _build_table(
     row.append(f"{req_id_color}{req_id}{Style.RESET_ALL}")
 
     # Perform check for implementations
-    if not expects_impl:
+    if implementation is IMPLEMENTATION.NOT_APPLICABLE:
         row.extend(["N/A"])
     else:
         row.extend(
@@ -68,7 +69,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
                 tests=stats.automated_tests_stats,
                 mvrs=stats.mvrs_stats,
                 completed=stats.completed,
-                expects_impl=stats.expects_impl,
+                implementation=stats.implementation,
             )
         )
 

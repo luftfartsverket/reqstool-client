@@ -23,6 +23,6 @@ requirements:
     description: This requirement is not supposed to have an impl
     rationale: Rationale
     significance: shall
-    implemented_in_src: false
+    implementation: N/A
     categories: ["maintainability", "functional-suitability"]
     revision: 0.0.1

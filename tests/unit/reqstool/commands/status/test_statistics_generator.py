@@ -14,6 +14,7 @@ from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.local_location import LocalLocation
+from reqstool.models.requirements import IMPLEMENTATION
 
 
 @SVCs("SVC_022")
@@ -27,7 +28,7 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
         _requirement_statistics={
             UrnId(urn="ms-101", id="REQ_101"): CombinedRequirementTestItem(
                 completed=True,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -50,7 +51,7 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-101", id="REQ_102"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
@@ -73,7 +74,7 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-101", id="REQ_201"): CombinedRequirementTestItem(
                 completed=True,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -96,7 +97,7 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-101", id="REQ_202"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -147,7 +148,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
         _requirement_statistics={
             UrnId(urn="ms-001", id="REQ_010"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
@@ -170,7 +171,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-001", id="REQ_020"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -193,7 +194,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="sys-001", id="REQ_sys001_505"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -216,7 +217,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ext-001", id="REQ_ext001_100"): CombinedRequirementTestItem(
                 completed=True,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -239,7 +240,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ext-002", id="REQ_ext002_300"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -262,7 +263,7 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ext-002", id="REQ_ext002_400"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -313,7 +314,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
         _requirement_statistics={
             UrnId(urn="sys-001", id="REQ_sys001_505"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -336,7 +337,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             ),
             UrnId(urn="sys-001", id="REQ_sys001_010"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=1,
@@ -359,7 +360,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             ),
             UrnId(urn="sys-001", id="REQ_sys001_020"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -382,7 +383,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             ),
             UrnId(urn="ext-001", id="REQ_ext001_100"): CombinedRequirementTestItem(
                 completed=True,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -405,7 +406,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             ),
             UrnId(urn="ext-002", id="REQ_ext002_300"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -428,7 +429,7 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             ),
             UrnId(urn="ext-002", id="REQ_ext002_400"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -481,7 +482,7 @@ def test_calculate_test_basic_no_impls(local_testdata_resources_rootdir_w_path):
         _requirement_statistics={
             UrnId(urn="ms-101", id="REQ_101"): CombinedRequirementTestItem(
                 completed=True,
-                expects_impl=False,
+                implementation=IMPLEMENTATION.NOT_APPLICABLE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -504,7 +505,7 @@ def test_calculate_test_basic_no_impls(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-101", id="REQ_201"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=True,
+                implementation=IMPLEMENTATION.IN_CODE,
                 nr_of_implementations=1,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -527,7 +528,7 @@ def test_calculate_test_basic_no_impls(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-101", id="REQ_1337"): CombinedRequirementTestItem(
                 completed=True,
-                expects_impl=False,
+                implementation=IMPLEMENTATION.NOT_APPLICABLE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,
@@ -550,7 +551,7 @@ def test_calculate_test_basic_no_impls(local_testdata_resources_rootdir_w_path):
             ),
             UrnId(urn="ms-101", id="REQ_1339"): CombinedRequirementTestItem(
                 completed=False,
-                expects_impl=False,
+                implementation=IMPLEMENTATION.NOT_APPLICABLE,
                 nr_of_implementations=0,
                 automated_tests_stats=TestStatisticsItem(
                     nr_of_failed_tests=0,

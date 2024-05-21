@@ -22,6 +22,7 @@ from reqstool.models.implementations import GitImplData, ImplementationDataInter
 from reqstool.models.imports import GitImportData, ImportDataInterface, LocalImportData, MavenImportData
 from reqstool.models.requirements import (
     CATEGORIES,
+    IMPLEMENTATION,
     SIGNIFANCETYPES,
     VARIANTS,
     MetaData,
@@ -299,8 +300,8 @@ class RequirementsModelGenerator:
 
                 # Check if rationale is defined, or set it to None
                 rationale = req["rationale"] if "rationale" in req else None
-                # Check if implemented_in_src is defined, or set it to True
-                implemeted_in_src = req["implemented_in_src"] if "implemented_in_src" in req else True
+                # Check if implementation is defined, or set it to True
+                implementation = req["implementation"] if "implementation" in req else IMPLEMENTATION.IN_CODE.value
 
                 urn_id = UrnId(urn=urn, id=req["id"])
                 req_data = RequirementData(
@@ -309,7 +310,7 @@ class RequirementsModelGenerator:
                     significance=SIGNIFANCETYPES(req["significance"]),
                     description=req["description"],
                     rationale=rationale,
-                    implemented_in_src=implemeted_in_src,
+                    implementation=IMPLEMENTATION(implementation),
                     categories=[CATEGORIES(c) for c in req["categories"]],
                     references=refs_data,
                     revision=self.__parse_req_version(version=req["revision"], urn_id=urn_id),
