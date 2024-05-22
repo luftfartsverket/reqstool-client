@@ -130,8 +130,8 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
             nr_of_total_requirements=4,
             nr_of_reqs_with_implementation=2,
             nr_of_total_svcs=4,
-            nr_of_completed_reqs_no_implementation_expected=0,
-            nr_of_total_reqs_no_implementation_expected=0,
+            nr_of_completed_reqs_no_implementation=0,
+            nr_of_total_reqs_no_implementation=0,
         ),
     )
     assert result == expected
@@ -296,8 +296,8 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             nr_of_total_requirements=6,
             nr_of_reqs_with_implementation=5,
             nr_of_total_svcs=9,
-            nr_of_completed_reqs_no_implementation_expected=0,
-            nr_of_total_reqs_no_implementation_expected=0,
+            nr_of_completed_reqs_no_implementation=0,
+            nr_of_total_reqs_no_implementation=0,
         ),
     )
     assert result == expected
@@ -462,8 +462,8 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             nr_of_total_requirements=6,
             nr_of_reqs_with_implementation=5,
             nr_of_total_svcs=8,
-            nr_of_completed_reqs_no_implementation_expected=0,
-            nr_of_total_reqs_no_implementation_expected=0,
+            nr_of_completed_reqs_no_implementation=0,
+            nr_of_total_reqs_no_implementation=0,
         ),
     )
     assert result == expected
@@ -579,8 +579,8 @@ def test_calculate_test_basic_no_impls(local_testdata_resources_rootdir_w_path):
             nr_of_missing_automated_tests=0,
             nr_of_missing_manual_tests=0,
             nr_of_passed_tests=2,
-            nr_of_completed_reqs_no_implementation_expected=2,
-            nr_of_total_reqs_no_implementation_expected=3,
+            nr_of_completed_reqs_no_implementation=2,
+            nr_of_total_reqs_no_implementation=3,
             nr_of_reqs_with_implementation=1,
             nr_of_skipped_tests=0,
             nr_of_total_requirements=4,

@@ -149,12 +149,12 @@ def _summarize_statisics(
                 numerator=(nr_of_completed_reqs - nr_of_completed_reqs_without_implementation),
                 denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
             ),
-            str(nr_of_reqs_without_implementation)  # Total
+            str(nr_of_reqs_without_implementation)
             + __numbers_as_percentage(
                 numerator=(nr_of_reqs_without_implementation),
                 denominator=(nr_of_reqs_without_implementation),
             ),
-            str(nr_of_completed_reqs_without_implementation)  # Verified
+            str(nr_of_completed_reqs_without_implementation)
             + __numbers_as_percentage(
                 numerator=(nr_of_completed_reqs_without_implementation),
                 denominator=(nr_of_reqs_without_implementation),
