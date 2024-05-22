@@ -48,8 +48,8 @@ class TotalStatisticsItem:
     nr_of_total_requirements: int = 0
     nr_of_reqs_with_implementation: int = 0
     nr_of_total_svcs: int = 0
-    nr_of_completed_reqs_no_implementation_expected: int = 0
-    nr_of_total_reqs_no_implementation_expected: int = 0
+    nr_of_completed_reqs_no_implementation: int = 0
+    nr_of_total_reqs_no_implementation: int = 0
 
     def update(self, completed: bool, combined_req_test_item: CombinedRequirementTestItem):
         self.nr_of_total_requirements += 1
@@ -59,10 +59,10 @@ class TotalStatisticsItem:
 
         # Some requirements could be completed without any implementation
         if completed and combined_req_test_item.implementation is IMPLEMENTATION.NOT_APPLICABLE:
-            self.nr_of_completed_reqs_no_implementation_expected += 1
+            self.nr_of_completed_reqs_no_implementation += 1
 
         if combined_req_test_item.implementation is IMPLEMENTATION.NOT_APPLICABLE:
-            self.nr_of_total_reqs_no_implementation_expected += 1
+            self.nr_of_total_reqs_no_implementation += 1
 
         if completed:
             self.nr_of_completed_requirements += 1
