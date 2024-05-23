@@ -63,7 +63,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
             )
         )
 
-    col_align = ["center"] * len(table_data[0])
+    col_align = ["center"] * len(headers) if table_data else []
     table = tabulate(tablefmt="fancy_grid", tabular_data=table_data, headers=headers, colalign=col_align)
     table_with_title = f"{title}\n{table}\n"
     statisics = _summarize_statisics(
