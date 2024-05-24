@@ -3,7 +3,7 @@ FROM python:3.12.3-alpine
 
 ENV PYTHONUNBUFFERED 1
 
-LABEL org.opencontainers.image.title="reqstool-image"
+LABEL org.opencontainers.image.title="reqstool"
 LABEL org.opencontainers.image.description="This is custom Docker Image for reqstool."
 LABEL org.opencontainers.image.authors="sysdev@lfv.se"
 LABEL org.opencontainers.image.vendor="LFV"
