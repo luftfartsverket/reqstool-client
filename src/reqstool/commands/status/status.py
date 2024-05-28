@@ -133,9 +133,12 @@ def _summarize_statisics(
     header_req_data = ("\b" * len(str(nr_of_total_reqs))) + f"Total Requirements: {str(nr_of_total_reqs)}"
     header_test_data = ("\b" * len(str(total_tests))) + f"Total Tests: {str(total_tests)}"
     header_svcs_data = ("\b" * len(str(nr_of_total_svcs))) + f"Total SVCs: {str(nr_of_total_svcs)}"
-    CODE = "CODE"
-    NA = "N/A"
-    IMPLEMENTATIONS = "Implementations"
+    CODE, NA, IMPLEMENTATIONS = __colorize_headers(
+        total=nr_of_total_reqs,
+        total_completed=nr_of_completed_reqs,
+        total_reqs_no_impl=nr_of_reqs_without_implementation,
+        completed_reqs_no_impl=nr_of_completed_reqs_without_implementation,
+    )
 
     implementation_data = [
         [
@@ -247,6 +250,22 @@ def __numbers_as_percentage(numerator: int, denominator: int) -> str:
     percentage = (numerator / denominator) * 100
     percentage_as_string = " ({:.2f}%)".format(percentage)
     return percentage_as_string
+
+
+def __colorize_headers(total: int, total_completed: int, total_reqs_no_impl: int, completed_reqs_no_impl: int):
+    total_code = total - total_reqs_no_impl
+    total_code_completed = total_code == (total_completed - completed_reqs_no_impl)
+    total_no_impl_completed = total_reqs_no_impl - completed_reqs_no_impl == 0
+
+    CODE = f"{Fore.GREEN}{'CODE'}{Style.RESET_ALL}" if total_code_completed else f"{Fore.RED}{'CODE'}{Style.RESET_ALL}"
+    NA = f"{Fore.GREEN}{'N/A'}{Style.RESET_ALL}" if total_no_impl_completed else f"{Fore.RED}{'N/A'}{Style.RESET_ALL}"
+    IMPLEMENTATIONS = (
+        f"{Fore.GREEN}{'Implementations'}{Style.RESET_ALL}"
+        if total == total_completed
+        else f"{Fore.RED}{'Implementations'}{Style.RESET_ALL}"
+    )
+
+    return CODE, NA, IMPLEMENTATIONS
 
 
 def _extend_row(result: TestStatisticsItem, row: List[str]):
