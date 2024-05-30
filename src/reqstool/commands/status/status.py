@@ -58,7 +58,15 @@ def _build_table(
 def _status_table(stats_container: StatisticsContainer) -> str:
     table_data = []
     headers = ["URN", "Req Id", "Implementation", "Automated Test", "Manual Test"]
-    title = "\nSTATUS"
+    # title = "\nSTATUS"
+    header_req_data = (
+        "\b" * len(str(stats_container._total_statistics.nr_of_total_requirements))
+    ) + f"Requirements: {str(stats_container._total_statistics.nr_of_total_requirements)}"
+    title = (
+        "╒═════════════════════════════════════════════════════════════════════════╕"
+        f"\n│                              {header_req_data}                             │"
+        "\n╘═════════════════════════════════════════════════════════════════════════╛"
+    )
 
     for req, stats in stats_container._requirement_statistics.items():
         table_data.append(
@@ -152,6 +160,28 @@ def _summarize_statisics(
                 numerator=(nr_of_completed_reqs - nr_of_completed_reqs_without_implementation),
                 denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
             ),
+            str(
+                nr_of_total_reqs
+                - (
+                    nr_of_reqs_without_implementation
+                    + (nr_of_completed_reqs - nr_of_completed_reqs_without_implementation)
+                )
+            )
+            + __numbers_as_percentage(
+                numerator=(
+                    nr_of_total_reqs
+                    - (
+                        nr_of_reqs_without_implementation
+                        + (nr_of_completed_reqs - nr_of_completed_reqs_without_implementation)
+                    )
+                ),
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
+            str(implemented)
+            + __numbers_as_percentage(
+                numerator=implemented,
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
             str(nr_of_reqs_without_implementation)
             + __numbers_as_percentage(
                 numerator=(nr_of_reqs_without_implementation),
@@ -162,10 +192,16 @@ def _summarize_statisics(
                 numerator=(nr_of_completed_reqs_without_implementation),
                 denominator=(nr_of_reqs_without_implementation),
             ),
-            str(left_to_implement)
+            str(nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation)
             + __numbers_as_percentage(
-                numerator=left_to_implement, denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation)
+                numerator=(nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation),
+                denominator=(nr_of_reqs_without_implementation),
             ),
+            # str(left_to_implement + (nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation))
+            # + __numbers_as_percentage(
+            #     numerator=left_to_implement,
+            #     denominator=(nr_of_total_reqs - nr_of_completed_reqs),
+            # ),
         ]
     ]
 
@@ -181,13 +217,7 @@ def _summarize_statisics(
         ]
     ]
 
-    implementation_headers = [
-        "Total",
-        "Verified",
-        "Total",
-        "Verified",
-        "Not Implemented",
-    ]
+    implementation_headers = ["Total", "Verified", "Not Verified", "Implemented", "Total", "Verified", "Not Verified"]
 
     svc_headers = [
         "Passed tests",
@@ -211,11 +241,11 @@ def _summarize_statisics(
         colalign=["center"] * len(implementation_data[0]),
     )
 
-    total_req_header = (
-        "╒════════════════════════════════════════════════════════════════╕"
-        f"\n│                      {header_req_data}                      │"
-        "\n╘════════════════════════════════════════════════════════════════╛"
-    )
+    # total_req_header = (
+    #     "╒════════════════════════════════════════════════════════════════╕"
+    #     f"\n│                      {header_req_data}                      │"
+    #     "\n╘════════════════════════════════════════════════════════════════╛"
+    # )
 
     total_tests_svcs_header = (
         "╒═══════════════════════════════════════════════════╤════════════════════════════════════════════╕"
@@ -225,20 +255,19 @@ def _summarize_statisics(
     )
 
     test_header = (
-        "╒══════════════════════════╤══════════════════════════╕"
-        f"\n|            {CODE}          │            {NA}           │"
-        "\n╘══════════════════════════╧══════════════════════════╛"
+        "╒═══════════════════════════════════════════════════════════╤═══════════════════════════════════════════╕"
+        f"\n|                             {CODE}                          │                     {NA}                   │"
+        "\n╘═══════════════════════════════════════════════════════════╧═══════════════════════════════════════════╛"
     )
 
     impl_header = (
-        "╒═════════════════════════════════════════════════════╕"
-        f"\n|                    {IMPLEMENTATIONS}                  │"
-        "\n╘═════════════════════════════════════════════════════╛"
+        "╒═══════════════════════════════════════════════════════════════════════════════════════════════════════╕"
+        f"\n|                                              {IMPLEMENTATIONS}                                          │"
+        "\n╘═══════════════════════════════════════════════════════════════════════════════════════════════════════╛"
     )
 
     table_with_title = (
-        f"\n{total_req_header}\n{impl_header}\n{test_header}\n"
-        f"{implementation_table}\n{total_tests_svcs_header}\n{svc_table}"
+        f"\n{impl_header}\n{test_header}\n" f"{implementation_table}\n{total_tests_svcs_header}\n{svc_table}"
     )
 
     return table_with_title
@@ -257,12 +286,12 @@ def __colorize_headers(total: int, total_completed: int, total_reqs_no_impl: int
     total_code_completed = total_code == (total_completed - completed_reqs_no_impl)
     total_no_impl_completed = total_reqs_no_impl - completed_reqs_no_impl == 0
 
-    CODE = f"{Fore.GREEN}{'CODE'}{Style.RESET_ALL}" if total_code_completed else f"{Fore.RED}{'CODE'}{Style.RESET_ALL}"
+    CODE = f"{Fore.GREEN}{'Code'}{Style.RESET_ALL}" if total_code_completed else f"{Fore.RED}{'Code'}{Style.RESET_ALL}"
     NA = f"{Fore.GREEN}{'N/A'}{Style.RESET_ALL}" if total_no_impl_completed else f"{Fore.RED}{'N/A'}{Style.RESET_ALL}"
     IMPLEMENTATIONS = (
-        f"{Fore.GREEN}{'Implementations'}{Style.RESET_ALL}"
+        f"{Fore.GREEN}{'IMPLEMENTATIONS'}{Style.RESET_ALL}"
         if total == total_completed
-        else f"{Fore.RED}{'Implementations'}{Style.RESET_ALL}"
+        else f"{Fore.RED}{'IMPLEMENTATIONS'}{Style.RESET_ALL}"
     )
 
     return CODE, NA, IMPLEMENTATIONS
