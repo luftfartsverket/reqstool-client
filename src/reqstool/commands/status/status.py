@@ -57,11 +57,10 @@ def _build_table(
 # builds the status table
 def _status_table(stats_container: StatisticsContainer) -> str:
     table_data = []
-    headers = ["URN", "Req Id", "Implementation", "Automated Test", "Manual Test"]
-    # title = "\nSTATUS"
+    headers = ["URN", "ID", "Implementation", "Automated Tests", "Manual Tests"]
     header_req_data = (
         "\b" * len(str(stats_container._total_statistics.nr_of_total_requirements))
-    ) + f"Requirements: {str(stats_container._total_statistics.nr_of_total_requirements)}"
+    ) + f"REQUIREMENTS: {str(stats_container._total_statistics.nr_of_total_requirements)}"
     title = (
         "╒═════════════════════════════════════════════════════════════════════════╕"
         f"\n│                              {header_req_data}                             │"
@@ -138,7 +137,6 @@ def _summarize_statisics(
     nr_of_reqs_without_implementation: int,
     nr_of_completed_reqs_without_implementation: int,
 ) -> str:
-    header_req_data = ("\b" * len(str(nr_of_total_reqs))) + f"Total Requirements: {str(nr_of_total_reqs)}"
     header_test_data = ("\b" * len(str(total_tests))) + f"Total Tests: {str(total_tests)}"
     header_svcs_data = ("\b" * len(str(nr_of_total_svcs))) + f"Total SVCs: {str(nr_of_total_svcs)}"
     CODE, NA, IMPLEMENTATIONS = __colorize_headers(
@@ -153,6 +151,11 @@ def _summarize_statisics(
             str(nr_of_total_reqs - nr_of_reqs_without_implementation)
             + __numbers_as_percentage(
                 numerator=nr_of_total_reqs - nr_of_reqs_without_implementation,
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
+            str(implemented)
+            + __numbers_as_percentage(
+                numerator=implemented,
                 denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
             ),
             str(nr_of_completed_reqs - nr_of_completed_reqs_without_implementation)
@@ -177,11 +180,6 @@ def _summarize_statisics(
                 ),
                 denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
             ),
-            str(implemented)
-            + __numbers_as_percentage(
-                numerator=implemented,
-                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
-            ),
             str(nr_of_reqs_without_implementation)
             + __numbers_as_percentage(
                 numerator=(nr_of_reqs_without_implementation),
@@ -197,11 +195,6 @@ def _summarize_statisics(
                 numerator=(nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation),
                 denominator=(nr_of_reqs_without_implementation),
             ),
-            # str(left_to_implement + (nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation))
-            # + __numbers_as_percentage(
-            #     numerator=left_to_implement,
-            #     denominator=(nr_of_total_reqs - nr_of_completed_reqs),
-            # ),
         ]
     ]
 
@@ -217,7 +210,7 @@ def _summarize_statisics(
         ]
     ]
 
-    implementation_headers = ["Total", "Verified", "Not Verified", "Implemented", "Total", "Verified", "Not Verified"]
+    implementation_headers = ["Total", "Implemented", "Verified", "Not Verified", "Total", "Verified", "Not Verified"]
 
     svc_headers = [
         "Passed tests",
@@ -240,12 +233,6 @@ def _summarize_statisics(
         headers=implementation_headers,
         colalign=["center"] * len(implementation_data[0]),
     )
-
-    # total_req_header = (
-    #     "╒════════════════════════════════════════════════════════════════╕"
-    #     f"\n│                      {header_req_data}                      │"
-    #     "\n╘════════════════════════════════════════════════════════════════╛"
-    # )
 
     total_tests_svcs_header = (
         "╒═══════════════════════════════════════════════════╤════════════════════════════════════════════╕"
