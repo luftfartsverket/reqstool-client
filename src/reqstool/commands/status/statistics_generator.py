@@ -13,6 +13,7 @@ from reqstool.model_generators.combined_indexed_dataset_generator import Combine
 from reqstool.model_generators.combined_raw_datasets_generator import CombinedRawDatasetsGenerator
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.mvrs import MVRData
+from reqstool.models.requirements import IMPLEMENTATION
 from reqstool.models.svcs import VERIFICATIONTYPES, SVCData
 from reqstool.models.test_data import TEST_RUN_STATUS, TestData
 
@@ -95,7 +96,7 @@ class StatisticsGenerator:
             )
 
             completed = (
-                nr_of_implementations > 0
+                self._check_implementation(urn_id=urn_id, nr_of_implementations=nr_of_implementations)
                 and mvr_stats.is_completed()
                 and automated_test_stats.is_completed()
                 and (should_have_mvrs or should_have_automated_tests)
@@ -107,6 +108,7 @@ class StatisticsGenerator:
                 completed=completed,
                 automated_tests_stats=automated_test_stats,
                 mvrs_stats=mvr_stats,
+                implementation=self.cid.requirements[urn_id].implementation,
             )
 
         return self.stats_container
@@ -118,6 +120,22 @@ class StatisticsGenerator:
                 for svc in svc_list:
                     svcs_urn_ids.append(svc)
         return svcs_urn_ids
+
+    def _check_implementation(self, urn_id: UrnId, nr_of_implementations: int) -> bool:
+        implementation = self.cid.requirements[urn_id].implementation
+        implementation_ok = False
+        if (
+            nr_of_implementations > 0
+            and implementation is IMPLEMENTATION.IN_CODE
+            or nr_of_implementations == 0
+            and implementation is IMPLEMENTATION.NOT_APPLICABLE
+        ):
+            implementation_ok = True
+        elif nr_of_implementations > 0 and implementation is IMPLEMENTATION.NOT_APPLICABLE:
+            # Throw error if there are implementations of a requirement that does not expect it
+            raise TypeError(f"Requirement {urn_id} should not have an implementation")
+
+        return implementation_ok
 
     # Returns a string if all test passes or fails
     def _get_test_stats(self, tests: List[TestData], svcs: List[SVCData]) -> StatsTestStatus:

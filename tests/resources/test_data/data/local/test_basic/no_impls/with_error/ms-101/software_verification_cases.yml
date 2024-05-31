@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/software_verification_cases.schema.json
+
+cases:
+  - id: SVC_201
+    requirement_ids: ["REQ_201"]
+    title: "Some Title SVC_201"
+    description: "Some Description SVC_201"
+    verification: manual-test
+    instructions: "Some instructions"
+    revision: "0.0.2"
+
+  - id: SVC_033
+    requirement_ids: ["REQ_1339"]
+    title: "Some Title SVC_1339"
+    verification: manual-test
+    revision: "0.0.1"

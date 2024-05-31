@@ -51,6 +51,12 @@ class CATEGORIES(Enum):
     SAFETY = "safety"
 
 
+@unique
+class IMPLEMENTATION(Enum):
+    IN_CODE = "in-code"
+    NOT_APPLICABLE = "N/A"
+
+
 @dataclass
 class ReferenceData:
     requirement_ids: Set[UrnId] = set[UrnId]
@@ -64,6 +70,7 @@ class RequirementData:
     description: str
     rationale: str
     revision: Version
+    implementation: IMPLEMENTATION = field(default=IMPLEMENTATION.IN_CODE)
     categories: List[CATEGORIES] = field(default_factory=list)
     references: List[ReferenceData] = field(default_factory=list)
 

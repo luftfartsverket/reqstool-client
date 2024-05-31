@@ -11,6 +11,7 @@ from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.location import LocationInterface
+from reqstool.models.requirements import IMPLEMENTATION
 
 
 @Requirements("REQ_027")
@@ -33,13 +34,21 @@ class StatusCommand:
         )
 
 
-def _build_table(req_id: str, urn: str, impls: int, tests: str, mvrs: str, completed: bool) -> List[str]:
+def _build_table(
+    req_id: str, urn: str, impls: int, tests: str, mvrs: str, completed: bool, implementation: IMPLEMENTATION
+) -> List[str]:
     row = [urn]
     # add color to requirement if it's completed or not
     req_id_color = f"{Fore.GREEN}" if completed else f"{Fore.RED}"
     row.append(f"{req_id_color}{req_id}{Style.RESET_ALL}")
-    # perform check for impls
-    row.extend([Fore.GREEN + "Implemented" + Style.RESET_ALL if impls > 0 else Fore.RED + "Missing" + Style.RESET_ALL])
+
+    # Perform check for implementations
+    if implementation is IMPLEMENTATION.NOT_APPLICABLE:
+        row.extend(["N/A"])
+    else:
+        row.extend(
+            [Fore.GREEN + "Implemented" + Style.RESET_ALL if impls > 0 else Fore.RED + "Missing" + Style.RESET_ALL]
+        )
     _extend_row(tests, row)
     _extend_row(mvrs, row)
     return row
@@ -48,8 +57,15 @@ def _build_table(req_id: str, urn: str, impls: int, tests: str, mvrs: str, compl
 # builds the status table
 def _status_table(stats_container: StatisticsContainer) -> str:
     table_data = []
-    headers = ["URN", "Req Id", "Implementation", "Automated Test", "Manual Test"]
-    title = "\nSTATUS"
+    headers = ["URN", "ID", "Implementation", "Automated Tests", "Manual Tests"]
+    header_req_data = (
+        "\b" * len(str(stats_container._total_statistics.nr_of_total_requirements))
+    ) + f"REQUIREMENTS: {str(stats_container._total_statistics.nr_of_total_requirements)}"
+    title = (
+        "╒═════════════════════════════════════════════════════════════════════════╕"
+        f"\n│                              {header_req_data}                             │"
+        "\n╘═════════════════════════════════════════════════════════════════════════╛"
+    )
 
     for req, stats in stats_container._requirement_statistics.items():
         table_data.append(
@@ -60,6 +76,7 @@ def _status_table(stats_container: StatisticsContainer) -> str:
                 tests=stats.automated_tests_stats,
                 mvrs=stats.mvrs_stats,
                 completed=stats.completed,
+                implementation=stats.implementation,
             )
         )
 
@@ -71,7 +88,10 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         nr_of_completed_reqs=stats_container._total_statistics.nr_of_completed_requirements,
         implemented=stats_container._total_statistics.nr_of_reqs_with_implementation,
         left_to_implement=stats_container._total_statistics.nr_of_total_requirements
-        - stats_container._total_statistics.nr_of_reqs_with_implementation,
+        - (
+            stats_container._total_statistics.nr_of_reqs_with_implementation
+            + stats_container._total_statistics.nr_of_total_reqs_no_implementation
+        ),
         total_tests=stats_container._total_statistics.nr_of_total_tests,
         passed_tests=stats_container._total_statistics.nr_of_passed_tests,
         failed_tests=stats_container._total_statistics.nr_of_failed_tests,
@@ -79,6 +99,10 @@ def _status_table(stats_container: StatisticsContainer) -> str:
         missing_automated_tests=stats_container._total_statistics.nr_of_missing_automated_tests,
         missing_manual_tests=stats_container._total_statistics.nr_of_missing_manual_tests,
         nr_of_total_svcs=stats_container._total_statistics.nr_of_total_svcs,
+        nr_of_reqs_without_implementation=(stats_container._total_statistics.nr_of_total_reqs_no_implementation),
+        nr_of_completed_reqs_without_implementation=(
+            stats_container._total_statistics.nr_of_completed_reqs_no_implementation
+        ),
     )
 
     legend = [
@@ -110,20 +134,70 @@ def _summarize_statisics(
     missing_automated_tests: int,
     missing_manual_tests: int,
     nr_of_total_svcs: int,
+    nr_of_reqs_without_implementation: int,
+    nr_of_completed_reqs_without_implementation: int,
 ) -> str:
-    header_req_data = ("\b" * len(str(nr_of_total_reqs))) + f"Total Requirements: {str(nr_of_total_reqs)}"
     header_test_data = ("\b" * len(str(total_tests))) + f"Total Tests: {str(total_tests)}"
     header_svcs_data = ("\b" * len(str(nr_of_total_svcs))) + f"Total SVCs: {str(nr_of_total_svcs)}"
+    CODE, NA, IMPLEMENTATIONS = __colorize_headers(
+        total=nr_of_total_reqs,
+        total_completed=nr_of_completed_reqs,
+        total_reqs_no_impl=nr_of_reqs_without_implementation,
+        completed_reqs_no_impl=nr_of_completed_reqs_without_implementation,
+    )
 
-    table_req_data = [
+    implementation_data = [
         [
-            str(nr_of_completed_reqs)
-            + __numbers_as_percentage(numerator=nr_of_completed_reqs, denominator=nr_of_total_reqs),
-            str(implemented - nr_of_completed_reqs)
-            + __numbers_as_percentage(numerator=implemented - nr_of_completed_reqs, denominator=nr_of_total_reqs),
-            str(left_to_implement) + __numbers_as_percentage(numerator=left_to_implement, denominator=nr_of_total_reqs),
+            str(nr_of_total_reqs - nr_of_reqs_without_implementation)
+            + __numbers_as_percentage(
+                numerator=nr_of_total_reqs - nr_of_reqs_without_implementation,
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
+            str(implemented)
+            + __numbers_as_percentage(
+                numerator=implemented,
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
+            str(nr_of_completed_reqs - nr_of_completed_reqs_without_implementation)
+            + __numbers_as_percentage(
+                numerator=(nr_of_completed_reqs - nr_of_completed_reqs_without_implementation),
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
+            str(
+                nr_of_total_reqs
+                - (
+                    nr_of_reqs_without_implementation
+                    + (nr_of_completed_reqs - nr_of_completed_reqs_without_implementation)
+                )
+            )
+            + __numbers_as_percentage(
+                numerator=(
+                    nr_of_total_reqs
+                    - (
+                        nr_of_reqs_without_implementation
+                        + (nr_of_completed_reqs - nr_of_completed_reqs_without_implementation)
+                    )
+                ),
+                denominator=(nr_of_total_reqs - nr_of_reqs_without_implementation),
+            ),
+            str(nr_of_reqs_without_implementation)
+            + __numbers_as_percentage(
+                numerator=(nr_of_reqs_without_implementation),
+                denominator=(nr_of_reqs_without_implementation),
+            ),
+            str(nr_of_completed_reqs_without_implementation)
+            + __numbers_as_percentage(
+                numerator=(nr_of_completed_reqs_without_implementation),
+                denominator=(nr_of_reqs_without_implementation),
+            ),
+            str(nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation)
+            + __numbers_as_percentage(
+                numerator=(nr_of_reqs_without_implementation - nr_of_completed_reqs_without_implementation),
+                denominator=(nr_of_reqs_without_implementation),
+            ),
         ]
     ]
+
     table_svc_data = [
         [
             str(passed_tests) + __numbers_as_percentage(numerator=passed_tests, denominator=total_tests),
@@ -135,11 +209,9 @@ def _summarize_statisics(
             + __numbers_as_percentage(numerator=missing_manual_tests, denominator=nr_of_total_svcs),
         ]
     ]
-    req_headers = [
-        "Implemented and Verified",
-        "Implemented",
-        "Not implemented",
-    ]
+
+    implementation_headers = ["Total", "Implemented", "Verified", "Not Verified", "Total", "Verified", "Not Verified"]
+
     svc_headers = [
         "Passed tests",
         "Failed tests",
@@ -147,24 +219,19 @@ def _summarize_statisics(
         "SVCs missing tests",
         "SVCs missing MVRs",
     ]
-    col_align = ["center"] * len(table_req_data[0])
-    req_table = req_table = tabulate(
-        tablefmt="fancy_grid",
-        tabular_data=table_req_data,
-        headers=req_headers,
-        colalign=col_align,
-    )
+
     svc_table = svc_table = tabulate(
         tablefmt="fancy_grid",
         tabular_data=table_svc_data,
         headers=svc_headers,
-        colalign=col_align,
+        colalign=["center"] * len(table_svc_data[0]),
     )
 
-    total_req_header = (
-        "╒════════════════════════════════════════════════════════════════╕"
-        f"\n│                      {header_req_data}                      │"
-        "\n╘════════════════════════════════════════════════════════════════╛"
+    implementation_table = tabulate(
+        tablefmt="fancy_grid",
+        tabular_data=implementation_data,
+        headers=implementation_headers,
+        colalign=["center"] * len(implementation_data[0]),
     )
 
     total_tests_svcs_header = (
@@ -174,7 +241,21 @@ def _summarize_statisics(
         "\n╘═══════════════════════════════════════════════════╧════════════════════════════════════════════╛"
     )
 
-    table_with_title = f"\n{total_req_header}\n{req_table}\n{total_tests_svcs_header}\n{svc_table}"
+    test_header = (
+        "╒═══════════════════════════════════════════════════════════╤═══════════════════════════════════════════╕"
+        f"\n|                             {CODE}                          │                     {NA}                   │"
+        "\n╘═══════════════════════════════════════════════════════════╧═══════════════════════════════════════════╛"
+    )
+
+    impl_header = (
+        "╒═══════════════════════════════════════════════════════════════════════════════════════════════════════╕"
+        f"\n|                                              {IMPLEMENTATIONS}                                          │"
+        "\n╘═══════════════════════════════════════════════════════════════════════════════════════════════════════╛"
+    )
+
+    table_with_title = (
+        f"\n{impl_header}\n{test_header}\n" f"{implementation_table}\n{total_tests_svcs_header}\n{svc_table}"
+    )
 
     return table_with_title
 
@@ -185,6 +266,22 @@ def __numbers_as_percentage(numerator: int, denominator: int) -> str:
     percentage = (numerator / denominator) * 100
     percentage_as_string = " ({:.2f}%)".format(percentage)
     return percentage_as_string
+
+
+def __colorize_headers(total: int, total_completed: int, total_reqs_no_impl: int, completed_reqs_no_impl: int):
+    total_code = total - total_reqs_no_impl
+    total_code_completed = total_code == (total_completed - completed_reqs_no_impl)
+    total_no_impl_completed = total_reqs_no_impl - completed_reqs_no_impl == 0
+
+    CODE = f"{Fore.GREEN}{'Code'}{Style.RESET_ALL}" if total_code_completed else f"{Fore.RED}{'Code'}{Style.RESET_ALL}"
+    NA = f"{Fore.GREEN}{'N/A'}{Style.RESET_ALL}" if total_no_impl_completed else f"{Fore.RED}{'N/A'}{Style.RESET_ALL}"
+    IMPLEMENTATIONS = (
+        f"{Fore.GREEN}{'IMPLEMENTATIONS'}{Style.RESET_ALL}"
+        if total == total_completed
+        else f"{Fore.RED}{'IMPLEMENTATIONS'}{Style.RESET_ALL}"
+    )
+
+    return CODE, NA, IMPLEMENTATIONS
 
 
 def _extend_row(result: TestStatisticsItem, row: List[str]):

@@ -271,6 +271,14 @@
                     "type": "string",
                     "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
                     "description": "Revision that the requirement was added"
+                },
+                "implementation": {
+                    "type": "string",
+                    "enum": [
+                        "in-code",
+                        "N/A"
+                    ],
+                    "description": "Enum value to describe how the requirement is implemented. Defaults to 'in-code' if omitted"
                 }
             },
             "required": [

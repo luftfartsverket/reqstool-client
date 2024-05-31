@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+#file://home/u70592/dev/clones/github/reqstool-client/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: ms-101
+  variant: microservice
+  title: Some Microservice Requirement Title
+  url: https://url.example.com
+
+requirements:
+  - id: REQ_201
+    title: Title REQ_201
+    significance: may
+    description: Manual test that is implemented and failed
+    rationale: Rationale REQ_201
+    categories: ["maintainability", "functional-suitability"]
+    references:
+      requirement_ids: ["REQ_101"]
+    revision: 0.0.1
+
+  - id: REQ_1339
+    title: My new requirement
+    description: This requirement is not supposed to have an impl
+    rationale: Rationale
+    significance: shall
+    implementation: N/A
+    categories: ["maintainability", "functional-suitability"]
+    revision: 0.0.1

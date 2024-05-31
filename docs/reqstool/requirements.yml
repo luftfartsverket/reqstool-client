@@ -217,3 +217,9 @@ requirements:
     description: Reqstool should be able to write the report to file / stdout.
     categories: [functional-suitability]
     revision: 0.4.0
+  - id: REQ_036
+    title: Reqstool shall support requirements that does not require an implementation
+    significance: shall
+    description: A user should be able to define a requirement that does not need an source code implementation.
+    categories: [functional-suitability, flexibility]
+    revision: 0.4.5

@@ -49,6 +49,45 @@ locations:
 
 Contains all the requirements.
 
+Below is an example of a requirement.yml file:
+
+```yaml
+metadata:
+  urn: ms-101
+  variant: microservice
+  title: Some Microservice Requirement Title
+  url: https://url.example.com
+
+requirements:
+  - id: REQ_101
+    title: Title REQ_101
+    significance: may
+    description: Requirement with automated test and should have no implementation
+    rationale: Rationale REQ_001
+    categories: ["maintainability", "functional-suitability"]
+    implementation: N/A
+    revision: 0.0.1
+```
+
+The `metadata` of the requirements.yml is required to describe the application.
+
+in the `requirements` section, an array of requirements can be specified. Some of the fields are required
+
+==== Required fields
+
+* id: Must be unique within the project.
+* title: A title of the requirement.
+* significance: Could be `shall, should`` or `may`.
+* description: Short text to describe the requirement.
+* categories: Which categories the requirement relates to.
+* revision: In which version of Reqstool client the requirement was introduced.
+
+==== Optional fields
+
+* rationale: Why this requirement is important.
+* implementation: If this requirement requires a source code implementation or not. Currently, there are two acceptable values: in-code or N/A. This defaults to `in-code` if omitted. 
+
+
 === software_verification_cases.yml
 
 Contains information about how specific requirements should be verified.
