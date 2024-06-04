@@ -1,8 +1,8 @@
 # Copyright © LFV
 
 import logging
-from importlib.abc import Traversable
 from importlib.resources import Package, files
+from pathlib import PosixPath
 
 from jinja2 import (
     BaseLoader,
@@ -37,8 +37,8 @@ class Jinja2Utils:
             return template_env.get_template(template_name)
 
         try:
-            template_module: Package = reqstool.commands.report.templates
-            template_path: Traversable = files(template_module).joinpath("")
+            template_module: Package = reqstool.commands.report
+            template_path: PosixPath = files(template_module).joinpath("templates")
             fs_loader = FileSystemLoader(searchpath=template_path)
             return load_template(fs_loader)
         except TemplateNotFound:
