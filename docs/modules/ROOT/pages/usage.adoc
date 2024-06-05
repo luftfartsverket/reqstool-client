@@ -86,3 +86,10 @@ reqstool report-asciidoc local -p path_to_requirements_dir -o path_to_output_fil
 Note: There is currently no JSON Schema for this file and it is a raw dump of the data structures using [jsonpickle](https://github.com/jsonpickle/jsonpickle) the format might change at anytime for the time being.
 
 
+=== Using the Docker image
+
+You could also run Reqstool-client from a container, using the same commands as above. However, you will also need to mount the path to the indata and/or where the expected output file should be placed. Below is an example using the `report-asciidoc` command once you have either built the image yourself or pulled it from ghcr.
+
+```bash
+docker run --rm -v path_to_requirements_files_folder:/input -v path_to_output_folder:/output  <containerId/tag> sh -c "reqstool report-asciidoc local -p ./test -o ./output/report_example.adoc"
+```
