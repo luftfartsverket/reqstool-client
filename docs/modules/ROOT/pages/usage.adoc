@@ -70,6 +70,8 @@ Generates a report in AsciiDoc.
 reqstool report-asciidoc local -p path_to_requirements_dir -o path_to_output_file.adoc
 ```
 
+IMPORTANT: The report-asciidoc command relies on PosixPath which _could_ result in issues when running on Windows machines. If an error occurs, don't hesitate to file a bug report!
+
 == Command: generate-json
 [[generate-json]]
 
