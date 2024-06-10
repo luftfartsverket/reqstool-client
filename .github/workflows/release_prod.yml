@@ -1,6 +1,7 @@
 name: Build and publish to PyPI
 
 on:
+  workflow_dispatch:
   release:
     types: [created]
 
@@ -11,10 +12,9 @@ jobs:
   build:
     name: Reuse build
     uses: ./.github/workflows/build.yml
-  
 
   publish-to-pypi:
-    needs: 
+    needs:
       - check-release
       - build
     runs-on: ubuntu-latest
@@ -36,7 +36,11 @@ jobs:
           sign-artifacts: true
 
   publish-image-to-ghcr:
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     needs:
       - publish-to-pypi
     steps:
@@ -59,4 +63,3 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/reqstool:latest
-          
