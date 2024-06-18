@@ -26,3 +26,13 @@ requirements:
     rationale: Rationale REQ_020
     categories: ["maintainability", "functional-suitability"]
     revision: 0.0.1
+  - id: REQ_030
+    title: Title REQ_030
+    significance: shall
+    description: Description REQ_030
+    rationale: Rationale REQ_030
+    categories: ["maintainability", "functional-suitability"]
+    revision: 0.0.1
+    lifecycle:
+      state: obsolete
+      reason: Reason for being obsolete

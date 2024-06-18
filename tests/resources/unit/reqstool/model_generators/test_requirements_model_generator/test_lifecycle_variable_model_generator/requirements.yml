@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/requirements.schema.json
+
+metadata:
+  urn: ms-001
+  variant: microservice
+  title: Some Microservice Requirement Title
+  url: https://url.example.com
+
+requirements:
+  - id: REQ_001
+    title: Title REQ_001
+    significance: shall
+    description: Description REQ_001
+    rationale: Rationale REQ_001
+    categories: ["functional-suitability"]
+    revision: 0.0.1
+  - id: REQ_002
+    title: Title REQ_002
+    significance: shall
+    description: Description REQ_002
+    rationale: Rationale REQ_002
+    categories: ["functional-suitability"]
+    revision: 0.0.1
+    lifecycle:
+      state: draft
+  - id: REQ_003
+    title: Title REQ_003
+    significance: shall
+    description: Description REQ_003
+    rationale: Rationale REQ_003
+    categories: ["functional-suitability"]
+    revision: 0.0.1
+    lifecycle:
+      state: obsolete
+      reason: Reason for being obsolete
+  - id: REQ_004
+    title: Title REQ_004
+    significance: shall
+    description: Description REQ_004
+    rationale: Rationale REQ_004
+    categories: ["functional-suitability"]
+    revision: 0.0.1
+    lifecycle:
+      state: draft
+      reason: Unnecessary reason

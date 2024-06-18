@@ -15,9 +15,7 @@
             }
         }
     },
-    "required": [
-        "cases"
-    ],
+    "required": ["cases"],
     "$defs": {
         "cases": {
             "type": "object",
@@ -44,13 +42,7 @@
                 },
                 "verification": {
                     "type": "string",
-                    "enum": [
-                        "automated-test",
-                        "manual-test",
-                        "review",
-                        "platform",
-                        "other"
-                    ],
+                    "enum": ["automated-test", "manual-test", "review", "platform", "other"],
                     "description": "Verification method. E.g. automated-test, manual-test, review, platform or other"
                 },
                 "instructions": {
@@ -61,15 +53,13 @@
                     "type": "string",
                     "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
                     "description": "Version the Software Verification Case was revised"
+                },
+                "lifecycle": {
+                    "type": "object",
+                    "$ref": "common.schema.json#/$defs/lifecycle"
                 }
             },
-            "required": [
-                "id",
-                "requirement_ids",
-                "title",
-                "verification",
-                "revision"
-            ]
+            "required": ["id", "requirement_ids", "title", "verification", "revision"]
         }
     }
 }

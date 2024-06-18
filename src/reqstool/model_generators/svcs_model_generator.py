@@ -8,6 +8,7 @@ from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
 from reqstool.common import utils
+from reqstool.common.dataclasses.lifecycle import LIFECYCLESTATE, LifecycleData
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
@@ -50,6 +51,15 @@ class SVCsModelGenerator:
 
         for case in data["cases"]:
             urn_id = UrnId(urn=self.urn, id=case["id"])
+
+            # Get lifecycle variables or use defaults
+            if "lifecycle" in case:
+                lifecycle_state = LIFECYCLESTATE(case["lifecycle"]["state"])
+                lifecycle_reason = case["lifecycle"]["reason"] if "reason" in case["lifecycle"] else ""
+            else:
+                lifecycle_state = LIFECYCLESTATE.EFFECTIVE
+                lifecycle_reason = ""
+
             svc = SVCData(
                 id=urn_id,
                 requirement_ids=utils.convert_ids_to_urn_id(ids=case["requirement_ids"], urn=self.urn),
@@ -58,6 +68,7 @@ class SVCsModelGenerator:
                 verification=VERIFICATIONTYPES(case["verification"]),
                 instructions=case["instructions"] if "instructions" in case else None,
                 revision=self.__parse_svc_version(version=case["revision"], urn_id=urn_id),
+                lifecycle=LifecycleData(state=lifecycle_state, reason=lifecycle_reason),
             )
 
             if svc.id not in r_result:

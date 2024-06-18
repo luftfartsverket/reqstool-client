@@ -9,7 +9,7 @@
         },
         "imports": {
             "$ref": "#/$defs/imports",
-            "description": "Array of systems or extenal sources to import"
+            "description": "Array of systems or external sources to import"
         },
         "implementations": {
             "$ref": "#/$defs/imports",
@@ -27,9 +27,7 @@
             "description": "Array of Requirements"
         }
     },
-    "required": [
-        "metadata"
-    ],
+    "required": ["metadata"],
     "anyOf": [
         {
             "if": {
@@ -52,9 +50,7 @@
             },
             "then": {
                 "not": {
-                    "required": [
-                        "implementations"
-                    ]
+                    "required": ["implementations"]
                 }
             }
         }
@@ -71,11 +67,7 @@
                 },
                 "variant": {
                     "type": "string",
-                    "enum": [
-                        "microservice",
-                        "system",
-                        "external"
-                    ],
+                    "enum": ["microservice", "system", "external"],
                     "description": "Enum of system, microservice, or external"
                 },
                 "title": {
@@ -87,11 +79,7 @@
                     "description": "Needed in case the document has extenal references like NMB2B for example, this url might point to a source of information about the EuroControl requirements"
                 }
             },
-            "required": [
-                "urn",
-                "variant",
-                "title"
-            ]
+            "required": ["urn", "variant", "title"]
         },
         "imports": {
             "type": "object",
@@ -142,11 +130,7 @@
                     "description": "Path to a directory (with requirements.yml and software_verification_cases.yml and/or manual_verification_results.yml)"
                 }
             },
-            "required": [
-                "branch",
-                "url",
-                "path"
-            ]
+            "required": ["branch", "url", "path"]
         },
         "maven": {
             "type": "object",
@@ -182,13 +166,7 @@
                     "description": "Version for the Maven implementation"
                 }
             },
-            "required": [
-                "group_id",
-                "artifact_id",
-                "url",
-                "path",
-                "version"
-            ]
+            "required": ["group_id", "artifact_id", "url", "path", "version"]
         },
         "local": {
             "type": "object",
@@ -199,9 +177,7 @@
                     "description": "Path to resource e.g. path to a directory (with requirements.yml and software_verification_cases.yml and/or manual_verification_results.yml) or to a requirements.yml"
                 }
             },
-            "required": [
-                "path"
-            ]
+            "required": ["path"]
         },
         "requirements": {
             "type": "object",
@@ -216,11 +192,7 @@
                     "description": "Title for the requirement"
                 },
                 "significance": {
-                    "enum": [
-                        "shall",
-                        "should",
-                        "may"
-                    ],
+                    "enum": ["shall", "should", "may"],
                     "description": "Enum with Level of significance. E.g. shall, should, may (https://www.rfc-editor.org/rfc/rfc2119)"
                 },
                 "description": {
@@ -262,9 +234,7 @@
                             "description": "Array of requirements related to this requirement"
                         }
                     },
-                    "required": [
-                        "requirement_ids"
-                    ],
+                    "required": ["requirement_ids"],
                     "description": "References to related requirements"
                 },
                 "revision": {
@@ -274,21 +244,15 @@
                 },
                 "implementation": {
                     "type": "string",
-                    "enum": [
-                        "in-code",
-                        "N/A"
-                    ],
+                    "enum": ["in-code", "N/A"],
                     "description": "Enum value to describe how the requirement is implemented. Defaults to 'in-code' if omitted"
+                },
+                "lifecycle": {
+                    "type": "object",
+                    "$ref": "common.schema.json#/$defs/lifecycle"
                 }
             },
-            "required": [
-                "id",
-                "title",
-                "significance",
-                "description",
-                "categories",
-                "revision"
-            ]
+            "required": ["id", "title", "significance", "description", "categories", "revision"]
         },
         "url": {
             "type": "string"

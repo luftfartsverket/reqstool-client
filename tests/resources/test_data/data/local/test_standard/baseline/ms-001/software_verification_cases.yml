@@ -41,9 +41,14 @@ cases:
     title: "SVC with missing MVR"
     verification: manual-test
     revision: "0.0.1"
+    lifecycle:
+      state: deprecated
+      reason: Super lame
 
   - id: SVC_030
     requirement_ids: ["sys-001:REQ_sys001_505"]
     title: "SVC with passing imported automated-test but not implemented"
     verification: automated-test
     revision: "0.0.1"
+    lifecycle:
+      state: effective
