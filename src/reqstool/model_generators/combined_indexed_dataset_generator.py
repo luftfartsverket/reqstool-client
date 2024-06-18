@@ -8,6 +8,7 @@ from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.utils import append_data_item_to_dict_list_entry, create_accessible_nodes_dict
+from reqstool.common.validators.lifecycle_validator import LifecycleValidator
 from reqstool.expression_languages.requirements_el import RequirementsELTransformer
 from reqstool.expression_languages.svcs_el import SVCsELTransformer
 from reqstool.filters.id_filters import IDFilters
@@ -94,6 +95,8 @@ class CombinedIndexedDatasetGenerator:
             mvrs_from_urn=self._mvrs_from_urn,
             mvrs_from_svc=self._mvrs_from_svc,
         )
+
+        LifecycleValidator(combined_indexed_dataset)
 
         return combined_indexed_dataset
 

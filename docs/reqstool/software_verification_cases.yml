@@ -186,4 +186,8 @@ cases:
     title: "Test to make sure that reqstool client supports requirements without any source code implementation"
     verification: automated-test
     revision: "0.4.5"
-
+  - id: SVC_038
+    requirement_ids: ["REQ_037, REQ_038"]
+    title: "Test to make sure that reqstool client supports predefined lifecycle states in requirements and SVCs"
+    verification: automated-test
+    revision: "0.4.6"

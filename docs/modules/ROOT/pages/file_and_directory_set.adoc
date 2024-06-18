@@ -66,6 +66,9 @@ requirements:
     rationale: Rationale REQ_001
     categories: ["maintainability", "functional-suitability"]
     implementation: N/A
+    lifecycle:
+      state: obsolete
+      reason: Superseded by REQ_102
     revision: 0.0.1
 ```
 
@@ -86,6 +89,7 @@ in the `requirements` section, an array of requirements can be specified. Some o
 
 * rationale: Why this requirement is important.
 * implementation: If this requirement requires a source code implementation or not. Currently, there are two acceptable values: in-code or N/A. This defaults to `in-code` if omitted. 
+* lifecycle: Provides four options: "draft", "effective", "obsolete", "deprecated". Effective is the default if lifecycle is omitted. If set to obsolete or deprecated, reqstool will throw a waring during parsing when a requirement or svc is referenced in code or by other requirements, SVCs, or MVRs.
 
 
 === software_verification_cases.yml
