@@ -31,24 +31,30 @@ class LifecycleValidator:
     def _check_defunct_annotations(
         self,
         annotations: dict[UrnId, list[AnnotationData]],
-        in_collection: dict[UrnId, Union[RequirementData, SVCData]],
+        collection_to_check: dict[UrnId, Union[RequirementData, SVCData]],
     ):
-        for urn in annotations:
-            if urn not in in_collection:
+        """
+        Look for annotations connecting the code to disused requirements or SVCs.
+        """
+        for urn_id in annotations:
+            if urn_id not in collection_to_check:
                 continue
-            state = in_collection[urn].lifecycle.state
-            if state == LIFECYCLESTATE.DEPRECATED or LIFECYCLESTATE.OBSOLETE:
-                logging.debug(f"{state.value}: {urn}")
+            state = collection_to_check[urn_id].lifecycle.state
+            if state in (LIFECYCLESTATE.DEPRECATED, LIFECYCLESTATE.OBSOLETE):
+                logging.warning(f"{state.value}: {urn_id}")
 
     def _check_defunct_references(
-        self, references: dict[UrnId, list[UrnId]], ref_collection: dict[UrnId, Union[SVCData, RequirementData]]
+        self, references: dict[UrnId, list[UrnId]], collection_to_check: dict[UrnId, Union[RequirementData, SVCData]]
     ):
-        for ref_id, related_ids in references.items():
-            if ref_id not in ref_collection:
+        """
+        Look for references in SVCs or MVRs to disused requirements or SVCs.
+        """
+        for urn_id, related_urn_ids in references.items():
+            if urn_id not in collection_to_check:
                 continue
-            state = ref_collection[ref_id].lifecycle.state
-            if state == LIFECYCLESTATE.DEPRECATED or LIFECYCLESTATE.OBSOLETE:
-                logging.debug(f"{state.value}: {self._format_list(related_ids)}")
+            state = collection_to_check[urn_id].lifecycle.state
+            if state in (LIFECYCLESTATE.DEPRECATED, LIFECYCLESTATE.OBSOLETE):
+                logging.warning(f"{state.value}: {self._format_list(related_urn_ids)}")
 
     def _format_list(self, items: list[UrnId]):
         return ", ".join(map(str, items))

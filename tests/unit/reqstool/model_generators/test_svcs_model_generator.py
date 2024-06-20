@@ -53,9 +53,9 @@ def test_lifecycle_variable_model_generator(svcs_model_generator):
     cases = svcs_model_generator.model.cases
 
     assert cases[UrnId(urn="ms-001", id="SVC_001")].lifecycle.state == LIFECYCLESTATE.EFFECTIVE
-    assert cases[UrnId(urn="ms-001", id="SVC_001")].lifecycle.reason == ""
+    assert cases[UrnId(urn="ms-001", id="SVC_001")].lifecycle.reason is None
     assert cases[UrnId(urn="ms-001", id="SVC_002")].lifecycle.state == LIFECYCLESTATE.DRAFT
-    assert cases[UrnId(urn="ms-001", id="SVC_002")].lifecycle.reason == ""
+    assert cases[UrnId(urn="ms-001", id="SVC_002")].lifecycle.reason is None
     assert cases[UrnId(urn="ms-001", id="SVC_003")].lifecycle.state == LIFECYCLESTATE.OBSOLETE
     assert cases[UrnId(urn="ms-001", id="SVC_003")].lifecycle.reason == "Reason for being obsolete"
     assert cases[UrnId(urn="ms-001", id="SVC_004")].lifecycle.state == LIFECYCLESTATE.DRAFT

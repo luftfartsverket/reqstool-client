@@ -38,6 +38,8 @@ requirements:
     references:
       requirement_ids: ["REQ_101"]
     revision: 0.0.1
+    lifecycle:
+      state: draft
 
   - id: REQ_202
     title: Title REQ_202

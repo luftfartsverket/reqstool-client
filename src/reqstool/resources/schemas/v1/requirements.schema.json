@@ -72,11 +72,11 @@
                 },
                 "title": {
                     "type": "string",
-                    "description": "A \"human-readable\" description of what the file contains. E.g. for System ED254 it might be \"System Requirements for ED254\", for ED254 MP: \"Requirements for ED254 Message Producer\""
+                    "description": "A \"human-readable\" description of what the file contains. E.g. for System X it might be \"System Requirements for X\", for X MP: \"Requirements for X Message Producer\""
                 },
                 "url": {
                     "type": "string",
-                    "description": "Needed in case the document has extenal references like NMB2B for example, this url might point to a source of information about the EuroControl requirements"
+                    "description": "Needed in case the document has external references, this url might point to a source of information about the external requirements"
                 }
             },
             "required": ["urn", "variant", "title"]
@@ -193,7 +193,7 @@
                 },
                 "significance": {
                     "enum": ["shall", "should", "may"],
-                    "description": "Enum with Level of significance. E.g. shall, should, may (https://www.rfc-editor.org/rfc/rfc2119)"
+                    "description": "Enum with level of significance. E.g. shall, should, may (https://www.rfc-editor.org/rfc/rfc2119)"
                 },
                 "description": {
                     "type": "string",

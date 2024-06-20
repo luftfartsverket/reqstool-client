@@ -26,6 +26,8 @@ cases:
     verification: manual-test
     instructions: "Some instructions"
     revision: "0.0.2"
+    lifecycle:
+      state: draft
 
   - id: SVC_202
     requirement_ids: ["REQ_202"]

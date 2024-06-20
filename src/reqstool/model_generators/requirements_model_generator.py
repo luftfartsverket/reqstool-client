@@ -306,10 +306,10 @@ class RequirementsModelGenerator:
                 # Get lifecycle variables or use defaults
                 if "lifecycle" in req:
                     lifecycle_state = LIFECYCLESTATE(req["lifecycle"]["state"])
-                    lifecycle_reason = req["lifecycle"]["reason"] if "reason" in req["lifecycle"] else ""
+                    lifecycle_reason = req["lifecycle"]["reason"] if "reason" in req["lifecycle"] else None
                 else:
                     lifecycle_state = LIFECYCLESTATE.EFFECTIVE
-                    lifecycle_reason = ""
+                    lifecycle_reason = None
 
                 urn_id = UrnId(urn=urn, id=req["id"])
                 req_data = RequirementData(

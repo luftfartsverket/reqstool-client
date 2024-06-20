@@ -71,7 +71,7 @@ class RequirementData:
     description: str
     rationale: str
     revision: Version
-    lifecycle: LifecycleData = field(default=LifecycleData(state=LIFECYCLESTATE.EFFECTIVE, reason=""))
+    lifecycle: LifecycleData = field(default=LifecycleData(state=LIFECYCLESTATE.EFFECTIVE, reason=None))
     implementation: IMPLEMENTATION = field(default=IMPLEMENTATION.IN_CODE)
     categories: List[CATEGORIES] = field(default_factory=list)
     references: List[ReferenceData] = field(default_factory=list)

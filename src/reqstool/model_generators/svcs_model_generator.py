@@ -55,10 +55,10 @@ class SVCsModelGenerator:
             # Get lifecycle variables or use defaults
             if "lifecycle" in case:
                 lifecycle_state = LIFECYCLESTATE(case["lifecycle"]["state"])
-                lifecycle_reason = case["lifecycle"]["reason"] if "reason" in case["lifecycle"] else ""
+                lifecycle_reason = case["lifecycle"]["reason"] if "reason" in case["lifecycle"] else None
             else:
                 lifecycle_state = LIFECYCLESTATE.EFFECTIVE
-                lifecycle_reason = ""
+                lifecycle_reason = None
 
             svc = SVCData(
                 id=urn_id,

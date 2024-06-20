@@ -216,7 +216,7 @@
             "properties": {
                 "state": {
                     "type": "string",
-                    "description": "The state of the requirement. Defaults to effective if omitted",
+                    "description": "The state of the requirement.",
                     "enum": ["draft", "effective", "deprecated", "obsolete"],
                     "default": "effective"
                 },

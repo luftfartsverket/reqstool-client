@@ -240,9 +240,9 @@ def test_lifecycle_variable_model_generator(resource_funcname_rootdir_w_path):
     requirements = rmg.requirements_data.requirements
 
     assert requirements[UrnId(urn="ms-001", id="REQ_001")].lifecycle.state == LIFECYCLESTATE.EFFECTIVE
-    assert requirements[UrnId(urn="ms-001", id="REQ_001")].lifecycle.reason == ""
+    assert requirements[UrnId(urn="ms-001", id="REQ_001")].lifecycle.reason is None
     assert requirements[UrnId(urn="ms-001", id="REQ_002")].lifecycle.state == LIFECYCLESTATE.DRAFT
-    assert requirements[UrnId(urn="ms-001", id="REQ_002")].lifecycle.reason == ""
+    assert requirements[UrnId(urn="ms-001", id="REQ_002")].lifecycle.reason is None
     assert requirements[UrnId(urn="ms-001", id="REQ_003")].lifecycle.state == LIFECYCLESTATE.OBSOLETE
     assert requirements[UrnId(urn="ms-001", id="REQ_003")].lifecycle.reason == "Reason for being obsolete"
     assert requirements[UrnId(urn="ms-001", id="REQ_004")].lifecycle.state == LIFECYCLESTATE.DRAFT
