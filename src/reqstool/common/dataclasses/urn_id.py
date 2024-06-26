@@ -32,3 +32,6 @@ class UrnId:
         if self.urn != other.urn:
             return self.urn < other.urn
         return self.id < other.id
+
+    def __str__(self) -> str:
+        return f"{self.urn}:{self.id}"

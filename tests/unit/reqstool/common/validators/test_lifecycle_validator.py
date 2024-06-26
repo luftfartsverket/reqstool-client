@@ -27,16 +27,13 @@ def test_defunct_states(combined_indexed_dataset, caplog):
 
     LifecycleValidator(combined_indexed_dataset)
 
-    assert "deprecated: UrnId(urn='ms-101', id='REQ_101')" in caplog.text
-    assert "deprecated: UrnId(urn='ms-101', id='SVC_101')" in caplog.text
-    assert "obsolete: UrnId(urn='ms-101', id='SVC_102')" in caplog.text
-    assert "deprecated: UrnId(urn='ms-101', id='SVC_101')" in caplog.text
-    assert "obsolete: UrnId(urn='ms-101', id='SVC_102')" in caplog.text
-    assert "deprecated: UrnId(urn='ms-101', id='REQ_101')" in caplog.text
-    assert "deprecated: UrnId(urn='ms-101', id='SVC_101')" in caplog.text
-    assert "obsolete: UrnId(urn='ms-101', id='SVC_102')" in caplog.text
-    assert "deprecated: UrnId(urn='ms-101', id='SVC_101')" in caplog.text
-    assert "obsolete: UrnId(urn='ms-101', id='SVC_102')" in caplog.text
+    assert "Urn ms-101:SVC_102 is used in an annotation despite being obsolete." in caplog.text
+    assert (
+        "The requirement ms-101:REQ_203 is marked as obsolete but the SVCs ms-101:SVC_202, ms-101:SVC_203 references it."
+        in caplog.text
+    )
+    assert "Urn ms-101:REQ_101 is used in an annotation despite being deprecated." in caplog.text
+    assert "Urn ms-101:SVC_101 is used in an annotation despite being deprecated." in caplog.text
 
 
 @SVCs("SVC_038")
@@ -44,16 +41,9 @@ def test_active_states(combined_indexed_dataset, caplog):
 
     LifecycleValidator(combined_indexed_dataset)
 
-    assert "draft: UrnId(urn='ms-101', id='REQ_201')" not in caplog.text
-    assert "draft: UrnId(urn='ms-101', id='MVR_201')" not in caplog.text
-    assert "effective: UrnId(urn='ms-101', id='MVR_202')" not in caplog.text
-    assert "draft: UrnId(urn='ms-101', id='SVC_201')" not in caplog.text
-    assert "effective: UrnId(urn='ms-101', id='SVC_202')" not in caplog.text
-    assert "draft: UrnId(urn='ms-101', id='REQ_201')" not in caplog.text
-    assert "draft: UrnId(urn='ms-101', id='MVR_201')" not in caplog.text
-    assert "effective: UrnId(urn='ms-101', id='MVR_202')" not in caplog.text
-    assert "draft: UrnId(urn='ms-101', id='SVC_201')" not in caplog.text
-    assert "effective: UrnId(urn='ms-101', id='SVC_202')" not in caplog.text
+    assert "The SVC ms-101:SVC_202 is marked as effective but the MVR ms-101:MVR_202 references it." not in caplog.text
+    assert "Urn ms-101:REQ_201 is used in an annotation despite being draft." not in caplog.text
+    assert "The SVC ms-101:SVC_201 is marked as draft but the MVR ms-101:MVR_201 references it." not in caplog.text
 
 
 @SVCs("SVC_038")

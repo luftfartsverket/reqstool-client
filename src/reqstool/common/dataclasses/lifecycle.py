@@ -12,6 +12,14 @@ class LIFECYCLESTATE(Enum):
     OBSOLETE = "obsolete"
 
 
+lifecycle_state_sort_order = {
+    LIFECYCLESTATE.OBSOLETE: 0,
+    LIFECYCLESTATE.DEPRECATED: 1,
+    LIFECYCLESTATE.EFFECTIVE: 2,
+    LIFECYCLESTATE.DRAFT: 3,
+}
+
+
 @dataclass
 class LifecycleData:
     reason: str = field(default=str)

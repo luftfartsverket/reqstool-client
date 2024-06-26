@@ -45,6 +45,17 @@ requirements:
     title: Title REQ_202
     significance: should
     description: Description REQ_202
-    rationale: Rationale REQ_201
+    rationale: Rationale REQ_202
     categories: ["reliability"]
     revision: 0.0.1
+
+  - id: REQ_203
+    title: Title REQ_203
+    significance: should
+    description: Description REQ_203
+    rationale: Rationale REQ_203
+    categories: ["reliability"]
+    revision: 0.0.1
+    lifecycle:
+      state: obsolete
+      reason: Valid reason 3

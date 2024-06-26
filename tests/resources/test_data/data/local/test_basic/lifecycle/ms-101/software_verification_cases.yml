@@ -30,9 +30,17 @@ cases:
       state: draft
 
   - id: SVC_202
-    requirement_ids: ["REQ_202"]
+    requirement_ids: ["REQ_202", "REQ_203"]
     title: "Some Title SVC_202"
     description: "Some Description SVC_202"
+    verification: manual-test
+    instructions: "Some instructions"
+    revision: "0.0.2"
+
+  - id: SVC_203
+    requirement_ids: ["REQ_202", "REQ_203"]
+    title: "Some Title SVC_203"
+    description: "Some Description SVC_203"
     verification: manual-test
     instructions: "Some instructions"
     revision: "0.0.2"
