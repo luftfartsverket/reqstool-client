@@ -50,6 +50,12 @@ class TotalStatisticsItem:
     nr_of_total_svcs: int = 0
     nr_of_completed_reqs_no_implementation: int = 0
     nr_of_total_reqs_no_implementation: int = 0
+    nr_of_total_manual_tests: int = 0
+    nr_of_total_annotated_tests: int = 0
+    nr_of_passed_manual_tests: int = 0
+    nr_of_failed_manual_tests: int = 0
+    nr_of_passed_automatic_tests: int = 0
+    nr_of_failed_automatic_tests: int = 0
 
     def update(self, completed: bool, combined_req_test_item: CombinedRequirementTestItem):
         self.nr_of_total_requirements += 1
