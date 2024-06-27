@@ -54,6 +54,35 @@ def _build_table(
     return row
 
 
+def _get_row_with_totals(stats_container: StatisticsContainer):
+    total_automatic = (
+        stats_container._total_statistics.nr_of_passed_automatic_tests
+        + stats_container._total_statistics.nr_of_failed_automatic_tests
+        + stats_container._total_statistics.nr_of_missing_automated_tests
+    )
+    total_manual = (
+        stats_container._total_statistics.nr_of_passed_manual_tests
+        + stats_container._total_statistics.nr_of_failed_manual_tests
+        + stats_container._total_statistics.nr_of_missing_automated_tests
+    )
+    return [
+        "Total",
+        "",
+        "",
+        # Column: Automatic
+        f"T{total_automatic} "
+        f"{Fore.GREEN}P{stats_container._total_statistics.nr_of_passed_automatic_tests} "
+        f"{Fore.RED}F{stats_container._total_statistics.nr_of_failed_automatic_tests} "
+        f"{Fore.YELLOW}S{stats_container._total_statistics.nr_of_skipped_tests} "
+        f"{Fore.RED}M{stats_container._total_statistics.nr_of_missing_automated_tests}{Style.RESET_ALL}",
+        # Column: Manual
+        f"T{total_manual}"
+        f" {Fore.GREEN}P{stats_container._total_statistics.nr_of_passed_manual_tests} "
+        f"{Fore.RED}F{stats_container._total_statistics.nr_of_failed_manual_tests} "
+        f"{Fore.RED}M{stats_container._total_statistics.nr_of_missing_automated_tests}{Style.RESET_ALL}",
+    ]
+
+
 # builds the status table
 def _status_table(stats_container: StatisticsContainer) -> str:
     table_data = []
@@ -79,6 +108,8 @@ def _status_table(stats_container: StatisticsContainer) -> str:
                 implementation=stats.implementation,
             )
         )
+
+    table_data.append(_get_row_with_totals(stats_container))
 
     col_align = ["center"] * len(headers) if table_data else []
     table = tabulate(tablefmt="fancy_grid", tabular_data=table_data, headers=headers, colalign=col_align)

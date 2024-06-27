@@ -246,6 +246,12 @@ class StatisticsGenerator:
         # Total SVCs
         stats_container._total_statistics.nr_of_total_svcs = len(self.cid.svcs)
 
+        # Total manual tests
+        stats_container._total_statistics.nr_of_total_manual_tests = total_no_of_mvrs
+
+        # Total annotated tests
+        stats_container._total_statistics.nr_of_total_annotated_tests = total_no_of_annotated_tests
+
         # Combined
         stats_container._total_statistics.nr_of_total_tests = total_no_of_annotated_tests + total_no_of_mvrs
 
@@ -266,8 +272,11 @@ class StatisticsGenerator:
         for mvr in mvrs:
             if mvr.passed:
                 stats_container._total_statistics.nr_of_passed_tests += 1
+                stats_container._total_statistics.nr_of_passed_manual_tests += 1
+
             else:
                 stats_container._total_statistics.nr_of_failed_tests += 1
+                stats_container._total_statistics.nr_of_failed_manual_tests += 1
 
     def __get_results_from_annotated_tests(self) -> List[TEST_RUN_STATUS]:
         test_results: List[TEST_RUN_STATUS] = []
@@ -306,8 +315,10 @@ class StatisticsGenerator:
             match test.status:
                 case TEST_RUN_STATUS.PASSED:
                     stats_container._total_statistics.nr_of_passed_tests += 1
+                    stats_container._total_statistics.nr_of_passed_automatic_tests += 1
                 case TEST_RUN_STATUS.FAILED:
                     stats_container._total_statistics.nr_of_failed_tests += 1
+                    stats_container._total_statistics.nr_of_failed_automatic_tests += 1
                 case TEST_RUN_STATUS.SKIPPED:
                     stats_container._total_statistics.nr_of_skipped_tests += 1
                 case TEST_RUN_STATUS.MISSING:
