@@ -5,6 +5,7 @@ from enum import Enum, unique
 from typing import Dict, List
 from packaging.version import Version
 
+from reqstool.common.dataclasses.lifecycle import LIFECYCLESTATE, LifecycleData
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.filters.svcs_filters import SVCFilter
 
@@ -26,6 +27,7 @@ class SVCData:
     verification: VERIFICATIONTYPES
     instructions: str
     revision: Version
+    lifecycle: LifecycleData = field(default=LifecycleData(state=LIFECYCLESTATE.EFFECTIVE, reason=None))
     requirement_ids: List[UrnId] = field(default_factory=list)
 
 

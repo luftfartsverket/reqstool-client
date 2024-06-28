@@ -223,3 +223,15 @@ requirements:
     description: A user should be able to define a requirement that does not need an source code implementation.
     categories: [functional-suitability, flexibility]
     revision: 0.4.5
+  - id: REQ_037
+    title: Requirements shall have the option to be decommissioned
+    significance: shall
+    description: A user shall be able to specify the state of the requirement. Whether it is in use or not.
+    categories: [maintainability]
+    revision: 0.4.6
+  - id: REQ_038
+    title: SVCs shall have the option to be decommissioned
+    significance: shall
+    description: A user shall be able to specify the state of the SVC. Whether it is in use or not.
+    categories: [maintainability]
+    revision: 0.4.6

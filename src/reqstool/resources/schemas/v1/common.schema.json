@@ -267,6 +267,49 @@
                     }
                 }
             ]
+        },
+        "lifecycle": {
+            "type": "object",
+            "description": "The state of the requirement",
+            "properties": {
+                "state": {
+                    "type": "string",
+                    "description": "The state of the requirement.",
+                    "enum": [
+                        "draft",
+                        "effective",
+                        "deprecated",
+                        "obsolete"
+                    ],
+                    "default": "effective"
+                },
+                "reason": {
+                    "type": "string",
+                    "description": "Reason for the current state, required if the state is deprecated or obsolete"
+                }
+            },
+            "required": [
+                "state"
+            ],
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "state": {
+                                "enum": [
+                                    "deprecated",
+                                    "obsolete"
+                                ]
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": [
+                            "reason"
+                        ]
+                    }
+                }
+            ]
         }
     }
 }

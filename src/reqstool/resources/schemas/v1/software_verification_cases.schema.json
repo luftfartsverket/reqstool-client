@@ -61,6 +61,10 @@
                     "type": "string",
                     "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
                     "description": "Version the Software Verification Case was revised"
+                },
+                "lifecycle": {
+                    "type": "object",
+                    "$ref": "common.schema.json#/$defs/lifecycle"
                 }
             },
             "required": [
