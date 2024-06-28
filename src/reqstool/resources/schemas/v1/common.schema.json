@@ -30,15 +30,23 @@
                             },
                             "oneOf": [
                                 {
-                                    "required": ["includes"],
+                                    "required": [
+                                        "includes"
+                                    ],
                                     "not": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
                                 {
-                                    "required": ["excludes"],
+                                    "required": [
+                                        "excludes"
+                                    ],
                                     "not": {
-                                        "required": ["includes"]
+                                        "required": [
+                                            "includes"
+                                        ]
                                     }
                                 }
                             ],
@@ -50,16 +58,23 @@
                             "if": {
                                 "properties": {
                                     "custom": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
-                                "required": ["custom", "requirement_ids"]
+                                "required": [
+                                    "custom",
+                                    "requirement_ids"
+                                ]
                             },
                             "then": {
                                 "properties": {
                                     "requirement_ids": {
                                         "not": {
-                                            "required": ["includes"]
+                                            "required": [
+                                                "includes"
+                                            ]
                                         }
                                     }
                                 }
@@ -69,16 +84,23 @@
                             "if": {
                                 "properties": {
                                     "requirement_ids": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
-                                "required": ["custom", "requirement_ids"]
+                                "required": [
+                                    "custom",
+                                    "requirement_ids"
+                                ]
                             },
                             "then": {
                                 "properties": {
                                     "custom": {
                                         "not": {
-                                            "required": ["includes"]
+                                            "required": [
+                                                "includes"
+                                            ]
                                         }
                                     }
                                 }
@@ -88,16 +110,23 @@
                             "if": {
                                 "properties": {
                                     "custom": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
-                                "required": ["custom", "svc_ids"]
+                                "required": [
+                                    "custom",
+                                    "svc_ids"
+                                ]
                             },
                             "then": {
                                 "properties": {
                                     "svc_ids": {
                                         "not": {
-                                            "required": ["includes"]
+                                            "required": [
+                                                "includes"
+                                            ]
                                         }
                                     }
                                 }
@@ -107,16 +136,23 @@
                             "if": {
                                 "properties": {
                                     "svc_ids": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
-                                "required": ["custom", "svc_ids"]
+                                "required": [
+                                    "custom",
+                                    "svc_ids"
+                                ]
                             },
                             "then": {
                                 "properties": {
                                     "custom": {
                                         "not": {
-                                            "required": ["includes"]
+                                            "required": [
+                                                "includes"
+                                            ]
                                         }
                                     }
                                 }
@@ -126,16 +162,23 @@
                             "if": {
                                 "properties": {
                                     "custom": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
-                                "required": ["custom", "mvr_ids"]
+                                "required": [
+                                    "custom",
+                                    "mvr_ids"
+                                ]
                             },
                             "then": {
                                 "properties": {
                                     "mvr_ids": {
                                         "not": {
-                                            "required": ["includes"]
+                                            "required": [
+                                                "includes"
+                                            ]
                                         }
                                     }
                                 }
@@ -145,16 +188,23 @@
                             "if": {
                                 "properties": {
                                     "mvr_ids": {
-                                        "required": ["excludes"]
+                                        "required": [
+                                            "excludes"
+                                        ]
                                     }
                                 },
-                                "required": ["custom", "mvr_ids"]
+                                "required": [
+                                    "custom",
+                                    "mvr_ids"
+                                ]
                             },
                             "then": {
                                 "properties": {
                                     "custom": {
                                         "not": {
-                                            "required": ["includes"]
+                                            "required": [
+                                                "includes"
+                                            ]
                                         }
                                     }
                                 }
@@ -197,15 +247,23 @@
             },
             "oneOf": [
                 {
-                    "required": ["includes"],
+                    "required": [
+                        "includes"
+                    ],
                     "not": {
-                        "required": ["excludes"]
+                        "required": [
+                            "excludes"
+                        ]
                     }
                 },
                 {
-                    "required": ["excludes"],
+                    "required": [
+                        "excludes"
+                    ],
                     "not": {
-                        "required": ["includes"]
+                        "required": [
+                            "includes"
+                        ]
                     }
                 }
             ]
@@ -217,7 +275,12 @@
                 "state": {
                     "type": "string",
                     "description": "The state of the requirement.",
-                    "enum": ["draft", "effective", "deprecated", "obsolete"],
+                    "enum": [
+                        "draft",
+                        "effective",
+                        "deprecated",
+                        "obsolete"
+                    ],
                     "default": "effective"
                 },
                 "reason": {
@@ -225,18 +288,25 @@
                     "description": "Reason for the current state, required if the state is deprecated or obsolete"
                 }
             },
-            "required": ["state"],
+            "required": [
+                "state"
+            ],
             "allOf": [
                 {
                     "if": {
                         "properties": {
                             "state": {
-                                "enum": ["deprecated", "obsolete"]
+                                "enum": [
+                                    "deprecated",
+                                    "obsolete"
+                                ]
                             }
                         }
                     },
                     "then": {
-                        "required": ["reason"]
+                        "required": [
+                            "reason"
+                        ]
                     }
                 }
             ]
