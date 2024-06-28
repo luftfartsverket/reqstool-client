@@ -12,7 +12,7 @@ TBA
 
 == Contributing
 
- * We adhere to the latest version of [Contributor Covenant](https://www.contributor-covenant.org/)
+ * We adhere to the latest version of https://www.contributor-covenant.org/[Contributor Covenant]
  * Fork repo
  * Before submitting a PR
    * Perform formatting (black):  `hatch run lint:black src tests`

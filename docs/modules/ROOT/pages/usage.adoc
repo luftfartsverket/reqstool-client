@@ -83,7 +83,7 @@ Same as `report-asciidoc`, but instead of generating an AsciiDoc report a comple
 reqstool report-asciidoc local -p path_to_requirements_dir -o path_to_output_file.json
 ```
 
-Note: There is currently no JSON Schema for this file and it is a raw dump of the data structures using [jsonpickle](https://github.com/jsonpickle/jsonpickle) the format might change at anytime for the time being.
+Note: There is currently no JSON Schema for this file and it is a raw dump of the data structures using https://github.com/jsonpickle/jsonpickle[jsonpickle] the format might change at anytime for the time being.
 
 
 === Using the Docker image
