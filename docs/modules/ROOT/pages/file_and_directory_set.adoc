@@ -4,8 +4,8 @@ All files have a JSON Schema: https://github.com/Luftfartsverket/reqstool-client
 
 For examples see:
 
-* docs/examples
-* unit tests: [TODO](#todo)
+* docs/examples https://github.com/luftfartsverket/reqstool-client/tree/main/docs/examples/requirements[examples]
+* unit tests: https://github.com/luftfartsverket/reqstool-client/tree/main/tests/resources/test_data/data/local[test data]
 
 [[reqstool_config]]
 === reqstool_config.yml

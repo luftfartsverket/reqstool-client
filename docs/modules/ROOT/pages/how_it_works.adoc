@@ -15,7 +15,7 @@ What each command actually does is described under xref:usage.adoc[usage]
 
 ==== Resolve custom paths
 
-If you are providing a path to a git repository or a Maven artifact, you can override the xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml][default locations] of the yaml files by providing a requirements_config.yml file in the same folder as your requirements.yml. In the requirements_config.yml, you are able to describe the structure of your repository/artifact and specify where the required yaml files are located. If the CombinedRawDatasetsGenerator detects such a file, it will try to locate the required files from the path described in the requirements_config.yml instead of the default path using the ReqstoolConfig component. 
+If you are providing a path to a git repository or a Maven artifact, you can override the xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml] of the yaml files by providing a requirements_config.yml file in the same folder as your requirements.yml. In the requirements_config.yml, you are able to describe the structure of your repository/artifact and specify where the required yaml files are located. If the CombinedRawDatasetsGenerator detects such a file, it will try to locate the required files from the path described in the requirements_config.yml instead of the default path using the ReqstoolConfig component. 
 
 
 ==== What is validated?
@@ -99,6 +99,30 @@ filters:
 When Requirement Tool is reading the data from ext-001, then REQ_101 will not be imported in the returning data, but all other requirements specified in ext-001's requirements.yml file will.  
 
 Filters can currently be applied to requirements.yml and software_verification_cases.yml.
+
+
+==== How to use annotations
+
+Reqstool relies on it's annotation framework in order to couple Requirements and Software Verification Cases with code implementation and test results. Reqstool needs the user to manually couple a specific requirement/svc with a function or class using annotations. 
+
+In order to couple Requirements and Software Verification Cases you will need to install and import a Reqstool annotation framework for your specific project. 
+
+Currently https://github.com/luftfartsverket/reqstool-java-annotations[Java] and https://github.com/luftfartsverket/reqstool-python-decorators[Python] is supported. Please read through those projects installation instructions in order to use them properly.  
+
+Whit the correct annotation framework installed, you'll use the `@Requirements` annotation to couple a specific requirement to a piece of code. 
+In this example, the requirement with id `REQ_111` is coupled with the function somefunction(). This is also possible to do on a class level if that's desired. 
+
+```
+@Requirements("REQ_111")
+def somefunction():
+```
+
+Similarly, you will use the `@SVCs` annotation to couple an SVC id to a test method or test class:
+
+```
+@SVCs("SVC_111")
+def test_somefunction():
+```
 
 
 ==== Sequence diagram of the program execution
