@@ -3,5 +3,6 @@
 name: reqstool-client
 title: Reqstool Client
 version: 0.4.7
+
 nav:
   - modules/ROOT/nav.adoc

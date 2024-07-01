@@ -132,6 +132,12 @@ def test_calculate_test_basic(local_testdata_resources_rootdir_w_path):
             nr_of_total_svcs=4,
             nr_of_completed_reqs_no_implementation=0,
             nr_of_total_reqs_no_implementation=0,
+            nr_of_total_manual_tests=2,
+            nr_of_total_annotated_tests=2,
+            nr_of_passed_manual_tests=1,
+            nr_of_failed_manual_tests=1,
+            nr_of_passed_automatic_tests=1,
+            nr_of_failed_automatic_tests=1,
         ),
     )
     assert result == expected
@@ -298,6 +304,12 @@ def test_calculate_test_standard_ms001(local_testdata_resources_rootdir_w_path):
             nr_of_total_svcs=9,
             nr_of_completed_reqs_no_implementation=0,
             nr_of_total_reqs_no_implementation=0,
+            nr_of_total_manual_tests=2,
+            nr_of_total_annotated_tests=5,
+            nr_of_passed_manual_tests=1,
+            nr_of_failed_manual_tests=1,
+            nr_of_passed_automatic_tests=4,
+            nr_of_failed_automatic_tests=1,
         ),
     )
     assert result == expected
@@ -464,6 +476,12 @@ def test_calculate_empty_standard_ms001(local_testdata_resources_rootdir_w_path)
             nr_of_total_svcs=8,
             nr_of_completed_reqs_no_implementation=0,
             nr_of_total_reqs_no_implementation=0,
+            nr_of_total_manual_tests=2,
+            nr_of_total_annotated_tests=5,
+            nr_of_passed_manual_tests=1,
+            nr_of_failed_manual_tests=1,
+            nr_of_passed_automatic_tests=4,
+            nr_of_failed_automatic_tests=1,
         ),
     )
     assert result == expected
@@ -586,6 +604,12 @@ def test_calculate_test_basic_no_impls(local_testdata_resources_rootdir_w_path):
             nr_of_total_requirements=4,
             nr_of_total_svcs=4,
             nr_of_total_tests=4,
+            nr_of_total_manual_tests=3,
+            nr_of_total_annotated_tests=1,
+            nr_of_passed_manual_tests=1,
+            nr_of_failed_manual_tests=2,
+            nr_of_passed_automatic_tests=1,
+            nr_of_failed_automatic_tests=0,
         ),
     )
     assert result == expected
