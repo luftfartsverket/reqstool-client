@@ -31,7 +31,7 @@ requires-python = ">=3.10"
 dependencies = [
     "colorama==0.4.6",
     "Jinja2==3.1.4",
-    "jsonpickle==3.0.4",
+    "jsonpickle==3.2.2",
     "jsonschema[format-nongpl]==4.23.0",
     "lark==1.1.9",
     "maven-artifact==0.3.4",
