@@ -55,7 +55,7 @@ source = "vcs"
 local_scheme = "no-local-version"
 
 [tool.hatch.build.targets.wheel.hooks.decorators]
-dependencies = ["reqstool-python-hatch-plugin==0.0.3"]
+dependencies = ["reqstool-python-hatch-plugin==0.0.4"]
 path = ["src", "tests"]
 
 [tool.hatch.envs.test]
