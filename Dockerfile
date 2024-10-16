@@ -1,5 +1,5 @@
 
-FROM python:3.12.3-alpine
+FROM python:3.13.0-alpine
 
 ENV PYTHONUNBUFFERED 1
 
