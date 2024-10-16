@@ -59,7 +59,7 @@ dependencies = ["reqstool-python-hatch-plugin==0.0.4"]
 path = ["src", "tests"]
 
 [tool.hatch.envs.test]
-dependencies = ["pytest==8.0.0", "pytest-sugar==1.0.0", "pytest-cov==4.1.0"]
+dependencies = ["pytest==8.3.3", "pytest-sugar==1.0.0", "pytest-cov==4.1.0"]
 
 [tool.hatch.envs.lint]
 detached = true
