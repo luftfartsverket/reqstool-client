@@ -62,7 +62,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>attach-reqstool-zip</goal>
+                            <goal>assemble-and-attach-zip-artifact</goal>
                         </goals>
                     </execution>
                 </executions>
