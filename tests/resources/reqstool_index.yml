@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_index.schema.json
+
+language: python
+build: hatch
+version: 0.4.2.dev16
+resources:
+  requirements: docs/reqstool/requirements.yml
+  software_verification_cases: docs/reqstool/software_verification_cases.yml
+  manual_verification_results: docs/reqstool/manual_verification_results.yml
+  annotations: build/reqstool/annotations.yml
+  test_results:
+    - build/junit.xml

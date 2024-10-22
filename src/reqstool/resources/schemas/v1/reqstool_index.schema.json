@@ -1,0 +1,82 @@
+{
+    "$id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_index.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema#",
+    "type": "object",
+    "properties": {
+        "language": {
+            "type": "string",
+            "enum": [
+                "python"
+            ]
+        },
+        "build": {
+            "type": "string",
+            "enum": [
+                "hatch",
+                "poetry"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+.*$"
+        },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "requirements": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "software_verification_cases": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "manual_verification_results": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "annotations": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "test_results": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            },
+            "required": [
+                "requirements",
+                "software_verification_cases",
+                "manual_verification_results",
+                "annotations",
+                "test_results"
+            ]
+        }
+    },
+    "required": [
+        "language",
+        "build",
+        "version",
+        "resources"
+    ],
+    "if": {
+        "properties": {
+            "language": {
+                "const": "python"
+            }
+        }
+    },
+    "then": {
+        "properties": {
+            "build": {
+                "enum": [
+                    "hatch",
+                    "poetry"
+                ]
+            }
+        }
+    }
+}
