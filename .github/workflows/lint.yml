@@ -16,10 +16,10 @@ jobs:
       - name: Install pip package(s)
         run: pip install hatch
       - name: Run black formatter check
-        run: hatch run lint:black --check --verbose src tests
+        run: hatch run dev:black --check --verbose src tests
       - name: Run flake8 linter
-        run: hatch run lint:flake8
+        run: hatch run dev:flake8
       - name: Install pip package check-jsonschema
         run: pip install check-jsonschema
       - name: Validate JSON Schemas
-        run: check-jsonschema --verbose --schemafile "https://json-schema.org/draft/2020-12/schema" src/reqstool/resources/schemas/*/*  
+        run: check-jsonschema --verbose --schemafile "https://json-schema.org/draft/2020-12/schema" src/reqstool/resources/schemas/*/*
