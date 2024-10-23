@@ -6,54 +6,61 @@
         "language": {
             "type": "string",
             "enum": [
-                "python"
-            ]
+                "java",
+                "python",
+                "javascript",
+                "typescript"
+            ],
+            "description": "The programming language used in the project."
         },
         "build": {
             "type": "string",
             "enum": [
+                "gradle",
                 "hatch",
-                "poetry"
-            ]
+                "maven",
+                "npm",
+                "poetry",
+                "yarn"
+            ],
+            "description": "The build tool used for the project."
         },
         "version": {
             "type": "string",
-            "pattern": "^\\d+\\.\\d+\\.\\d+.*$"
+            "pattern": "^\\d+\\.\\d+\\.\\d+.*$",
+            "description": "The version of the project, following semantic versioning."
         },
         "resources": {
             "type": "object",
             "properties": {
                 "requirements": {
                     "type": "string",
-                    "format": "uri"
+                    "description": "Path to the requirements.yml file"
                 },
                 "software_verification_cases": {
                     "type": "string",
-                    "format": "uri"
+                    "description": "Path to the software_verification_cases.yml"
                 },
                 "manual_verification_results": {
                     "type": "string",
-                    "format": "uri"
+                    "description": "Path to the manual_verification_results.yml"
                 },
                 "annotations": {
                     "type": "string",
-                    "format": "uri"
+                    "description": "Path to the annotations file providing additional context or metadata."
                 },
                 "test_results": {
                     "type": "array",
                     "items": {
-                        "type": "string",
-                        "format": "uri"
-                    }
+                        "type": "string"
+                    },
+                    "description": "List of URIs to the test result files."
                 }
             },
             "required": [
-                "requirements",
-                "software_verification_cases",
-                "manual_verification_results",
-                "annotations",
-                "test_results"
-            ]
+                "requirements"
+            ],
+            "description": "Resources associated with the project, including requirements, verification cases, and test results."
         }
     },
     "required": [
@@ -62,21 +69,82 @@
         "version",
         "resources"
     ],
-    "if": {
-        "properties": {
-            "language": {
-                "const": "python"
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "language": {
+                        "const": "python"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "build": {
+                        "enum": [
+                            "hatch",
+                            "poetry"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "language": {
+                        "const": "java"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "build": {
+                        "enum": [
+                            "maven",
+                            "gradle"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "language": {
+                        "const": "javascript"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "build": {
+                        "enum": [
+                            "npm",
+                            "yarn"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "language": {
+                        "const": "typescript"
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "build": {
+                        "enum": [
+                            "npm",
+                            "yarn"
+                        ]
+                    }
+                }
             }
         }
-    },
-    "then": {
-        "properties": {
-            "build": {
-                "enum": [
-                    "hatch",
-                    "poetry"
-                ]
-            }
-        }
-    }
+    ]
 }
