@@ -3,7 +3,8 @@ import os
 import re
 import sys
 import tarfile
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Optional
 from urllib.parse import urljoin
 
 import requests
@@ -16,10 +17,10 @@ from reqstool.locations.location import LocationInterface
 
 @dataclass(kw_only=True)
 class PypiLocation(LocationInterface):
-    url: str
-    package_name: str
+    url: str = field(default="https://pypi.org/pypi/simple")
+    package: str
     version: str
-    env_token: str
+    env_token: Optional[str] = field(default=None)
 
     @staticmethod
     def normalize_pypi_package_name(self, package_name):
@@ -35,14 +36,14 @@ class PypiLocation(LocationInterface):
         if token:
             logging.debug("Using OAuth Bearer token for authentication")
 
-        package_url = self.get_package_url(self.package_name, self.version, self.url, self.env_token)
+        package_url = self.get_package_url(self.package, self.version, self.url, self.env_token)
 
         if not package_url:
             raise RequestException(
-                f"Unable to find a sdist pypi package for {self.package_name} == {self.version} in repo {url} {'with token' if self.token else ''}"
+                f"Unable to find a sdist pypi package for {self.package} == {self.version} in repo {url} {'with token' if self.token else ''}"
             )
 
-        logging.debug(f"Downloading {self.package_name} from {self.url} to {dst_path}\n")
+        logging.debug(f"Downloading {self.package} from {self.url} to {dst_path}\n")
 
         try:
             downloaded_file = download_file(url=package_url, dst_path=dst_path, token=token)
@@ -56,7 +57,7 @@ class PypiLocation(LocationInterface):
             sys.exit(1)
         except Exception as e:
             logging.fatal(
-                f"Error when downloading etc sdist pypi package for {self.package_name} == {self.version}"
+                f"Error when downloading etc sdist pypi package for {self.package} == {self.version}"
                 f" in repo {self.url} {'with token' if self.token else ''}",
                 e,
             )
@@ -65,14 +66,14 @@ class PypiLocation(LocationInterface):
         logging.debug(f"Extracted {downloaded_file} to {dst_path}\n")
 
     @staticmethod
-    def get_package_url(package_name, version, base_url, token) -> str:
-        package_name = PypiLocation.normalize_package_name(package_name)
+    def get_package_url(package, version, base_url, token) -> str:
+        package = PypiLocation.normalize_package_name(package)
 
         if not base_url.endswith("/"):
             base_url += "/"
 
         # Construct the request URL by appending the package_name to base_url_path
-        url = urljoin(base_url, f"{package_name}/")
+        url = urljoin(base_url, f"{package}/")
 
         # Prepare headers
         headers = {"Accept": "text/html"}

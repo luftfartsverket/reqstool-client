@@ -11,6 +11,8 @@ from reqstool.locations.location import LocationInterface
 @Requirements("REQ_001")
 @dataclass
 class LocalLocation(LocationInterface):
+    path: str
+
     def _make_available_on_localdisk(self, dst_path: str):
         # dst_directory already exists but should a symlimk, remove
         os.rmdir(dst_path)
