@@ -21,7 +21,7 @@ def choose_token() -> str:
 
 @SVCs("SVC_002")
 @pytest.mark.skipif(
-    not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
+    not (os.getenv("GITHUB_TOKEN") or not os.getenv("GITLAB_TOKEN")),
     reason="Test needs GITLAB_TOKEN or GITLAB environment variable to be set",
 )
 def test_basic_git():
@@ -40,7 +40,7 @@ def test_basic_git():
 
 @SVCs("SVC_003", "SVC_008")
 @pytest.mark.skipif(
-    not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
+    not (os.getenv("GITHUB_TOKEN") or not os.getenv("GITLAB_TOKEN")),
     reason="Test needs GITLAB_TOKEN or GITHUB_TOKEN environment variable to be set",
 )
 def test_basic_maven():
