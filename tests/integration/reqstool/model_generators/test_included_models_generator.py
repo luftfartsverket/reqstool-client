@@ -32,7 +32,7 @@ def test_basic_git():
             env_token=choose_token(),
             url="https://github.com/Luftfartsverket/reqstool-client.git",
             path="tests/resources/test_data/data/remote/test_standard/test_standard_maven_git/ms-001",
-            branch="main",
+            branch="16-fix-svc-assigned-req-ids",
         ),
         semantic_validator=semantic_validator,
     )
