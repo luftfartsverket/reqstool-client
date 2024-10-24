@@ -40,6 +40,23 @@ class TempDirectoryUtil:
         return new_path
 
 
+def download_file(url, dst_path, token) -> Path:
+    headers = {}
+    if token:
+        # If the token exists, add it as a Bearer token in the Authorization header
+        headers["Authorization"] = f"Bearer {token}"
+
+    response = requests.get(url, headers=headers, allow_redirects=True)
+
+    fn: Path = Path(dst_path, os.path.basename(url))
+    with open(fn, "wb") as file:
+        file.write(response.content)
+
+    logging.debug(f"Downloaded {fn}")
+
+    return fn
+
+
 def open_file_https_file(uri: str):
     session = requests.Session()
     session.mount("file://", FileAdapter())

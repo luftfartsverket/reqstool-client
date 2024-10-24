@@ -1,8 +1,9 @@
 # Copyright © LFV
 
-from dataclasses import dataclass, field
 import dataclasses
+from dataclasses import dataclass, field
 from pathlib import PurePath
+
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
 
@@ -31,10 +32,12 @@ class LocationResolver:
 
         # Parent: Local  Current: Git   -> Resolved: Git
         # Parent: Local  Current: Maven -> Resolved: Maven
+        # Parent: Local  Current: Pypi  -> Resolved: Pypi
         # Parent: Git    Current: Git   -> Resolved: Git
         # Parent: Git    Current: Maven -> Resolved: Maven
         # Parent: Maven  Current: Git   -> Resolved: Git
         # Parent: Maven  Current: Maven -> Resolved: Maven
+        # etc
         else:
             resolved = self._current_unresolved
 

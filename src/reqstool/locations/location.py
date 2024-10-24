@@ -10,6 +10,7 @@ class LOCATIONTYPES(Enum):
     GIT = "git"
     LOCAL = "local"
     MAVEN = "maven"
+    PYPI = "pypi"
 
 
 @dataclass(kw_only=True)

@@ -30,6 +30,7 @@ requires-python = ">=3.10"
 
 dependencies = [
     "colorama==0.4.6",
+    "distlib==0.3.9",
     "Jinja2==3.1.4",
     "jsonpickle==3.3.0",
     "jsonschema[format-nongpl]==4.23.0",
@@ -43,6 +44,8 @@ dependencies = [
     "xmldict==0.4.1",
     "reqstool-python-decorators==0.0.5",
     "packaging==24.1",
+    "requests==2.32.3",
+    "beautifulsoup4==4.12.3",
 ]
 
 [project.scripts]
