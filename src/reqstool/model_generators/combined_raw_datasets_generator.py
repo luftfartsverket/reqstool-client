@@ -162,14 +162,15 @@ class CombinedRawDatasetsGenerator:
 
         tmp_path = TempDirectoryUtil.get_suffix_path("can_we_use_urn_here").absolute()
 
-        tmp_path = current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
+        actual_tmp_path = current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
 
-        requirements_indata = RequirementsIndata(dst_path=tmp_path, location=current_location_handler.current)
+        requirements_indata = RequirementsIndata(dst_path=actual_tmp_path, location=current_location_handler.current)
 
         if not requirements_indata.requirements_indata_paths.requirements_yml.exists:
-            msg = f"Missing requirements file:  {requirements_indata.requirements_indata_paths.requirements_yml.path}"
-
-            sys.exit(msg)
+            logging.fatal(
+                f"Missing requirements file:  {requirements_indata.requirements_indata_paths.requirements_yml.path}"
+            )
+            sys.exit(1)
 
         rmg = RequirementsModelGenerator(
             parent=current_location_handler.current,
