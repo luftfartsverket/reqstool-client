@@ -48,6 +48,8 @@ class RequirementsIndata:
 
             self.reqstool_config = ReqstoolConfig._parse(yaml_data=data)
 
+            self._update_with_reqstool_config_values()
+
     def _ensure_absolute_paths_and_check_existance(self):
         # iterate over all fields and ensure absolute paths
 
@@ -88,3 +90,37 @@ class RequirementsIndata:
                 item.exists = os.path.exists(item.path)
         else:
             raise TypeError(type(original))
+
+    def _update_with_reqstool_config_values(self):
+        # replace default values with those specified in reqstool_config.yml
+
+        if self.reqstool_config.resources.requirements:
+            self.requirements_indata_paths.requirements_yml = RequirementsIndataPathItem(
+                path=self.reqstool_config.resources.requirements
+            )
+
+        if self.reqstool_config.resources.software_verification_cases:
+            self.requirements_indata_paths.svcs_yml = RequirementsIndataPathItem(
+                path=self.reqstool_config.resources.software_verification_cases
+            )
+
+        if self.reqstool_config.resources.manual_verification_results:
+            self.requirements_indata_paths.mvrs_yml = RequirementsIndataPathItem(
+                path=self.reqstool_config.resources.manual_verification_results
+            )
+
+        if self.reqstool_config.resources.test_results:
+            test_results = self.reqstool_config.resources.test_results
+
+            if isinstance(test_results, Sequence):
+                r_test_results = []
+
+                for test_result in test_results:
+                    r_test_results.append(RequirementsIndataPathItem(path=test_result))
+
+                self.requirements_indata_paths.test_results = r_test_results
+
+        if self.reqstool_config.resources.annotations:
+            self.requirements_indata_paths.annotations_yml = RequirementsIndataPathItem(
+                path=self.reqstool_config.resources.annotations
+            )
