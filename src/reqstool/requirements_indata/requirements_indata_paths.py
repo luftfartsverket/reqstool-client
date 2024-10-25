@@ -34,3 +34,11 @@ class RequirementsIndataPaths:
     test_results: List[RequirementsIndataPathItem] = field(
         default_factory=lambda: [RequirementsIndataPathItem(path="test_results")]
     )
+
+    # # generated
+    # annotations_yml: RequirementsIndataPathItem = field(
+    #     default_factory=lambda: RequirementsIndataPathItem(path="annotations.yml")
+    # )
+    # test_results: List[RequirementsIndataPathItem] = field(
+    #     default_factory=lambda: [RequirementsIndataPathItem(path="test_results")]
+    # )

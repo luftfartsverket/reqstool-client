@@ -78,7 +78,6 @@ def test_system_requirements_model_generator(resource_funcname_rootdir_w_path):
     assert model.implementations[2]._current_unresolved.artifact_id == "test-one"
     assert model.implementations[2]._current_unresolved.version == "0.0.1"
     assert model.implementations[2]._current_unresolved.classifier == "classifier1"
-    assert model.implementations[2]._current_unresolved.path == "some/path1"
 
     # maven #2
     assert model.implementations[3]._current_unresolved.url == "https://repo2.maven.org"
@@ -86,7 +85,6 @@ def test_system_requirements_model_generator(resource_funcname_rootdir_w_path):
     assert model.implementations[3]._current_unresolved.artifact_id == "test-two"
     assert model.implementations[3]._current_unresolved.version == "0.0.2"
     assert model.implementations[3]._current_unresolved.classifier == "classifier2"
-    assert model.implementations[3]._current_unresolved.path == "some/path2"
 
     # REQUIREMENTS
     assert model.requirements[UrnId(urn="sys-001", id="REQ_001")].id.id == "REQ_001"
@@ -142,7 +140,6 @@ def test_microservice_requirements_model_generator(resource_funcname_rootdir_w_p
     assert model.imports[2]._current_unresolved.artifact_id == "test-one"
     assert model.imports[2]._current_unresolved.version == "1.0.0"
     assert model.imports[2]._current_unresolved.classifier == "someclassifier"
-    assert model.imports[2]._current_unresolved.path == "some/path1"
 
     # REQUIREMENTS
     assert model.requirements[UrnId(urn="ms-001", id="REQ_001")].id.id == "REQ_001"

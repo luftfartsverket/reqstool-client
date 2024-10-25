@@ -1,7 +1,7 @@
 # Xyaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 # yaml-language-server: $schema=file:///home/u30576/dev/clones/github/Luftfartsverket/reqstool-client/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
-# type: java-maven
+# typeX: java-maven
 
 # project_root_dir: "../../baseline/ms-101-maven"
 
@@ -11,7 +11,6 @@
 #     - target/failsafe
 #     - target/surefire
 
-
 language: java
 build: maven
 resources:
@@ -20,5 +19,5 @@ resources:
   manual_verification_results: manual_verification_results.yml
   annotations: ../../baseline/ms-101-maven/../../target/reqstool/annotations.yml
   test_results:
-  - ../../baseline/ms-101-maven/../../target/failsafe
-  - ../../baseline/ms-101-maven/../../target/surefire
+    - ../../baseline/ms-101-maven/../../target/failsafe
+    - ../../baseline/ms-101-maven/../../target/surefire
