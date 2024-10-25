@@ -1,47 +1,49 @@
 # Copyright © LFV
 
 from dataclasses import dataclass, field
-from enum import Enum, unique
 from typing import List, Optional
 
 
-@unique
-class TYPES(Enum):
-    DEFAULT = "default"
-    JAVA_MAVEN = "java-maven"
-    PYTHON = "python"
-
-
 @dataclass
-class Locations:
+class Resources:
+    requirements: Optional[str] = field(default=None)
+    software_verification_cases: Optional[str] = field(default=None)
+    manual_verification_results: Optional[str] = field(default=None)
+    annotations: Optional[str] = field(default=None)
     test_results: List[str] = field(default_factory=lambda: [])
-    annotations: Optional[str] = None
 
 
 @dataclass
 class ReqstoolConfig:
-    project_root_dir: str
-    type: TYPES
-    locations: Optional[Locations] = None
+    language: str
+    build: str
+    resources: Resources
 
     @staticmethod
     def _parse(yaml_data: dict) -> "ReqstoolConfig":
-        r_type = TYPES(yaml_data["type"])
+        r_language = yaml_data.get("language", None)
+        r_build = yaml_data.get("build", None)
 
-        r_project_root_dir = "." if "project_root_dir" not in yaml_data else yaml_data["project_root_dir"]
+        # Parse resources
+        resources_data = yaml_data["resources"]
+        r_resources = Resources(
+            requirements=(resources_data["requirements"] if "requirements" in resources_data else None),
+            software_verification_cases=(
+                resources_data["software_verification_cases"]
+                if "software_verification_cases" in resources_data
+                else None
+            ),
+            manual_verification_results=(
+                resources_data["manual_verification_results"]
+                if "manual_verification_results" in resources_data
+                else None
+            ),
+            annotations=resources_data["annotations"] if "annotations" in resources_data else None,
+            test_results=resources_data["test_results"] if "test_results" in resources_data else None,
+        )
 
-        r_locations = Locations(annotations=None, test_results=[])
-
-        if "locations" in yaml_data:
-
-            locations = yaml_data["locations"]
-
-            if "annotations" in locations:
-                annotations = locations["annotations"]
-
-                r_locations.annotations = annotations
-
-            if "test_results_dirs" in locations:
-                r_locations.test_results = locations["test_results_dirs"]
-
-        return ReqstoolConfig(type=r_type, project_root_dir=r_project_root_dir, locations=r_locations)
+        return ReqstoolConfig(
+            language=r_language,
+            build=r_build,
+            resources=r_resources,
+        )

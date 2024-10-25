@@ -143,7 +143,6 @@ class RequirementsModelGenerator:
                         artifact_id=maven["artifact_id"],
                         version=maven["version"],
                         classifier=maven["classifier"],
-                        path=maven["path"],
                     ),
                 )
 
@@ -198,7 +197,6 @@ class RequirementsModelGenerator:
                         artifact_id=maven["artifact_id"],
                         version=maven["version"],
                         classifier=maven["classifier"],
-                        path=maven["path"],
                     ),
                 )
 

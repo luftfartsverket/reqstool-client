@@ -21,7 +21,6 @@ imports:
       artifact_id: test-one
       version: 1.0.0
       classifier: someclassifier
-      path: some/path1
 
 filters:
   "gitlab-001":

@@ -224,7 +224,7 @@ class CombinedRawDatasetsGenerator:
 
         # handle automated test results
 
-        for test_results_dir in requirements_indata.requirements_indata_paths.test_results_dirs:
+        for test_results_dir in requirements_indata.requirements_indata_paths.test_results:
 
             if test_results_dir.exists:
                 automated_tests_results = TestDataModelGenerator(path=test_results_dir.path, urn=current_urn).model

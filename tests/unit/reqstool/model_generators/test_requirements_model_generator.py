@@ -52,7 +52,6 @@ def test_system_requirements_model_generator(resource_funcname_rootdir_w_path):
     assert model.imports[2]._current_unresolved.artifact_id == "test-one"
     assert model.imports[2]._current_unresolved.version == "1.0.0"
     assert model.imports[2]._current_unresolved.classifier == "someclassifier"
-    assert model.imports[2]._current_unresolved.path == "some/path1"
 
     # maven #2
     assert model.imports[3]._current_unresolved.url == "https://repo2.maven.org"
@@ -60,7 +59,6 @@ def test_system_requirements_model_generator(resource_funcname_rootdir_w_path):
     assert model.imports[3]._current_unresolved.artifact_id == "test-two"
     assert model.imports[3]._current_unresolved.version == "0.0.2"
     assert model.imports[3]._current_unresolved.classifier == "classifier2"
-    assert model.imports[3]._current_unresolved.path == "some/path2"
 
     # IMPLEMENTATIONS
     assert len(model.implementations) == 4

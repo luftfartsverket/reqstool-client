@@ -105,7 +105,6 @@ class Command:
         # Subparser for maven report
         maven_report_parser = parser.add_parser("maven", help="maven source")
         maven_report_parser.add_argument("-u", "--url", help="url description", required=True)
-        maven_report_parser.add_argument("-p", "--path", help="path description", required=True)
         maven_report_parser.add_argument("-t", "--env_token", help="env_token description")
         maven_report_parser.add_argument("--group_id", help="group_id description", required=True)
         maven_report_parser.add_argument("--artifact_id", help="artifact_id description", required=True)
@@ -184,7 +183,6 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         if "maven" in args_source.source:
             location = MavenLocation(
                 url=args_source.url,
-                path=args_source.path,
                 group_id=args_source.group_id,
                 artifact_id=args_source.artifact_id,
                 version=args_source.version,

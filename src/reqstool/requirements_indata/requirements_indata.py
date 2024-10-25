@@ -16,9 +16,7 @@ from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
 from reqstool.locations.maven_location import MavenLocation
-from reqstool.reqstool_config.reqstool_config import TYPES, ReqstoolConfig
-from reqstool.requirements_indata.java.java_maven_requirements_indata_paths import JavaMavenRequirementsIndataPaths
-from reqstool.requirements_indata.python.python_requirements_indata_paths import PythonRequirementsIndataPaths
+from reqstool.reqstool_config.reqstool_config import ReqstoolConfig
 from reqstool.requirements_indata.requirements_indata_paths import RequirementsIndataPathItem, RequirementsIndataPaths
 
 
@@ -50,17 +48,6 @@ class RequirementsIndata:
 
             self.reqstool_config = ReqstoolConfig._parse(yaml_data=data)
 
-            match self.reqstool_config.type:
-                case TYPES.JAVA_MAVEN:
-                    self.requirements_indata_paths = JavaMavenRequirementsIndataPaths()
-                case TYPES.PYTHON:
-                    self.requirements_indata_paths = PythonRequirementsIndataPaths()
-
-            self._handle_custom()
-
-            if self.reqstool_config.project_root_dir is not None:
-                self.requirements_indata_paths.prepend_paths(self.reqstool_config.project_root_dir)
-
     def _ensure_absolute_paths_and_check_existance(self):
         # iterate over all fields and ensure absolute paths
 
@@ -77,9 +64,7 @@ class RequirementsIndata:
                 )
             elif isinstance(self.location, MavenLocation):
                 # Include self.location.path when resolving a git repository
-                RequirementsIndata._ensure_absolute_path_and_check_existance(
-                    paths=[self.dst_path, self.location.path], original=original
-                )
+                RequirementsIndata._ensure_absolute_path_and_check_existance(paths=[self.dst_path], original=original)
             elif isinstance(self.location, LocalLocation):
                 # resolve soft link
                 abs_dst_path = os.readlink(self.dst_path)
@@ -103,22 +88,3 @@ class RequirementsIndata:
                 item.exists = os.path.exists(item.path)
         else:
             raise TypeError(type(original))
-
-    def _handle_custom(self):
-        # replace default values with custom if specified
-
-        if self.reqstool_config.locations.test_results:
-            test_results = self.reqstool_config.locations.test_results
-
-            if isinstance(test_results, Sequence):
-                r_test_results = []
-
-                for test_result_dir in test_results:
-                    r_test_results.append(RequirementsIndataPathItem(path=test_result_dir))
-
-                self.requirements_indata_paths.test_results_dirs = r_test_results
-
-        if self.reqstool_config.locations.annotations:
-            self.requirements_indata_paths.annotations_yml = RequirementsIndataPathItem(
-                path=self.reqstool_config.locations.annotations
-            )

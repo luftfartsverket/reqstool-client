@@ -17,7 +17,7 @@ from reqstool.locations.location import LocationInterface
 
 @dataclass(kw_only=True)
 class PypiLocation(LocationInterface):
-    url: str = field(default="https://pypi.org/pypi/simple")
+    url: str = field(default="https://pypi.org/simple")
     package: str
     version: str
     env_token: Optional[str] = field(default=None)
