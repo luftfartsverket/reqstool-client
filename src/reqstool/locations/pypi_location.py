@@ -51,6 +51,9 @@ class PypiLocation(LocationInterface):
             logging.debug(f"Extracting {downloaded_file} to {dst_path}\n")
 
             with tarfile.open(downloaded_file, "r:gz") as tar_ref:
+                top_level_dirs = {
+                    member.name.split("/")[0] for member in tar_ref.getmembers() if member.name.count("/") > 0
+                }
                 tar_ref.extractall(path=dst_path, filter="data")
         except tarfile.TarError as e:
             logging.fatal(f"Error extracting {downloaded_file}: {e}")
@@ -63,7 +66,17 @@ class PypiLocation(LocationInterface):
             )
             sys.exit(1)
 
-        logging.debug(f"Extracted {downloaded_file} to {dst_path}\n")
+        if len(top_level_dirs) != 1:
+            logging.fatal(
+                f"Tarball from {self.url} did not have one and only one" f" top level directory: {top_level_dirs}"
+            )
+            sys.exit(1)
+
+        top_level_dir = os.path.join(dst_path, top_level_dirs[0])
+
+        logging.debug(f"Extracted {downloaded_file} to {top_level_dir}\n")
+
+        return top_level_dir
 
     @staticmethod
     def get_package_url(package, version, base_url, token) -> str:

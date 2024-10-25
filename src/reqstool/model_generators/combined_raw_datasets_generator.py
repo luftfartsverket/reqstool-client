@@ -162,7 +162,7 @@ class CombinedRawDatasetsGenerator:
 
         tmp_path = TempDirectoryUtil.get_suffix_path("can_we_use_urn_here").absolute()
 
-        current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
+        tmp_path = current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
 
         requirements_indata = RequirementsIndata(dst_path=tmp_path, location=current_location_handler.current)
 

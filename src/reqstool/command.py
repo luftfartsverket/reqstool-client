@@ -115,7 +115,7 @@ class Command:
         self._add_sort_by(maven_report_parser)
 
     def _add_argument_version(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
-        ver: str = "local dev" if __package__ is None else f"{version('reqstool')}"
+        ver: str = "dev" if __package__ is None else f"{version('reqstool')}"
 
         argument_parser.add_argument(
             "-V",

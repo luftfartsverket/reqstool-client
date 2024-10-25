@@ -2,7 +2,7 @@
 
 import dataclasses
 from dataclasses import dataclass, field
-from pathlib import PurePath
+from pathlib import Path, PurePath
 
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
@@ -43,5 +43,5 @@ class LocationResolver:
 
         return resolved
 
-    def make_available_on_localdisk(self, dst_path: str):
+    def make_available_on_localdisk(self, dst_path: str) -> str:
         return self.current._make_available_on_localdisk(dst_path=dst_path)

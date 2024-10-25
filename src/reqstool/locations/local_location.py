@@ -27,3 +27,5 @@ class LocalLocation(LocationInterface):
         os.symlink(src_path, symlink_name, dir_fd=dst_dir_fd, target_is_directory=True)
 
         os.close(dst_dir_fd)
+
+        return dst_path

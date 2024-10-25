@@ -3,6 +3,7 @@
 import logging
 import os
 import tempfile
+from importlib.metadata import version
 from itertools import chain
 from pathlib import Path
 from typing import Dict, Iterable, List, Sequence
@@ -40,19 +41,23 @@ class TempDirectoryUtil:
         return new_path
 
 
-def download_file(url, dst_path, token) -> Path:
-    headers = {}
+def download_file(url, dst_path, token, **kwargs) -> Path:
+    ver: str = "dev" if __package__ is None else f"{version('reqstool')}"
+    user_agent = (f"reqstool/{ver}",)
+
+    headers = {"User-Agent": user_agent}
+
     if token:
         # If the token exists, add it as a Bearer token in the Authorization header
         headers["Authorization"] = f"Bearer {token}"
 
     response = requests.get(url, headers=headers, allow_redirects=True)
 
-    fn: Path = Path(dst_path, os.path.basename(url))
+    fn: Path = os.path.abspath(Path(dst_path, os.path.basename(url)))
     with open(fn, "wb") as file:
         file.write(response.content)
 
-    logging.debug(f"Downloaded {fn}")
+    logging.debug(f"Downloaded {url} to {fn}")
 
     return fn
 
