@@ -58,10 +58,5 @@
     },
     "additionalProperties": false
   },
-  "required": [
-    "language",
-    "build",
-    "version",
-    "resources"
-  ]
+  "additionalProperties": false
 }

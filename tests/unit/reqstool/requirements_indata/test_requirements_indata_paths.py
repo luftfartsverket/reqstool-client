@@ -21,8 +21,9 @@ def test_prepend_paths_with_none_properties(default_instance):
     assert rip.requirements_yml.path == "requirements.yml"
     assert rip.svcs_yml.path == "software_verification_cases.yml"
     assert rip.mvrs_yml.path == "manual_verification_results.yml"
-    assert rip.annotations_yml is None
-    assert len(rip.test_results) == 0
+    assert rip.annotations_yml.path == "annotations.yml"
+    assert len(rip.test_results) == 1
+    assert rip.test_results[0].path == "test_results"
 
 
 # # Test the merge method with properties that can be None
