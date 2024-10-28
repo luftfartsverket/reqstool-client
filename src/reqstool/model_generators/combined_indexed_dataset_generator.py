@@ -7,9 +7,10 @@ from typing import Dict, List, Set, Tuple
 from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.common.dataclasses.urn_id import UrnId
-from reqstool.common.utils import append_data_item_to_dict_list_entry, create_accessible_nodes_dict
+from reqstool.common.utils import Utils
 from reqstool.common.validators.lifecycle_validator import LifecycleValidator
-from reqstool.expression_languages.requirements_el import RequirementsELTransformer
+from reqstool.expression_languages.requirements_el import \
+    RequirementsELTransformer
 from reqstool.expression_languages.svcs_el import SVCsELTransformer
 from reqstool.filters.id_filters import IDFilters
 from reqstool.filters.requirements_filters import RequirementFilter
@@ -18,7 +19,8 @@ from reqstool.models.annotations import AnnotationData
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.mvrs import MVRData
 from reqstool.models.raw_datasets import CombinedRawDataset
-from reqstool.models.requirements import VARIANTS, RequirementData, RequirementsData
+from reqstool.models.requirements import (VARIANTS, RequirementData,
+                                          RequirementsData)
 from reqstool.models.svcs import SVCData, SVCsData
 from reqstool.models.test_data import TEST_RUN_STATUS, TestData
 
@@ -67,7 +69,7 @@ class CombinedIndexedDatasetGenerator:
     _mvrs_from_svc: Dict[UrnId, List[UrnId]] = field(init=False, default_factory=dict)
 
     def __post_init__(self):
-        self._accessible_nodes_dict = create_accessible_nodes_dict(self._crd.parsing_graph)
+        self._accessible_nodes_dict = Utils.create_accessible_nodes_dict(self._crd.parsing_graph)
 
         self.combined_indexed_dataset = self.__generate()
 
@@ -144,7 +146,7 @@ class CombinedIndexedDatasetGenerator:
                 assert reqdata.id not in self._requirements
 
                 self._requirements[reqdata.id] = reqdata
-                append_data_item_to_dict_list_entry(dictionary=self._reqs_from_urn, key=urn, data=reqdata.id)
+                Utils.append_data_item_to_dict_list_entry(dictionary=self._reqs_from_urn, key=urn, data=reqdata.id)
 
     def __process_svcs(self):
         for urn, rds in self._crd.raw_datasets.items():
@@ -175,10 +177,10 @@ class CombinedIndexedDatasetGenerator:
 
                     self._svcs[svcdata.id] = svcdata
 
-                    append_data_item_to_dict_list_entry(dictionary=self._svcs_from_urn, key=urn, data=svcdata.id)
+                    Utils.append_data_item_to_dict_list_entry(dictionary=self._svcs_from_urn, key=urn, data=svcdata.id)
 
                     for req_urn_id in svcdata.requirement_ids:
-                        append_data_item_to_dict_list_entry(
+                        Utils.append_data_item_to_dict_list_entry(
                             dictionary=self._svcs_from_req,
                             key=req_urn_id,
                             data=svcdata.id,
@@ -210,10 +212,10 @@ class CombinedIndexedDatasetGenerator:
 
                     self._mvrs[mvrdata.id] = mvrdata
 
-                    append_data_item_to_dict_list_entry(dictionary=self._mvrs_from_urn, key=urn, data=mvrdata.id)
+                    Utils.append_data_item_to_dict_list_entry(dictionary=self._mvrs_from_urn, key=urn, data=mvrdata.id)
 
                     for svc_urn_id in mvrdata.svc_ids:
-                        append_data_item_to_dict_list_entry(
+                        Utils.append_data_item_to_dict_list_entry(
                             dictionary=self._mvrs_from_svc,
                             key=svc_urn_id,
                             data=mvrdata.id,
@@ -223,7 +225,7 @@ class CombinedIndexedDatasetGenerator:
         for urn, rds in self._crd.raw_datasets.items():
             if rds.annotations_data and rds.annotations_data.implementations:
                 for req_id, req_anno_data in rds.annotations_data.implementations.items():
-                    append_data_item_to_dict_list_entry(
+                    Utils.append_data_item_to_dict_list_entry(
                         dictionary=self._annotations_impls, key=req_id, data=req_anno_data
                     )
 
@@ -231,7 +233,7 @@ class CombinedIndexedDatasetGenerator:
         for urn, rds in self._crd.raw_datasets.items():
             if rds.annotations_data and rds.annotations_data.tests:
                 for req_id, req_anno_data in rds.annotations_data.tests.items():
-                    append_data_item_to_dict_list_entry(
+                    Utils.append_data_item_to_dict_list_entry(
                         dictionary=self._annotations_tests, key=req_id, data=req_anno_data
                     )
 
@@ -263,7 +265,7 @@ class CombinedIndexedDatasetGenerator:
                                 status=TEST_RUN_STATUS.MISSING,
                             )
 
-                        append_data_item_to_dict_list_entry(
+                        Utils.append_data_item_to_dict_list_entry(
                             dictionary=self._automated_test_result, key=svc_urn_id, data=test_data
                         )
 

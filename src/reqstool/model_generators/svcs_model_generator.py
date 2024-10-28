@@ -2,14 +2,14 @@
 
 import sys
 from typing import Dict, Set
-from packaging.version import InvalidVersion, Version
 
+from packaging.version import InvalidVersion, Version
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
-from reqstool.common import utils
 from reqstool.common.dataclasses.lifecycle import LIFECYCLESTATE, LifecycleData
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.common.utils import Utils
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.filters.svcs_filters import SVCFilter
@@ -24,7 +24,7 @@ class SVCsModelGenerator:
         self.model = self.__generate(uri)
 
     def __generate(self, uri: str) -> SVCsData:
-        response = utils.open_file_https_file(uri)
+        response = Utils.open_file_https_file(uri)
 
         yaml = YAML(typ="safe")
 
@@ -62,7 +62,7 @@ class SVCsModelGenerator:
 
             svc = SVCData(
                 id=urn_id,
-                requirement_ids=utils.convert_ids_to_urn_id(ids=case["requirement_ids"], urn=self.urn),
+                requirement_ids=Utils.convert_ids_to_urn_id(ids=case["requirement_ids"], urn=self.urn),
                 title=case["title"],
                 description=case["description"] if "description" in case else None,
                 verification=VERIFICATIONTYPES(case["verification"]),
@@ -93,15 +93,15 @@ class SVCsModelGenerator:
                 if "svc_ids" in urn_filter:
                     if "includes" in urn_filter["svc_ids"]:
                         svc_ids_includes = set(
-                            utils.check_ids_to_filter(current_urn=urn, ids=urn_filter["svc_ids"]["includes"])
+                            Utils.check_ids_to_filter(current_urn=urn, ids=urn_filter["svc_ids"]["includes"])
                         )
-                        svc_urn_ids_includes = set(utils.convert_ids_to_urn_id(urn=urn, ids=svc_ids_includes))
+                        svc_urn_ids_includes = set(Utils.convert_ids_to_urn_id(urn=urn, ids=svc_ids_includes))
 
                     if "excludes" in urn_filter["svc_ids"]:
                         svc_ids_excludes = set(
-                            utils.check_ids_to_filter(current_urn=urn, ids=urn_filter["svc_ids"]["excludes"])
+                            Utils.check_ids_to_filter(current_urn=urn, ids=urn_filter["svc_ids"]["excludes"])
                         )
-                        svc_urn_ids_excludes = set(utils.convert_ids_to_urn_id(urn=urn, ids=svc_ids_excludes))
+                        svc_urn_ids_excludes = set(Utils.convert_ids_to_urn_id(urn=urn, ids=svc_ids_excludes))
 
                 if "custom" in urn_filter:
                     if "includes" in urn_filter["custom"]:

@@ -6,8 +6,7 @@ from typing import Dict, List
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
-from reqstool.common import utils
-from reqstool.common.utils import TempDirectoryUtil
+from reqstool.common.utils import TempDirectoryUtil, Utils
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.location_resolver.location_resolver import LocationResolver
 from reqstool.locations.location import LocationInterface
@@ -73,20 +72,20 @@ class CombinedRawDatasetsGenerator:
             case VARIANTS.SYSTEM:
                 parsed_systems = self.__import_systems(raw_datasets, parent_rd=rd)
                 parsed_microservices = self.__import_implementations(raw_datasets, implementations=rd.implementations)
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     self._parsing_graph, key=rd.metadata.urn, data=parsed_systems
                 )
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     self._parsing_graph, key=rd.metadata.urn, data=parsed_microservices
                 )
 
                 # add current urn as parent to all microservices
                 for ms_urn in parsed_microservices:
-                    utils.append_data_item_to_dict_list_entry(self._parsing_graph, key=ms_urn, data=rd.metadata.urn)
+                    Utils.append_data_item_to_dict_list_entry(self._parsing_graph, key=ms_urn, data=rd.metadata.urn)
 
             case VARIANTS.MICROSERVICE:
                 parsed_systems = self.__import_systems(raw_datasets, parent_rd=rd)
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     self._parsing_graph, key=rd.metadata.urn, data=parsed_systems
                 )
             case _:
@@ -123,7 +122,7 @@ class CombinedRawDatasetsGenerator:
                     raw_datasets=raw_datasets, parent_rd=current_imported_model.requirements_data
                 )
 
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     dictionary=self._parsing_graph, key=current_urn, data=imported_systems
                 )
 

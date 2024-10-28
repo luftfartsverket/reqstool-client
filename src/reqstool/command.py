@@ -4,11 +4,15 @@
 import argparse
 import os
 import sys
-from importlib.metadata import version
 from typing import TextIO, Union
+
+from reqstool.common.utils import Utils
 
 if __package__ is None or len(__package__) == 0:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+    Utils.is_installed_package = False
+
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
@@ -115,7 +119,7 @@ class Command:
         self._add_sort_by(maven_report_parser)
 
     def _add_argument_version(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
-        ver: str = "dev" if __package__ is None else f"{version('reqstool')}"
+        ver = Utils.get_version()
 
         argument_parser.add_argument(
             "-V",

@@ -1,7 +1,7 @@
 # Copyright © LFV
 
 
-from reqstool.common.utils import create_accessible_nodes_dict
+from reqstool.common.utils import Utils
 
 
 def test_create_accessible_nodes_dict():
@@ -12,6 +12,6 @@ def test_create_accessible_nodes_dict():
         "ms-001": ["sys-001"],
     }
 
-    accesible_nodes_dict = create_accessible_nodes_dict(parsing_graph)
+    accesible_nodes_dict = Utils.create_accessible_nodes_dict(parsing_graph)
 
     assert accesible_nodes_dict

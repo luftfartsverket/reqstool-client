@@ -9,9 +9,9 @@ from reqstool_python_decorators.decorators.decorators import Requirements
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
-from reqstool.common import utils
 from reqstool.common.dataclasses.lifecycle import LIFECYCLESTATE, LifecycleData
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.common.utils import Utils
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.filters.requirements_filters import RequirementFilter
@@ -64,7 +64,7 @@ class RequirementsModelGenerator:
         self,
         uri: str,
     ) -> RequirementsData:
-        response = utils.open_file_https_file(uri)
+        response = Utils.open_file_https_file(uri)
 
         yaml = YAML(typ="safe")
 
@@ -240,21 +240,21 @@ class RequirementsModelGenerator:
 
                 if "requirement_ids" in urn_filter:
                     if "includes" in urn_filter["requirement_ids"]:
-                        filtered_ids = utils.check_ids_to_filter(
+                        filtered_ids = Utils.check_ids_to_filter(
                             current_urn=urn, ids=urn_filter["requirement_ids"]["includes"]
                         )
                         req_ids_includes = set(filtered_ids)
                         req_urn_ids_imports: Set[UrnId] = set(
-                            utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_includes)
+                            Utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_includes)
                         )
 
                     if "excludes" in urn_filter["requirement_ids"]:
-                        filtered_ids = utils.check_ids_to_filter(
+                        filtered_ids = Utils.check_ids_to_filter(
                             current_urn=urn, ids=urn_filter["requirement_ids"]["excludes"]
                         )
                         req_ids_excludes = set(filtered_ids)
                         req_urn_ids_excludes: Set[UrnId] = set(
-                            utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_excludes)
+                            Utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_excludes)
                         )
 
                 if "custom" in urn_filter:
@@ -290,7 +290,7 @@ class RequirementsModelGenerator:
                     refs_data.extend(
                         [
                             ReferenceData(
-                                requirement_ids=utils.convert_ids_to_urn_id(
+                                requirement_ids=Utils.convert_ids_to_urn_id(
                                     ids=req["references"]["requirement_ids"], urn=urn
                                 )
                             )

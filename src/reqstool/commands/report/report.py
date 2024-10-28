@@ -12,7 +12,7 @@ from reqstool.commands.status.statistics_container import StatisticsContainer
 from reqstool.commands.status.statistics_generator import StatisticsGenerator
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.jinja2 import Jinja2Utils
-from reqstool.common.utils import get_mvr_urn_ids_for_svcs_urn_id
+from reqstool.common.utils import Utils
 from reqstool.common.validator_error_holder import ValidationErrorHolder
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.locations.location import LocationInterface
@@ -162,7 +162,7 @@ class ReportCommand:
             # get all implementations for current requirement
             impls: List = self._get_annotation_impls(cid=cid, urn_id=urn_id)
 
-            mvr_ids: List[UrnId] = get_mvr_urn_ids_for_svcs_urn_id(cid=cid, svcs_urn_ids=svcs_urn_ids)
+            mvr_ids: List[UrnId] = Utils.get_mvr_urn_ids_for_svcs_urn_id(cid=cid, svcs_urn_ids=svcs_urn_ids)
 
             # Get mvrs for current requirement if there are any (else [])
             mvrs: List[MVRData] = [cid.mvrs[mvr_id] for mvr_id in mvr_ids] if mvr_ids else []

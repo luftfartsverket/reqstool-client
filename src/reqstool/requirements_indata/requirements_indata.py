@@ -10,7 +10,7 @@ from reqstool_python_decorators.decorators.decorators import Requirements
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
-from reqstool.common.utils import open_file_https_file
+from reqstool.common.utils import Utils
 from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
@@ -35,7 +35,7 @@ class RequirementsIndata:
     def _handle_requirements_config(self):
 
         if os.path.exists(os.path.join(self.dst_path, "reqstool_config.yml")):
-            response = open_file_https_file(os.path.join(self.dst_path, "reqstool_config.yml"))
+            response = Utils.open_file_https_file(os.path.join(self.dst_path, "reqstool_config.yml"))
 
             yaml = YAML(typ="safe")
 

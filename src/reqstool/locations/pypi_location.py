@@ -11,7 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
 
-from reqstool.common.utils import download_file
+from reqstool.common.utils import Utils
 from reqstool.locations.location import LocationInterface
 
 
@@ -46,7 +46,7 @@ class PypiLocation(LocationInterface):
         logging.debug(f"Downloading {self.package} from {self.url} to {dst_path}\n")
 
         try:
-            downloaded_file = download_file(url=package_url, dst_path=dst_path, token=token)
+            downloaded_file = Utils.download_file(url=package_url, dst_path=dst_path, token=token)
 
             logging.debug(f"Extracting {downloaded_file} to {dst_path}\n")
 
