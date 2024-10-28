@@ -25,6 +25,8 @@ from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.status import StatusCommand
 from reqstool.common.utils import Utils
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
+
+# from reqstool.common.validators.syntax_validator import JsonSchemaItem
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
@@ -140,8 +142,8 @@ class Command:
             action="version",
             version=f"""
 {ver}
-JSON Schema version: {JsonSchemaItem.schema_version}
-JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
+        # JSON Schema version: {JsonSchemaItem.schema_version}
+        # JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         )
 
         return argument_parser
@@ -212,7 +214,7 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
                 classifier=args_source.classifier if args_source.classifier else None,
                 env_token=args_source.env_token if args_source.env_token else None,
             )
-        elif "maven" in args_source.source:  # TODO $$$
+        elif "pypi" in args_source.source:  # TODO $$$
             location = PypiLocation(
                 url=args_source.url if args_source.url else None,
                 package=args_source.package,
