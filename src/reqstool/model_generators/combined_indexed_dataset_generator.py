@@ -9,8 +9,7 @@ from reqstool_python_decorators.decorators.decorators import Requirements
 from reqstool.common.dataclasses.urn_id import UrnId
 from reqstool.common.utils import Utils
 from reqstool.common.validators.lifecycle_validator import LifecycleValidator
-from reqstool.expression_languages.requirements_el import \
-    RequirementsELTransformer
+from reqstool.expression_languages.requirements_el import RequirementsELTransformer
 from reqstool.expression_languages.svcs_el import SVCsELTransformer
 from reqstool.filters.id_filters import IDFilters
 from reqstool.filters.requirements_filters import RequirementFilter
@@ -19,8 +18,7 @@ from reqstool.models.annotations import AnnotationData
 from reqstool.models.combined_indexed_dataset import CombinedIndexedDataset
 from reqstool.models.mvrs import MVRData
 from reqstool.models.raw_datasets import CombinedRawDataset
-from reqstool.models.requirements import (VARIANTS, RequirementData,
-                                          RequirementsData)
+from reqstool.models.requirements import VARIANTS, RequirementData, RequirementsData
 from reqstool.models.svcs import SVCData, SVCsData
 from reqstool.models.test_data import TEST_RUN_STATUS, TestData
 
