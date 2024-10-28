@@ -192,7 +192,7 @@ class CombinedRawDatasetsGenerator:
         ):
             # parse file sources other than requirements.yml
             annotations_data, svcs_data, automated_tests, mvrs_data = self.__parse_source_other(
-                requirements_indata, rmg
+                actual_tmp_path, requirements_indata, rmg
             )
 
         raw_dataset = RawDataset(
@@ -206,7 +206,9 @@ class CombinedRawDatasetsGenerator:
         return raw_dataset
 
     @Requirements("REQ_009", "REQ_010", "REQ_013")
-    def __parse_source_other(self, requirements_indata: RequirementsIndata, rmg: RequirementsModelGenerator):
+    def __parse_source_other(
+        self, actual_tmp_path: str, requirements_indata: RequirementsIndata, rmg: RequirementsModelGenerator
+    ):
         annotations_data: AnnotationsData = None
         svcs_data: SVCsData = None
         mvrs_data: MVRsData = None
@@ -224,12 +226,13 @@ class CombinedRawDatasetsGenerator:
 
         # handle automated test results
 
-        for test_results_dir in requirements_indata.requirements_indata_paths.test_results:
+        for test_result_pattern in requirements_indata.test_results_patterns:
 
-            if test_results_dir.exists:
-                automated_tests_results = TestDataModelGenerator(path=test_results_dir.path, urn=current_urn).model
+            test_result_files = Utils.get_matching_files(path=actual_tmp_path, patterns=[test_result_pattern])
 
-                tests |= automated_tests_results.tests
+            automated_tests_results = TestDataModelGenerator(test_result_files, urn=current_urn).model
+
+            tests |= automated_tests_results.tests
 
         automated_tests = TestsData(tests=tests)
 

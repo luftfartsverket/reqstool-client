@@ -2,7 +2,6 @@
 
 import os
 import sys
-from collections.abc import Sequence
 from dataclasses import dataclass, field, fields
 from typing import List, Union
 
@@ -26,6 +25,7 @@ class RequirementsIndata:
     location: LocationInterface  # current location
     reqstool_config: ReqstoolConfig = field(init=False, default=None)
     requirements_indata_paths: RequirementsIndataPaths = field(default_factory=RequirementsIndataPaths)
+    test_results_patterns: List[str] = field(default_factory=lambda: [])
 
     def __post_init__(self):
         self._handle_requirements_config()
@@ -78,18 +78,9 @@ class RequirementsIndata:
         paths: List[str], original: Union[RequirementsIndataPathItem, List[RequirementsIndataPathItem]]
     ):
 
-        if isinstance(original, RequirementsIndataPathItem):
-            new_abs_path = os.path.abspath(os.path.join(*paths, original.path))
-            original.path = new_abs_path
-            original.exists = os.path.exists(original.path)
-
-        elif isinstance(original, Sequence):
-            for item in original:
-                new_abs_path = os.path.abspath(os.path.join(*paths, item.path))
-                item.path = new_abs_path
-                item.exists = os.path.exists(item.path)
-        else:
-            raise TypeError(type(original))
+        new_abs_path = os.path.abspath(os.path.join(*paths, original.path))
+        original.path = new_abs_path
+        original.exists = os.path.exists(original.path)
 
     def _update_with_reqstool_config_values(self):
         # replace default values with those specified in reqstool_config.yml
@@ -110,15 +101,7 @@ class RequirementsIndata:
             )
 
         if self.reqstool_config.resources.test_results:
-            test_results = self.reqstool_config.resources.test_results
-
-            if isinstance(test_results, Sequence):
-                r_test_results = []
-
-                for test_result in test_results:
-                    r_test_results.append(RequirementsIndataPathItem(path=test_result))
-
-                self.requirements_indata_paths.test_results = r_test_results
+            self.test_results_patterns.extend(self.reqstool_config.resources.test_results)
 
         if self.reqstool_config.resources.annotations:
             self.requirements_indata_paths.annotations_yml = RequirementsIndataPathItem(

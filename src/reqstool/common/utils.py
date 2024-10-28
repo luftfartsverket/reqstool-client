@@ -31,7 +31,7 @@ class Utils:
         return ver
 
     @staticmethod
-    def download_file(url, dst_path, token, **kwargs) -> Path:
+    def download_file(url, dst_path, token=None, **kwargs) -> Path:
 
         response = Utils.open_file_https_file(url)
 
@@ -44,8 +44,17 @@ class Utils:
         return fn
 
     @staticmethod
-    def open_file_https_file(uri: str, token, **kwargs):
-        user_agent = (f"reqstool/{Utils.get_version()}",)
+    def get_matching_files(path: str, patterns: List[str]) -> List[Path]:
+        matching_files = []
+
+        for pattern in patterns:
+            matching_files.extend(Path(path).rglob(pattern))
+
+        return list(set(matching_files))  # Remove duplicates if patterns overlap
+
+    @staticmethod
+    def open_file_https_file(uri: str, token=None, **kwargs):
+        user_agent = f"reqstool/{Utils.get_version()}"
 
         headers = {"User-Agent": user_agent}
 
