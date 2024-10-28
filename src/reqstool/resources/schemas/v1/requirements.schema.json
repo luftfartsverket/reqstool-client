@@ -114,7 +114,7 @@
                 "pypi": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/$defs/maven"
+                        "$ref": "#/$defs/pypi"
                     },
                     "description": "Array of PyPI artifacts"
                 },
@@ -181,13 +181,40 @@
                 },
                 "version": {
                     "type": "string",
-                    "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+)$",
+                    "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+).*$",
                     "description": "Version for the Maven implementation"
                 }
             },
             "required": [
                 "group_id",
                 "artifact_id",
+                "version"
+            ]
+        },
+        "pypi": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "env_token": {
+                    "type": "string",
+                    "description": "Token to authenticate. E.g. PYPI_TOKEN or empty"
+                },
+                "url": {
+                    "$ref": "#/$defs/url",
+                    "description": "URL to artifact repository (default if empty is PyPI)"
+                },
+                "package": {
+                    "type": "string",
+                    "description": "PyPI package name"
+                },
+                "version": {
+                    "type": "string",
+                    "pattern": "^(\\d+\\.)?(\\d+\\.)?(\\*|\\d+).*$",
+                    "description": "Version for the Maven implementation"
+                }
+            },
+            "required": [
+                "package",
                 "version"
             ]
         },
