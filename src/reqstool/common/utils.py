@@ -32,15 +32,8 @@ class Utils:
 
     @staticmethod
     def download_file(url, dst_path, token, **kwargs) -> Path:
-        user_agent = (f"reqstool/{Utils.get_version()}",)
 
-        headers = {"User-Agent": user_agent}
-
-        if token:
-            # If the token exists, add it as a Bearer token in the Authorization header
-            headers["Authorization"] = f"Bearer {token}"
-
-        response = requests.get(url, headers=headers, allow_redirects=True)
+        response = Utils.open_file_https_file(url)
 
         fn: Path = os.path.abspath(Path(dst_path, os.path.basename(url)))
         with open(fn, "wb") as file:
@@ -51,7 +44,15 @@ class Utils:
         return fn
 
     @staticmethod
-    def open_file_https_file(uri: str):
+    def open_file_https_file(uri: str, token, **kwargs):
+        user_agent = (f"reqstool/{Utils.get_version()}",)
+
+        headers = {"User-Agent": user_agent}
+
+        if token:
+            # If the token exists, add it as a Bearer token in the Authorization header
+            headers["Authorization"] = f"Bearer {token}"
+
         session = requests.Session()
         session.mount("file://", FileAdapter())
 
@@ -60,7 +61,7 @@ class Utils:
 
             uri = "file://" + str(path.absolute())
 
-        response = session.get(uri)
+        response = session.get(url=uri, headers=headers, allow_redirects=True, **kwargs)
 
         return response
 

@@ -28,9 +28,9 @@ class GitLocation(LocationInterface):
         else:
             repo = clone_repository(url=self.url, path=dst_path, callbacks=self.MyRemoteCallbacks(api_token))
 
-        logging.debug(f"Cloned repo {self.url} (branch: {self.branch}) to {repo.path}\n")
+        logging.debug(f"Cloned repo {self.url} (branch: {self.branch}) to {repo.workdir}\n")
 
-        return repo.path
+        return repo.workdir
 
     class MyRemoteCallbacks(RemoteCallbacks):
         def __init__(self, api_token):
