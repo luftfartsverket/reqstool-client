@@ -2,7 +2,7 @@
 
 import dataclasses
 from dataclasses import dataclass, field
-from pathlib import Path, PurePath
+from pathlib import PurePath
 
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface

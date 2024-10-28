@@ -40,7 +40,8 @@ class PypiLocation(LocationInterface):
 
         if not package_url:
             raise RequestException(
-                f"Unable to find a sdist pypi package for {self.package} == {self.version} in repo {url} {'with token' if self.token else ''}"
+                f"Unable to find a sdist pypi package for {self.package} == {self.version} in repo {self.url}"
+                f" {'with token' if self.token else ''}"
             )
 
         logging.debug(f"Downloading {self.package} from {self.url} to {dst_path}\n")
