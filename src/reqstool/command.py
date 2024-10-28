@@ -2,6 +2,7 @@
 # Copyright © LFV
 
 import argparse
+import logging
 import os
 import sys
 from typing import TextIO, Union
@@ -22,6 +23,7 @@ from reqstool.commands.report import report
 from reqstool.commands.report.criterias.group_by import GroupbyOptions
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.status import StatusCommand
+from reqstool.common.utils import Utils
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
@@ -144,6 +146,11 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         return argument_parser
 
+    def _add_argument_log_level(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        argument_parser.add_argument(
+            "--log", default="WARNING", help="Set the logging level (FATAL, ERROR, WARNING, INFO, DEBUG)."
+        )
+
     def get_arguments(self) -> argparse.Namespace:
         class ComboRawTextandArgsDefaultUltimateHelpFormatter(
             argparse.RawTextHelpFormatter, argparse.ArgumentDefaultsHelpFormatter
@@ -156,6 +163,7 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         )
 
         self._add_argument_version(self.__parser)
+        self._add_argument_log_level(self.__parser)
 
         subparsers = self.__parser.add_subparsers(dest="command", help="Sub-commands")
 
@@ -270,6 +278,9 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 def main():
     command = Command()
     args = command.get_arguments()
+
+    # Set the logging level based on the argument
+    logging.basicConfig(level=getattr(logging, args.log.upper(), logging.WARNING))
 
     exit_code: int = 0
 
