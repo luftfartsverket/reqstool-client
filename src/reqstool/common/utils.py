@@ -26,14 +26,13 @@ class Utils:
 
     @staticmethod
     def get_version() -> str:
-        ver: str = f"{version('topsky_stimulator')}" if Utils.is_installed_package else "local-dev"
+        ver: str = f"{version('reqstool')}" if Utils.is_installed_package else "local-dev"
 
         return ver
 
     @staticmethod
     def download_file(url, dst_path, token, **kwargs) -> Path:
-        ver: str = "dev" if __package__ is None else f"{version('reqstool')}"
-        user_agent = (f"reqstool/{ver}",)
+        user_agent = (f"reqstool/{Utils.get_version()}",)
 
         headers = {"User-Agent": user_agent}
 
