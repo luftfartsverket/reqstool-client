@@ -23,3 +23,8 @@ class LocalImportData(ImportDataInterface):
 @dataclass
 class MavenImportData(ImportDataInterface):
     pass
+
+
+@dataclass
+class PypiImportData(ImportDataInterface):
+    pass

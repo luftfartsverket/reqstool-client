@@ -15,6 +15,7 @@ from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
 from reqstool.locations.maven_location import MavenLocation
+from reqstool.locations.pypi_location import PypiLocation
 from reqstool.reqstool_config.reqstool_config import ReqstoolConfig
 from reqstool.requirements_indata.requirements_indata_paths import RequirementsIndataPathItem, RequirementsIndataPaths
 
@@ -65,14 +66,15 @@ class RequirementsIndata:
                     paths=[self.dst_path, self.location.path], original=original
                 )
             elif isinstance(self.location, MavenLocation):
-                # Include self.location.path when resolving a git repository
+                RequirementsIndata._ensure_absolute_path_and_check_existance(paths=[self.dst_path], original=original)
+            elif isinstance(self.location, PypiLocation):
                 RequirementsIndata._ensure_absolute_path_and_check_existance(paths=[self.dst_path], original=original)
             elif isinstance(self.location, LocalLocation):
                 # resolve soft link
                 abs_dst_path = os.readlink(self.dst_path)
                 RequirementsIndata._ensure_absolute_path_and_check_existance(paths=[abs_dst_path], original=original)
             else:
-                raise TypeError
+                raise TypeError(f"Unknown location type: {type(self.location)}")
 
     def _ensure_absolute_path_and_check_existance(
         paths: List[str], original: Union[RequirementsIndataPathItem, List[RequirementsIndataPathItem]]

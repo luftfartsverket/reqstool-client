@@ -23,7 +23,7 @@ class PypiLocation(LocationInterface):
     env_token: Optional[str] = field(default=None)
 
     @staticmethod
-    def normalize_pypi_package_name(self, package_name):
+    def normalize_pypi_package_name(package_name):
         return re.sub(r"[-_.]+", "-", package_name).lower()
 
     def _make_available_on_localdisk(self, dst_path: str):
@@ -73,7 +73,7 @@ class PypiLocation(LocationInterface):
             )
             sys.exit(1)
 
-        top_level_dir = os.path.join(dst_path, top_level_dirs[0])
+        top_level_dir = os.path.join(dst_path, top_level_dirs.pop())
 
         logging.debug(f"Extracted {downloaded_file} to {top_level_dir}\n")
 
@@ -81,7 +81,7 @@ class PypiLocation(LocationInterface):
 
     @staticmethod
     def get_package_url(package, version, base_url, token) -> str:
-        package = PypiLocation.normalize_package_name(package)
+        package = PypiLocation.normalize_pypi_package_name(package_name=package)
 
         if not base_url.endswith("/"):
             base_url += "/"

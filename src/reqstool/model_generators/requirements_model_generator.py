@@ -19,8 +19,9 @@ from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LOCATIONTYPES, LocationInterface
 from reqstool.locations.maven_location import MavenLocation
+from reqstool.locations.pypi_location import PypiLocation
 from reqstool.models.implementations import GitImplData, ImplementationDataInterface, LocalImplData, MavenImplData
-from reqstool.models.imports import GitImportData, ImportDataInterface, LocalImportData, MavenImportData
+from reqstool.models.imports import GitImportData, ImportDataInterface, LocalImportData, MavenImportData, PypiImportData
 from reqstool.models.requirements import (
     CATEGORIES,
     IMPLEMENTATION,
@@ -182,6 +183,8 @@ class RequirementsModelGenerator:
 
             # maven
             self.__parse_systems_maven(data=data, r_systems=r_systems)
+            # pypi
+            self.__parse_systems_pypi(data=data, r_systems=r_systems)
 
         return r_systems
 
@@ -201,6 +204,21 @@ class RequirementsModelGenerator:
                 )
 
                 r_systems.append(maven_system)
+
+    def __parse_systems_pypi(self, data, r_systems):
+        if LOCATIONTYPES.PYPI.value in data["imports"]:
+            for pypi in data["imports"][LOCATIONTYPES.PYPI.value]:
+                pypi_system = PypiImportData(
+                    parent=self.parent,
+                    _current_unresolved=PypiLocation(
+                        env_token=pypi["env_token"],
+                        url=pypi["url"],
+                        package=pypi["package"],
+                        version=pypi["version"],
+                    ),
+                )
+
+                r_systems.append(pypi_system)
 
     def __parse_systems_local(self, data, r_systems):
         if LOCATIONTYPES.LOCAL.value in data["imports"]:
