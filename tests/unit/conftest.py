@@ -2,17 +2,8 @@
 
 import logging
 import os
-import sys
 
 import pytest
-
-if __package__ is None or len(__package__) == 0:
-    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-    from reqstool.common.utils import Utils
-
-    Utils.is_installed_package = False
-
 
 from .reqstool.models.test_implementations import git_impl_data, implementations_data, local_impl_data, maven_impl_data
 from .reqstool.models.test_imports import git_import_data, local_import_data, maven_import_data
