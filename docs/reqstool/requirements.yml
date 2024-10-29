@@ -6,13 +6,6 @@ metadata:
   title: Reqstool client
   url: https://github.com/Luftfartsverket/reqstool-client
 
-imports:
-  pypi:
-    - url: https://jfrog.lfv.se/artifactory/api/pypi/sysdev-pypi-dev/simple
-      package: topsky-stimulator
-      version: 0.4.2.dev17
-      env_token: JF_TOKEN
-
 requirements:
   - id: REQ_001
     title: Indata from local files
