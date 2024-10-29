@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 python_classes = ["!TestDataModelGenerator", "!TestStatisticsItem"]
-
 addopts = [
+    "-rsxX",
     "-s",
     "--import-mode=importlib",
     "--log-cli-level=DEBUG",
-    '-m not slow',
+    '-m not slow or not integration',
 ]
 pythonpath = [".", "src", "tests"]
-testpaths = ["tests/unit"]
+testpaths = ["tests"]
 markers = [
     "flaky: tests that can randomly fail through no change to the code",
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
@@ -89,6 +89,13 @@ target-version = ['py310']
 
 [tool.flake8]
 ignore = ["W503"]
+addopts = [
+    "-s",
+    "--import-mode=importlib",
+    "--log-cli-level=DEBUG",
+    #    '-m not slow or not integration',
+]
+pythonpath = [".", "src", "tests"]
 max-line-length = 125
 # exclude = tests/*
 max-complexity = 10
