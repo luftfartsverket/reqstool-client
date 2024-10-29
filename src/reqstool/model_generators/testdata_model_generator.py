@@ -34,7 +34,7 @@ class TestDataModelGenerator:
 
         for test_result_file in test_result_files:
 
-            if not os.path.exists(test_result_file):
+            if not os.path.isfile(test_result_file):
                 logging.warning("test_result_file did not exist: {test_result_file}")
                 continue
 

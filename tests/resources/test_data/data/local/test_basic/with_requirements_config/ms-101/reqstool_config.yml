@@ -8,5 +8,4 @@ resources:
   manual_verification_results: ../../baseline/ms-101/manual_verification_results.yml
   annotations: ../../baseline/ms-101/annotations.yml
   test_results:
-    - ../../baseline/ms-101/test_results/failsafe
-    - ../../baseline/ms-101/test_results/surefire
+    - ../../baseline/ms-101/test_results/**/*.xml
