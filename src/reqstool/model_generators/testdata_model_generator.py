@@ -1,6 +1,7 @@
 # Copyright © LFV
 
 import logging
+import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -33,7 +34,8 @@ class TestDataModelGenerator:
 
         for test_result_file in test_result_files:
 
-            if not test_result_file.exists():
+            if not os.path.exists(test_result_file):
+                logging.warning("test_result_file did not exist: {test_result_file}")
                 continue
 
             tree = ET.parse(test_result_file)
