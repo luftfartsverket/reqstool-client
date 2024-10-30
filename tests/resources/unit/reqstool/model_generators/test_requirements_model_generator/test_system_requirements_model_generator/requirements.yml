@@ -21,7 +21,6 @@ imports:
       artifact_id: test-one
       version: 1.0.0
       classifier: someclassifier
-      path: some/path1
 
     - env_token: "MAVEN_TOKEN"
       url: https://repo2.maven.org
@@ -29,7 +28,6 @@ imports:
       artifact_id: test-two
       version: 0.0.2
       classifier: classifier2
-      path: some/path2
 
 filters:
   "gitlab-001":
@@ -61,7 +59,6 @@ implementations: # only used with type = system
       artifact_id: test-one
       version: 0.0.1
       classifier: classifier1
-      path: some/path1
 
     - env_token: "MAVEN_TOKEN"
       url: https://repo2.maven.org
@@ -69,7 +66,6 @@ implementations: # only used with type = system
       artifact_id: test-two
       version: 0.0.2
       classifier: classifier2
-      path: some/path2
 
 requirements:
   - id: REQ_001

@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
-type: java-maven
-
-project_root_dir: "../../baseline/ms-101-maven"
-
-locations:
-  annotations: annotations.yml
-  test_results_dirs:
-    - target/failsafe
-    - target/surefire
+language: java
+build: maven
+resources:
+  requirements: ../../baseline/ms-101/requirements.yml
+  software_verification_cases: ../../baseline/ms-101/software_verification_cases.yml
+  manual_verification_results: ../../baseline/ms-101/manual_verification_results.yml
+  annotations: ../../baseline/ms-101/annotations.yml
+  test_results:
+    - ../../baseline/ms-101/test_results/**/*.xml

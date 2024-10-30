@@ -9,9 +9,9 @@ from reqstool_python_decorators.decorators.decorators import Requirements
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
-from reqstool.common import utils
 from reqstool.common.dataclasses.lifecycle import LIFECYCLESTATE, LifecycleData
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.common.utils import Utils
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.filters.requirements_filters import RequirementFilter
@@ -19,8 +19,9 @@ from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LOCATIONTYPES, LocationInterface
 from reqstool.locations.maven_location import MavenLocation
+from reqstool.locations.pypi_location import PypiLocation
 from reqstool.models.implementations import GitImplData, ImplementationDataInterface, LocalImplData, MavenImplData
-from reqstool.models.imports import GitImportData, ImportDataInterface, LocalImportData, MavenImportData
+from reqstool.models.imports import GitImportData, ImportDataInterface, LocalImportData, MavenImportData, PypiImportData
 from reqstool.models.requirements import (
     CATEGORIES,
     IMPLEMENTATION,
@@ -64,7 +65,7 @@ class RequirementsModelGenerator:
         self,
         uri: str,
     ) -> RequirementsData:
-        response = utils.open_file_https_file(uri)
+        response = Utils.open_file_https_file(uri)
 
         yaml = YAML(typ="safe")
 
@@ -143,7 +144,6 @@ class RequirementsModelGenerator:
                         artifact_id=maven["artifact_id"],
                         version=maven["version"],
                         classifier=maven["classifier"],
-                        path=maven["path"],
                     ),
                 )
 
@@ -183,6 +183,8 @@ class RequirementsModelGenerator:
 
             # maven
             self.__parse_systems_maven(data=data, r_systems=r_systems)
+            # pypi
+            self.__parse_systems_pypi(data=data, r_systems=r_systems)
 
         return r_systems
 
@@ -198,11 +200,25 @@ class RequirementsModelGenerator:
                         artifact_id=maven["artifact_id"],
                         version=maven["version"],
                         classifier=maven["classifier"],
-                        path=maven["path"],
                     ),
                 )
 
                 r_systems.append(maven_system)
+
+    def __parse_systems_pypi(self, data, r_systems):
+        if LOCATIONTYPES.PYPI.value in data["imports"]:
+            for pypi in data["imports"][LOCATIONTYPES.PYPI.value]:
+                pypi_system = PypiImportData(
+                    parent=self.parent,
+                    _current_unresolved=PypiLocation(
+                        env_token=pypi["env_token"],
+                        url=pypi["url"],
+                        package=pypi["package"],
+                        version=pypi["version"],
+                    ),
+                )
+
+                r_systems.append(pypi_system)
 
     def __parse_systems_local(self, data, r_systems):
         if LOCATIONTYPES.LOCAL.value in data["imports"]:
@@ -242,21 +258,21 @@ class RequirementsModelGenerator:
 
                 if "requirement_ids" in urn_filter:
                     if "includes" in urn_filter["requirement_ids"]:
-                        filtered_ids = utils.check_ids_to_filter(
+                        filtered_ids = Utils.check_ids_to_filter(
                             current_urn=urn, ids=urn_filter["requirement_ids"]["includes"]
                         )
                         req_ids_includes = set(filtered_ids)
                         req_urn_ids_imports: Set[UrnId] = set(
-                            utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_includes)
+                            Utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_includes)
                         )
 
                     if "excludes" in urn_filter["requirement_ids"]:
-                        filtered_ids = utils.check_ids_to_filter(
+                        filtered_ids = Utils.check_ids_to_filter(
                             current_urn=urn, ids=urn_filter["requirement_ids"]["excludes"]
                         )
                         req_ids_excludes = set(filtered_ids)
                         req_urn_ids_excludes: Set[UrnId] = set(
-                            utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_excludes)
+                            Utils.convert_ids_to_urn_id(urn=urn, ids=req_ids_excludes)
                         )
 
                 if "custom" in urn_filter:
@@ -292,7 +308,7 @@ class RequirementsModelGenerator:
                     refs_data.extend(
                         [
                             ReferenceData(
-                                requirement_ids=utils.convert_ids_to_urn_id(
+                                requirement_ids=Utils.convert_ids_to_urn_id(
                                     ids=req["references"]["requirement_ids"], urn=urn
                                 )
                             )

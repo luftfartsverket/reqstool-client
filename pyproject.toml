@@ -3,9 +3,21 @@ requires = ["hatchling", "hatch-vcs", "build", "twine"]
 build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
-addopts = ["-s", "--import-mode=importlib", "--log-cli-level=DEBUG"]
+python_classes = ["!TestDataModelGenerator", "!TestStatisticsItem"]
+addopts = [
+    "-rsxX",
+    "-s",
+    "--import-mode=importlib",
+    "--log-cli-level=DEBUG",
+    '-m not slow or not integration',
+]
 pythonpath = [".", "src", "tests"]
-testpaths = ["tests/unit"]
+testpaths = ["tests"]
+markers = [
+    "flaky: tests that can randomly fail through no change to the code",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: tests that require external resources",
+]
 
 [project]
 name = "reqstool"
@@ -30,6 +42,7 @@ requires-python = ">=3.10"
 
 dependencies = [
     "colorama==0.4.6",
+    "distlib==0.3.9",
     "Jinja2==3.1.4",
     "jsonpickle==3.3.0",
     "jsonschema[format-nongpl]==4.23.0",
@@ -43,6 +56,8 @@ dependencies = [
     "xmldict==0.4.1",
     "reqstool-python-decorators==0.0.5",
     "packaging==24.1",
+    "requests==2.32.3",
+    "beautifulsoup4==4.12.3",
 ]
 
 [project.scripts]
@@ -74,6 +89,13 @@ target-version = ['py310']
 
 [tool.flake8]
 ignore = ["W503"]
+addopts = [
+    "-s",
+    "--import-mode=importlib",
+    "--log-cli-level=DEBUG",
+    #    '-m not slow or not integration',
+]
+pythonpath = [".", "src", "tests"]
 max-line-length = 125
 # exclude = tests/*
 max-complexity = 10

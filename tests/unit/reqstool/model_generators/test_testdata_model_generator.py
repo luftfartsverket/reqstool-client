@@ -41,7 +41,17 @@ def test_testdata_model_generator(local_testdata_resources_rootdir_w_path):
     # * Test different types of file structure (Java, Python, Frontend Typescript)
 
     tdmg = (
-        TestDataModelGenerator(path=local_testdata_resources_rootdir_w_path("test_basic/baseline/ms-101"), urn="test"),
+        TestDataModelGenerator(
+            test_result_files=[
+                local_testdata_resources_rootdir_w_path(
+                    "test_basic/baseline/ms-101/test_results/failsafe/TEST-com.example.RequirementsExampleTestsIT.xml"
+                ),
+                local_testdata_resources_rootdir_w_path(
+                    "test_basic/baseline/ms-101/test_results/surefire/TEST-com.example.RequirementsExampleTests.xml"
+                ),
+            ],
+            urn="test",
+        ),
     )
 
     assert tdmg is not None

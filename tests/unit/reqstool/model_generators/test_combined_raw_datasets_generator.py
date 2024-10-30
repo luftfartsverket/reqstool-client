@@ -83,4 +83,4 @@ def test_missing_requirements_file(local_testdata_resources_rootdir_w_path):
             semantic_validator=semantic_validator,
         )
     assert excinfo.type == SystemExit
-    assert "Missing requirements file:" in str(excinfo.value)
+    assert excinfo.value.code == 1

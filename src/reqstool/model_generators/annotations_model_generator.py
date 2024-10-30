@@ -6,8 +6,8 @@ from typing import Dict
 from ruamel.yaml import YAML
 
 from reqstool.commands.exit_codes import EXIT_CODE_SYNTAX_VALIDATION_ERROR
-from reqstool.common import utils
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.common.utils import Utils
 from reqstool.common.validators.syntax_validator import JsonSchemaTypes, SyntaxValidator
 from reqstool.models.annotations import AnnotationData, AnnotationsData
 
@@ -19,7 +19,7 @@ class AnnotationsModelGenerator:
         self.model = self.__generate(uri)
 
     def __generate(self, uri: str) -> AnnotationsData:
-        response = utils.open_file_https_file(uri)
+        response = Utils.open_file_https_file(uri)
 
         yaml = YAML(typ="safe")
 
@@ -40,7 +40,7 @@ class AnnotationsModelGenerator:
             return dictionary
 
         for requirement_id in data["requirement_annotations"][dictionary_key].keys():
-            urn_id = utils.convert_id_to_urn_id(self.urn, requirement_id)
+            urn_id = Utils.convert_id_to_urn_id(self.urn, requirement_id)
             if requirement_id not in dictionary:
                 dictionary[urn_id] = []
 

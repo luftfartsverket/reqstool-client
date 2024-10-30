@@ -6,8 +6,7 @@ from typing import Dict, List
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
-from reqstool.common import utils
-from reqstool.common.utils import TempDirectoryUtil
+from reqstool.common.utils import TempDirectoryUtil, Utils
 from reqstool.common.validators.semantic_validator import SemanticValidator
 from reqstool.location_resolver.location_resolver import LocationResolver
 from reqstool.locations.location import LocationInterface
@@ -73,20 +72,20 @@ class CombinedRawDatasetsGenerator:
             case VARIANTS.SYSTEM:
                 parsed_systems = self.__import_systems(raw_datasets, parent_rd=rd)
                 parsed_microservices = self.__import_implementations(raw_datasets, implementations=rd.implementations)
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     self._parsing_graph, key=rd.metadata.urn, data=parsed_systems
                 )
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     self._parsing_graph, key=rd.metadata.urn, data=parsed_microservices
                 )
 
                 # add current urn as parent to all microservices
                 for ms_urn in parsed_microservices:
-                    utils.append_data_item_to_dict_list_entry(self._parsing_graph, key=ms_urn, data=rd.metadata.urn)
+                    Utils.append_data_item_to_dict_list_entry(self._parsing_graph, key=ms_urn, data=rd.metadata.urn)
 
             case VARIANTS.MICROSERVICE:
                 parsed_systems = self.__import_systems(raw_datasets, parent_rd=rd)
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     self._parsing_graph, key=rd.metadata.urn, data=parsed_systems
                 )
             case _:
@@ -123,7 +122,7 @@ class CombinedRawDatasetsGenerator:
                     raw_datasets=raw_datasets, parent_rd=current_imported_model.requirements_data
                 )
 
-                utils.extend_data_sequence_to_dict_list_entry(
+                Utils.extend_data_sequence_to_dict_list_entry(
                     dictionary=self._parsing_graph, key=current_urn, data=imported_systems
                 )
 
@@ -162,14 +161,15 @@ class CombinedRawDatasetsGenerator:
 
         tmp_path = TempDirectoryUtil.get_suffix_path("can_we_use_urn_here").absolute()
 
-        current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
+        actual_tmp_path = current_location_handler.make_available_on_localdisk(dst_path=tmp_path)
 
-        requirements_indata = RequirementsIndata(dst_path=tmp_path, location=current_location_handler.current)
+        requirements_indata = RequirementsIndata(dst_path=actual_tmp_path, location=current_location_handler.current)
 
         if not requirements_indata.requirements_indata_paths.requirements_yml.exists:
-            msg = f"Missing requirements file:  {requirements_indata.requirements_indata_paths.requirements_yml.path}"
-
-            sys.exit(msg)
+            logging.fatal(
+                f"Missing requirements file:  {requirements_indata.requirements_indata_paths.requirements_yml.path}"
+            )
+            sys.exit(1)
 
         rmg = RequirementsModelGenerator(
             parent=current_location_handler.current,
@@ -192,7 +192,7 @@ class CombinedRawDatasetsGenerator:
         ):
             # parse file sources other than requirements.yml
             annotations_data, svcs_data, automated_tests, mvrs_data = self.__parse_source_other(
-                requirements_indata, rmg
+                actual_tmp_path, requirements_indata, rmg
             )
 
         raw_dataset = RawDataset(
@@ -206,7 +206,9 @@ class CombinedRawDatasetsGenerator:
         return raw_dataset
 
     @Requirements("REQ_009", "REQ_010", "REQ_013")
-    def __parse_source_other(self, requirements_indata: RequirementsIndata, rmg: RequirementsModelGenerator):
+    def __parse_source_other(
+        self, actual_tmp_path: str, requirements_indata: RequirementsIndata, rmg: RequirementsModelGenerator
+    ):
         annotations_data: AnnotationsData = None
         svcs_data: SVCsData = None
         mvrs_data: MVRsData = None
@@ -224,12 +226,13 @@ class CombinedRawDatasetsGenerator:
 
         # handle automated test results
 
-        for test_results_dir in requirements_indata.requirements_indata_paths.test_results_dirs:
+        for test_result_pattern in requirements_indata.test_results_patterns:
 
-            if test_results_dir.exists:
-                automated_tests_results = TestDataModelGenerator(path=test_results_dir.path, urn=current_urn).model
+            test_result_files = Utils.get_matching_files(path=actual_tmp_path, patterns=[test_result_pattern])
 
-                tests |= automated_tests_results.tests
+            automated_tests_results = TestDataModelGenerator(test_result_files, urn=current_urn).model
+
+            tests |= automated_tests_results.tests
 
         automated_tests = TestsData(tests=tests)
 

@@ -37,7 +37,6 @@ def maven_impl_data() -> MavenImplData:
             artifact_id="artifactexample",
             version="0.0.1",
             classifier="someclassifier",
-            path="some/path",
         ),
     )
 
@@ -68,7 +67,6 @@ def test_maven_impl_data(maven_impl_data):
     assert maven_impl_data.current.artifact_id == "artifactexample"
     assert maven_impl_data.current.version == "0.0.1"
     assert maven_impl_data.current.classifier == "someclassifier"
-    assert maven_impl_data.current.path == "some/path"
 
 
 def test_implementations_data(implementations_data):

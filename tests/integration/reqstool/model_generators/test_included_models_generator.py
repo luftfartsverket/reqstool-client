@@ -20,9 +20,11 @@ def choose_token() -> str:
 
 
 @SVCs("SVC_002")
+@pytest.mark.slow
+@pytest.mark.integration
 @pytest.mark.skipif(
-    not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
-    reason="Test needs GITLAB_TOKEN or GITLAB environment variable to be set",
+    not (os.getenv("GITHUB_TOKEN")),
+    reason="Test needs GITHUB_TOKEN",
 )
 def test_basic_git():
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
@@ -30,7 +32,7 @@ def test_basic_git():
     combined_raw_datasets_generator.CombinedRawDatasetsGenerator(
         initial_location=GitLocation(
             env_token=choose_token(),
-            url="https://github.com/Luftfartsverket/reqstool-client.git",
+            url="https://github.com/luftfartsverket/reqstool-client.git",
             path="tests/resources/test_data/data/remote/test_standard/test_standard_maven_git/ms-001",
             branch="main",
         ),
@@ -39,9 +41,11 @@ def test_basic_git():
 
 
 @SVCs("SVC_003", "SVC_008")
+@pytest.mark.slow
+@pytest.mark.integration
 @pytest.mark.skipif(
-    not (os.getenv("GITHUB_TOKEN") or os.getenv("GITLAB_TOKEN")),
-    reason="Test needs GITLAB_TOKEN or GITHUB_TOKEN environment variable to be set",
+    not (os.getenv("GITHUB_TOKEN")),
+    reason="Test needs GITHUB_TOKEN",
 )
 def test_basic_maven():
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
@@ -50,8 +54,7 @@ def test_basic_maven():
         # Setup
         initial_location=MavenLocation(
             env_token=choose_token(),
-            url="https://maven.pkg.github.com/Luftfartsverket/reqstool-test-packages",
-            path="",
+            url="https://maven.pkg.github.com/luftfartsverket/reqstool-test-packages",
             group_id="se.lfv.reqstool.testdata",
             artifact_id="reqstool-testdata-test-basic-ms101",
             version="0.0.2",

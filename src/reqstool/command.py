@@ -2,13 +2,18 @@
 # Copyright © LFV
 
 import argparse
+import logging
 import os
 import sys
-from importlib.metadata import version
 from typing import TextIO, Union
 
 if __package__ is None or len(__package__) == 0:
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+    from reqstool.common.utils import Utils
+
+    Utils.is_installed_package = False
+
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
@@ -18,11 +23,15 @@ from reqstool.commands.report import report
 from reqstool.commands.report.criterias.group_by import GroupbyOptions
 from reqstool.commands.report.criterias.sort_by import SortByOptions
 from reqstool.commands.status.status import StatusCommand
+from reqstool.common.utils import Utils
 from reqstool.common.validators.syntax_validator import JsonSchemaItem
+
+# from reqstool.common.validators.syntax_validator import JsonSchemaItem
 from reqstool.locations.git_location import GitLocation
 from reqstool.locations.local_location import LocalLocation
 from reqstool.locations.location import LocationInterface
 from reqstool.locations.maven_location import MavenLocation
+from reqstool.locations.pypi_location import PypiLocation
 
 
 class Command:
@@ -104,8 +113,7 @@ class Command:
 
         # Subparser for maven report
         maven_report_parser = parser.add_parser("maven", help="maven source")
-        maven_report_parser.add_argument("-u", "--url", help="url description", required=True)
-        maven_report_parser.add_argument("-p", "--path", help="path description", required=True)
+        maven_report_parser.add_argument("-u", "--url", help="url description", required=False)
         maven_report_parser.add_argument("-t", "--env_token", help="env_token description")
         maven_report_parser.add_argument("--group_id", help="group_id description", required=True)
         maven_report_parser.add_argument("--artifact_id", help="artifact_id description", required=True)
@@ -115,8 +123,18 @@ class Command:
         self._add_group_by(maven_report_parser)
         self._add_sort_by(maven_report_parser)
 
+        # Subparser for pypi report
+        pypi_report_parser = parser.add_parser("pypi", help="pypi source")
+        pypi_report_parser.add_argument("-u", "--url", help="url description", required=False)
+        pypi_report_parser.add_argument("-t", "--env_token", help="env_token description")
+        pypi_report_parser.add_argument("--package", help="package", required=True)
+        pypi_report_parser.add_argument("--version", help="version description", required=True)
+        self._add_argument_output(pypi_report_parser)
+        self._add_group_by(pypi_report_parser)
+        self._add_sort_by(pypi_report_parser)
+
     def _add_argument_version(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
-        ver: str = "local dev" if __package__ is None else f"{version('reqstool')}"
+        ver = Utils.get_version()
 
         argument_parser.add_argument(
             "-V",
@@ -124,11 +142,16 @@ class Command:
             action="version",
             version=f"""
 {ver}
-JSON Schema version: {JsonSchemaItem.schema_version}
-JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
+        # JSON Schema version: {JsonSchemaItem.schema_version}
+        # JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         )
 
         return argument_parser
+
+    def _add_argument_log_level(self, argument_parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        argument_parser.add_argument(
+            "--log", default="WARNING", help="Set the logging level (FATAL, ERROR, WARNING, INFO, DEBUG)."
+        )
 
     def get_arguments(self) -> argparse.Namespace:
         class ComboRawTextandArgsDefaultUltimateHelpFormatter(
@@ -142,6 +165,7 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
         )
 
         self._add_argument_version(self.__parser)
+        self._add_argument_log_level(self.__parser)
 
         subparsers = self.__parser.add_subparsers(dest="command", help="Sub-commands")
 
@@ -183,12 +207,18 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 
         if "maven" in args_source.source:
             location = MavenLocation(
-                url=args_source.url,
-                path=args_source.path,
+                url=args_source.url if args_source.url else None,
                 group_id=args_source.group_id,
                 artifact_id=args_source.artifact_id,
                 version=args_source.version,
                 classifier=args_source.classifier if args_source.classifier else None,
+                env_token=args_source.env_token if args_source.env_token else None,
+            )
+        elif "pypi" in args_source.source:  # TODO $$$
+            location = PypiLocation(
+                url=args_source.url if args_source.url else None,
+                package=args_source.package,
+                version=args_source.version,
                 env_token=args_source.env_token if args_source.env_token else None,
             )
         elif "git" in args_source.source:
@@ -250,6 +280,9 @@ JSON Schema location: {JsonSchemaItem.schema_module.__path__._path[0]}""",
 def main():
     command = Command()
     args = command.get_arguments()
+
+    # Set the logging level based on the argument
+    logging.basicConfig(level=getattr(logging, args.log.upper(), logging.WARNING))
 
     exit_code: int = 0
 

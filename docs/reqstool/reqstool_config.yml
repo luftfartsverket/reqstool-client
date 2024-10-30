@@ -1,8 +1,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
-type: default
-project_root_dir: "../.."
-locations:
-  annotations: "build/reqstool/annotations.yml"
-  test_results_dirs:
-    - "build/"
+language: java
+build: maven
+resources:
+  requirements: requirements.yml
+  software_verification_cases: software_verification_cases.yml
+  manual_verification_results: manual_verification_results.yml
+  annotations: ../../target/reqstool/annotations.yml
+  test_results:
+    - ../../target/failsafe
+    - ../../target/surefire

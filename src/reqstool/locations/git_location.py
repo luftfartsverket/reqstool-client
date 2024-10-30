@@ -16,8 +16,9 @@ class GitLocation(LocationInterface):
     url: str
     branch: str
     env_token: str
+    path: str
 
-    def _make_available_on_localdisk(self, dst_path: str):
+    def _make_available_on_localdisk(self, dst_path: str) -> str:
         api_token = os.getenv(self.env_token)
 
         if self.branch:
@@ -27,7 +28,9 @@ class GitLocation(LocationInterface):
         else:
             repo = clone_repository(url=self.url, path=dst_path, callbacks=self.MyRemoteCallbacks(api_token))
 
-        logging.debug(f"Cloned repo {self.url} (branch: {self.branch}) to {repo.path}\n")
+        logging.debug(f"Cloned repo {self.url} (branch: {self.branch}) to {repo.workdir}\n")
+
+        return repo.workdir
 
     class MyRemoteCallbacks(RemoteCallbacks):
         def __init__(self, api_token):

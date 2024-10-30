@@ -37,7 +37,6 @@ def maven_import_data():
             artifact_id="artifactexample",
             version="0.0.1",
             classifier="classifierexample",
-            path="maven/some/path",
         ),
     )
 
@@ -64,4 +63,3 @@ def test_maven_system_data(maven_import_data):
     assert maven_import_data.current.version == "0.0.1"
     assert maven_import_data.current.artifact_id == "artifactexample"
     assert maven_import_data.current.classifier == "classifierexample"
-    assert maven_import_data.current.path == "maven/some/path"

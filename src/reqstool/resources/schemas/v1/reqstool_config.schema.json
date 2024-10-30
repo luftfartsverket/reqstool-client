@@ -2,45 +2,61 @@
   "$id": "https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
+  "description": "Configuration for reqstool",
+  "title": "Reqstool Configuration",
   "properties": {
-    "type": {
+    "language": {
       "type": "string",
       "enum": [
-        "default",
-        "java-maven",
-        "python"
+        "java",
+        "python",
+        "javascript",
+        "typescript"
       ],
-      "description": "Type of the configuration"
+      "description": "The programming language used in the project."
     },
-    "project_root_dir": {
+    "build": {
       "type": "string",
-      "description": "Path to project root dir (e.g. where pom.xml, pyproject.toml are) (default: \"./\")"
+      "enum": [
+        "gradle",
+        "hatch",
+        "maven",
+        "npm",
+        "poetry",
+        "yarn"
+      ],
+      "description": "The build tool used for the project."
     },
-    "locations": {
+    "resources": {
       "type": "object",
       "properties": {
-        "test_results_dirs": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "Path to test result directory"
-          },
-          "additionalProperties": false,
-          "description": "Paths to test results directories"
+        "requirements": {
+          "type": "string",
+          "description": "Path to the requirements.yml file (default: same directory as reqstool_config.yml)"
+        },
+        "software_verification_cases": {
+          "type": "string",
+          "description": "Path to the software_verification_cases.yml (default: same directory as reqstool_config.yml)"
+        },
+        "manual_verification_results": {
+          "type": "string",
+          "description": "Path to the manual_verification_results.yml (default: same directory as reqstool_config.yml)"
         },
         "annotations": {
           "type": "string",
-          "description": "Path to annotations file"
+          "description": "Path to the annotations file providing additional context or metadata."
+        },
+        "test_results": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of paths to the test result files."
         }
       },
-      "additionalProperties": false,
-      "description": "Locations for test results and annotations"
-    }
+      "description": "Resources associated with the project (all paths are relative to reqtools_config.yml). "
+    },
+    "additionalProperties": false
   },
-  "required": [
-    "type"
-  ],
-  "description": "Configuration for reqstool",
-  "title": "Reqstool Configuration",
   "additionalProperties": false
 }

@@ -31,7 +31,6 @@ def maven_location_data():
         artifact_id="artifactexample",
         version="0.0.1",
         classifier="classifierexample",
-        path="/some/path",
     )
 
 
@@ -53,4 +52,3 @@ def test_maven_location_data(maven_location_data):
     assert maven_location_data.artifact_id == "artifactexample"
     assert maven_location_data.version == "0.0.1"
     assert maven_location_data.classifier == "classifierexample"
-    assert maven_location_data.path == "/some/path"

@@ -8,8 +8,8 @@ from colorama import Fore, Style
 from reqstool_python_decorators.decorators.decorators import Requirements
 from tabulate import tabulate
 
-import reqstool.common.utils as utils
 from reqstool.common.dataclasses.urn_id import UrnId
+from reqstool.common.utils import Utils
 from reqstool.common.validator_error_holder import ValidationError, ValidationErrorHolder
 from reqstool.models.imports import ImportDataInterface
 from reqstool.models.raw_datasets import CombinedRawDataset
@@ -257,11 +257,11 @@ class SemanticValidator:
         return self._validation_error_holder.get_no_of_errors() > 0
 
     def _requirement_id_exists(self, requirement_id: str, combined_raw_dataset: CombinedRawDataset) -> bool:
-        all_reqs = utils.flatten_all_reqs(raw_datasets=combined_raw_dataset.raw_datasets)
+        all_reqs = Utils.flatten_all_reqs(raw_datasets=combined_raw_dataset.raw_datasets)
         return requirement_id in all_reqs
 
     def _svc_id_exists(self, svc_id: str, combined_raw_dataset: CombinedRawDataset) -> bool:
-        all_svcs = utils.flatten_all_svcs(raw_datasets=combined_raw_dataset.raw_datasets)
+        all_svcs = Utils.flatten_all_svcs(raw_datasets=combined_raw_dataset.raw_datasets)
         return svc_id in all_svcs
 
     def prettify_urn_id(self, urn_id: UrnId) -> str:

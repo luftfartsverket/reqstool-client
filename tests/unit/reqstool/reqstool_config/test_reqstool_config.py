@@ -1,70 +1,65 @@
 # Copyright © LFV
 
-
-import pytest
 from pytest import fixture
 from ruamel.yaml import YAML
 
-from reqstool.reqstool_config.reqstool_config import TYPES, ReqstoolConfig
+from reqstool.reqstool_config.reqstool_config import ReqstoolConfig
 
 
 @fixture
-def rc_yaml_config_all() -> dict:
+def rc_yaml_index_all() -> dict:
     YAML_STR = """
-    type: java-maven
-
-    project_root_dir: /some_root_dir
-
-    locations:
-      annotations: custom_annotations.yml
-      test_results_dirs:
-        - target/failsafe
-        - target/surefire
+    language: python
+    build: hatch
+    resources:
+        requirements: reqstool/requirements.yml
+        software_verification_cases: reqstool/software_verification_cases.yml
+        manual_verification_results: reqstool/manual_verification_results.yml
+        annotations: build/reqstool/annotations.yml
+        test_results:
+            - build/junit.xml
     """
     yaml = YAML(typ="safe")
     data = yaml.load(YAML_STR)
-
     return data
 
 
 @fixture
-def rc_yaml_config_minimal() -> dict:
+def rc_yaml_index_minimal() -> dict:
     YAML_STR = """
-    type: java-maven
+    resources:
+        annotations: build/reqstool/annotations.yml
+        test_results:
+            - build/junit.xml
     """
     yaml = YAML(typ="safe")
     data = yaml.load(YAML_STR)
-
     return data
 
 
-@fixture
-def rc_yaml_config_incorrect_type() -> dict:
-    YAML_STR = """
-    type: java-maven-docs
-    """
-    yaml = YAML(typ="safe")
-    data = yaml.load(YAML_STR)
+def test_all(rc_yaml_index_all):
+    rc = ReqstoolConfig._parse(yaml_data=rc_yaml_index_all)
 
-    return data
-
-
-def test_all(rc_yaml_config_all):
-    rc = ReqstoolConfig._parse(yaml_data=rc_yaml_config_all)
-
-    assert rc.type == TYPES.JAVA_MAVEN
-    assert rc.project_root_dir == "/some_root_dir"
-    assert rc.locations.annotations == "custom_annotations.yml"
-    assert rc.locations.test_results[0] == "target/failsafe"
-    assert rc.locations.test_results[1] == "target/surefire"
+    # Access attributes directly instead of subscripting
+    assert rc.language == "python"
+    assert rc.build == "hatch"
+    assert rc.resources.requirements == "reqstool/requirements.yml"
+    assert rc.resources.software_verification_cases == "reqstool/software_verification_cases.yml"
+    assert rc.resources.manual_verification_results == "reqstool/manual_verification_results.yml"
+    assert rc.resources.annotations == "build/reqstool/annotations.yml"
+    assert len(rc.resources.test_results) == 1
+    assert "build/junit.xml" in rc.resources.test_results
 
 
-def test_minimal(rc_yaml_config_minimal):
-    rc = ReqstoolConfig._parse(yaml_data=rc_yaml_config_minimal)
+def test_minimal(rc_yaml_index_minimal):
+    rc = ReqstoolConfig._parse(yaml_data=rc_yaml_index_minimal)
 
-    assert rc.type == TYPES.JAVA_MAVEN
-
-
-def test_incorrect_type(rc_yaml_config_incorrect_type):
-    with pytest.raises(ValueError, match="'java-maven-docs' is not a valid TYPES"):
-        ReqstoolConfig._parse(yaml_data=rc_yaml_config_incorrect_type)
+    # Access attributes directly
+    assert rc.language is None
+    assert rc.build is None
+    assert rc.resources.requirements is None
+    assert rc.resources.software_verification_cases is None
+    assert rc.resources.manual_verification_results is None
+    assert rc.resources.annotations == "build/reqstool/annotations.yml"
+    assert len(rc.resources.test_results) == 1
+    assert "build/junit.xml" in rc.resources.test_results

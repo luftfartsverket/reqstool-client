@@ -1,10 +1,11 @@
 # Copyright © LFV
 
 import logging
+import os
 import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
@@ -16,25 +17,28 @@ class TestDataModelGenerator:
     UNIT_METHOD_IDENTIFIER_REGEX = r"^([a-zA-Z_$][a-zA-Z0-9_$]*).*$"
     KARATE_METHOD_IDENTIFIER_REGEX = r"\[\d+(?:\.\d+)?:\d+\]\s*(.+)"
 
-    def __init__(self, path: str, urn: str):
-        self.path = path
+    def __init__(self, test_result_files: List[Path], urn: str):
+        self.test_result_files = test_result_files
         self.urn = urn
         # key: urn+fqn
-        self.model: Dict[UrnId, TestData] = self.__generate(path, urn)
+        self.model: Dict[UrnId, TestData] = self.__generate(test_result_files, urn)
 
-    def __generate(self, path: str, urn: str) -> TestsData:
-        tests = self.__parse_test_data(path, urn)
+    def __generate(self, test_result_files: List[Path], urn: str) -> TestsData:
+        tests = self.__parse_test_data(test_result_files, urn)
 
         return TestsData(tests=tests)
 
     @Requirements("REQ_014", "REQ_015")
-    def __parse_test_data(self, path: str, urn: str) -> Dict[str, TestData]:
+    def __parse_test_data(self, test_result_files: List[Path], urn: str) -> Dict[str, TestData]:
         r_testdata: Dict[str, TestData] = {}
 
-        xml_files = list(Path(path).glob("**/*.xml"))
+        for test_result_file in test_result_files:
 
-        for xml_file in xml_files:
-            tree = ET.parse(xml_file)
+            if not os.path.isfile(test_result_file):
+                logging.warning(f"test_result_file did not exist: {test_result_file}")
+                continue
+
+            tree = ET.parse(test_result_file)
             root = tree.getroot()
 
             for testcase in root.findall(".//testcase"):
