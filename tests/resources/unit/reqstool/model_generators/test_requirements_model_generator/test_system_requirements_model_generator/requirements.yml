@@ -22,12 +22,18 @@ imports:
       version: 1.0.0
       classifier: someclassifier
 
-    - env_token: "MAVEN_TOKEN"
-      url: https://repo2.maven.org
-      group_id: com.example.two
+    - group_id: com.example.two
       artifact_id: test-two
       version: 0.0.2
-      classifier: classifier2
+
+  pypi:
+    - env_token: "PYPI_TOKEN"
+      url: https://example.com/simple/
+      package: package1
+      version: 1.0.0
+
+    - package: package2
+      version: 2.0.0
 
 filters:
   "gitlab-001":

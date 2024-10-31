@@ -44,7 +44,7 @@ class MavenLocation(LocationInterface):
         logging.debug(f"Downloading {artifact} from {self.url} to {dst_path}")
 
         try:
-            if not downloader.download(artifact, filename=dst_path, allow_redirects=True):
+            if not downloader.download(artifact, filename=dst_path):
                 raise RequestException(f"Error downloading artifact {artifact} from: {self.url}")
         except RequestException as e:
             logging.fatal(e.msg)
