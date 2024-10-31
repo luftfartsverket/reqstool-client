@@ -134,7 +134,7 @@
             "properties": {
                 "env_token": {
                     "type": "string",
-                    "description": "Token to authenticate. E.g. GITLAB_TOKEN or empty"
+                    "description": "Token to authenticate. E.g. GITLAB_TOKEN or empty."
                 },
                 "branch": {
                     "type": "string",
@@ -146,7 +146,7 @@
                 },
                 "path": {
                     "type": "string",
-                    "description": "Path to a directory (with requirements.yml and software_verification_cases.yml and/or manual_verification_results.yml)"
+                    "description": "Path to a directory with reqstool files (requirements.yml (required), software_verification_cases.yml and/or manual_verification_results.yml)"
                 }
             },
             "required": [
@@ -161,11 +161,11 @@
             "properties": {
                 "env_token": {
                     "type": "string",
-                    "description": "Token to authenticate. E.g. MAVEN_TOKEN or empty"
+                    "description": "Token to authenticate. E.g. MAVEN_TOKEN or empty."
                 },
                 "url": {
                     "$ref": "#/$defs/url",
-                    "description": "URL to artifact repository (default if empty is Maven Central)"
+                    "description": "URL to artifact repository (default: Maven Central)"
                 },
                 "group_id": {
                     "type": "string",
@@ -177,7 +177,7 @@
                 },
                 "classifier": {
                     "type": "string",
-                    "description": "Maven classifier"
+                    "description": "Maven classifier (default: reqstool)"
                 },
                 "version": {
                     "type": "string",
@@ -197,11 +197,11 @@
             "properties": {
                 "env_token": {
                     "type": "string",
-                    "description": "Token to authenticate. E.g. PYPI_TOKEN or empty"
+                    "description": "Token to authenticate. E.g. PYPI_TOKEN or empty."
                 },
                 "url": {
                     "$ref": "#/$defs/url",
-                    "description": "URL to artifact repository (default if empty is PyPI)"
+                    "description": "URL to artifact repository (default: Python Package Index, pypi.org)"
                 },
                 "package": {
                     "type": "string",

@@ -23,3 +23,8 @@ class LocalImplData(ImplementationDataInterface):
 @dataclass
 class MavenImplData(ImplementationDataInterface):
     pass
+
+
+@dataclass
+class PypiImplData(ImplementationDataInterface):
+    pass

@@ -11,7 +11,7 @@ from reqstool.models.raw_datasets import CombinedRawDataset
 
 
 @SVCs("SVC_009", "SVC_010")
-def test_include_exclude_for_reqiurements(local_testdata_resources_rootdir_w_path):
+def test_include_exclude_for_requirements(local_testdata_resources_rootdir_w_path):
     semantic_validator = SemanticValidator(validation_error_holder=ValidationErrorHolder())
     crd: CombinedRawDataset = CombinedRawDatasetsGenerator(
         initial_location=LocalLocation(path=local_testdata_resources_rootdir_w_path("test_standard/baseline/sys-001")),
