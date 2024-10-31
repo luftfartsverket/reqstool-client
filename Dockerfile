@@ -2,6 +2,7 @@
 FROM python:3.13.0-alpine
 
 ENV PYTHONUNBUFFERED=1
+ARG REQSTOOL_VERSION
 
 LABEL org.opencontainers.image.title="reqstool"
 LABEL org.opencontainers.image.description="This is custom Docker Image for reqstool."
