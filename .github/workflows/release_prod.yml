@@ -1,4 +1,4 @@
-name: Build and publish to PyPI
+name: Build and publish to PyPI and GHCR
 
 on:
   workflow_dispatch:
@@ -62,13 +62,11 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # Generate Docker tags based on the following events/attributes
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
+            type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
-            type=latest  # Add this line to create a latest tag
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
