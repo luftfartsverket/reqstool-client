@@ -66,7 +66,7 @@ class MavenLocation(LocationInterface):
             )
             sys.exit(1)
 
-        top_level_dir = os.path.join(dst_path, top_level_dirs[0])
+        top_level_dir = os.path.join(dst_path, top_level_dirs.pop())
 
         # os.remove(artifact.get_filename(dst_path))
 
