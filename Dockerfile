@@ -11,5 +11,5 @@ LABEL org.opencontainers.image.documentation="https://github.com/Luftfartsverket
 LABEL org.opencontainers.image.source="https://github.com/Luftfartsverket/reqstool-client"
 LABEL org.opencontainers.image.url="https://github.com/Luftfartsverket/reqstool-client"
 
-RUN pip install --no-cache-dir reqstool
+RUN pip install --no-cache-dir "reqstool==${REQSTOOL_VERSION}"
 
