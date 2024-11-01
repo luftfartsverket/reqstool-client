@@ -33,7 +33,10 @@ class Utils:
     @staticmethod
     def download_file(url, dst_path, token=None, **kwargs) -> Path:
 
-        response = Utils.open_file_https_file(url)
+        response = Utils.open_file_https_file(url, token=token, **kwargs)
+
+        # Raise an error if the request was unsuccessful
+        response.raise_for_status()
 
         fn: Path = os.path.abspath(Path(dst_path, os.path.basename(url)))
         with open(fn, "wb") as file:
@@ -42,15 +45,6 @@ class Utils:
         logging.debug(f"Downloaded {url} to {fn}")
 
         return fn
-
-    @staticmethod
-    def get_matching_files(path: str, patterns: List[str]) -> List[Path]:
-        matching_files = []
-
-        for pattern in patterns:
-            matching_files.extend(Path(path).rglob(pattern))
-
-        return list(set(matching_files))  # Remove duplicates if patterns overlap
 
     @staticmethod
     def open_file_https_file(uri: str, token=None, **kwargs):
@@ -73,6 +67,15 @@ class Utils:
         response = session.get(url=uri, headers=headers, allow_redirects=True, **kwargs)
 
         return response
+
+    @staticmethod
+    def get_matching_files(path: str, patterns: List[str]) -> List[Path]:
+        matching_files = []
+
+        for pattern in patterns:
+            matching_files.extend(Path(path).rglob(pattern))
+
+        return list(set(matching_files))  # Remove duplicates if patterns overlap
 
     @staticmethod
     def flatten_all_reqs(raw_datasets: Dict[str, RawDataset]) -> Dict[str, RequirementData]:

@@ -36,7 +36,7 @@ class PypiLocation(LocationInterface):
         if token:
             logging.debug("Using OAuth Bearer token for authentication")
 
-        package_url = self.get_package_url(self.package, self.version, self.url, self.env_token)
+        package_url = self.get_package_url(self.package, self.version, self.url, token)
 
         if not package_url:
             raise RequestException(
@@ -61,8 +61,8 @@ class PypiLocation(LocationInterface):
             sys.exit(1)
         except Exception as e:
             logging.fatal(
-                f"Error when downloading etc sdist pypi package for {self.package} == {self.version}"
-                f" in repo {self.url} {'with token' if self.token else ''}",
+                f"Error when downloading etc sdist pypi package for {self.package}=={self.version}"
+                f" in repo {self.url} {'with token' if token else ''}",
                 e,
             )
             sys.exit(1)
