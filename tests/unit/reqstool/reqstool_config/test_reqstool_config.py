@@ -27,10 +27,6 @@ def rc_yaml_index_all() -> dict:
 @fixture
 def rc_yaml_index_minimal() -> dict:
     YAML_STR = """
-    resources:
-        annotations: build/reqstool/annotations.yml
-        test_results:
-            - build/junit.xml
     """
     yaml = YAML(typ="safe")
     data = yaml.load(YAML_STR)
@@ -60,6 +56,5 @@ def test_minimal(rc_yaml_index_minimal):
     assert rc.resources.requirements is None
     assert rc.resources.software_verification_cases is None
     assert rc.resources.manual_verification_results is None
-    assert rc.resources.annotations == "build/reqstool/annotations.yml"
-    assert len(rc.resources.test_results) == 1
-    assert "build/junit.xml" in rc.resources.test_results
+    assert rc.resources.annotations is None
+    assert rc.resources.test_results is None
