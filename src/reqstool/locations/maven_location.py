@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 from zipfile import ZipFile
 
-from maven_artifact import Artifact, Downloader, RequestException, Utils
+from maven_artifact import Artifact, Downloader, RequestException
 from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.locations.location import LocationInterface
@@ -26,12 +26,8 @@ class MavenLocation(LocationInterface):
     def _make_available_on_localdisk(self, dst_path: str):
         token = os.getenv(self.env_token)
 
-        # if base64 encoded assume username:password
-        if Utils.is_base64(token):
-            downloader = Downloader(base=self.url, password=token)
-        # assume OAuth Bearer
-        else:
-            downloader = Downloader(base=self.url, token=token)
+        # assume OAuth Bearer, see: https://georgearisty.dev/posts/oauth2-token-bearer-usage/
+        downloader = Downloader(base=self.url, token=token)
 
         artifact = Artifact(
             group_id=self.group_id,
