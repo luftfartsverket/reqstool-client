@@ -44,7 +44,7 @@ dependencies = [
     "colorama==0.4.6",
     "distlib==0.3.9",
     "Jinja2==3.1.4",
-    "jsonpickle==3.3.0",
+    "jsonpickle==3.4.2",
     "jsonschema[format-nongpl]==4.23.0",
     "lark==1.2.2",
     "maven-artifact==0.3.4",
