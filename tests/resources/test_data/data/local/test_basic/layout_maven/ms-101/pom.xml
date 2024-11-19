@@ -75,7 +75,7 @@
                 </dependencies>
                 <configuration>
                     <datasetPath>
-                        ${project.basedir}/tests/resources/test_data/data/local/test_basic/layout_maven/ms-101/src/resources/docs/requirements
+                        ${project.basedir}/docs/requirements
                     </datasetPath>
                 </configuration>
 
