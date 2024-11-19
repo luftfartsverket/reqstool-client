@@ -7,7 +7,7 @@
 
     <groupId>se.lfv.reqstool.testdata</groupId>
     <artifactId>reqstool-testdata-test-basic-ms101</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -68,7 +68,7 @@
                 </executions>
                 <configuration>
                     <datasetPath>
-                        data/local/test_basic/layout_maven/ms-101/src/resources/docs/requirements
+                        tests/resources/test_data/data/local/test_basic/layout_maven/ms-101/src/resources/docs/requirements
                     </datasetPath>
                 </configuration>
 
