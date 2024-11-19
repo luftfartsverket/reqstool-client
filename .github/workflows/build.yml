@@ -29,6 +29,8 @@ jobs:
       - name: Install dependencies
         run: pip install hatch
       - name: Run unit and integrations tests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: hatch run dev:pytest -m "" --cov=reqstool --cov-report=html -o junit_family=xunit2 --junitxml=build/junit.xml
       - name: Build project
         run: hatch build
