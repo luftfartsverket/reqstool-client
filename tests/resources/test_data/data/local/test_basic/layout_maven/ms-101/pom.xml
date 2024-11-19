@@ -75,7 +75,7 @@
                 </dependencies>
                 <configuration>
                     <datasetPath>
-                        ${project.basedir}/docs/requirements
+                        ${project.basedir}/src/resources/docs/requirements
                     </datasetPath>
                 </configuration>
 
