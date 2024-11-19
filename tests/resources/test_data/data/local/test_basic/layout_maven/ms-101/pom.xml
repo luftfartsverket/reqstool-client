@@ -66,9 +66,16 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>se.lfv.reqstool</groupId>
+                        <artifactId>reqstool-java-annotations</artifactId>
+                        <version>0.1.2</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <datasetPath>
-                        tests/resources/test_data/data/local/test_basic/layout_maven/ms-101/src/resources/docs/requirements
+                        ${project.basedir}/tests/resources/test_data/data/local/test_basic/layout_maven/ms-101/src/resources/docs/requirements
                     </datasetPath>
                 </configuration>
 
