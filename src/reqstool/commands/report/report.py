@@ -64,7 +64,7 @@ class ReportCommand:
         crd = CombinedRawDatasetsGenerator(
             initial_location=self.__initial_location, semantic_validator=semantic_validator
         ).combined_raw_datasets
-        cid: CombinedIndexedDataset = CombinedIndexedDatasetGenerator(_crd=crd).combined_indexed_dataset
+        cid: CombinedIndexedDataset = CombinedIndexedDatasetGenerator(_crd=crd, _filtered=True).combined_indexed_dataset
 
         aggregated_data: Dict[UrnId, Dict[str, Union[str, str]]] = self.__aggregated_requirements_data(cid=cid)
 
@@ -73,7 +73,7 @@ class ReportCommand:
             initial_location=self.__initial_location, semantic_validator=semantic_validator
         ).result
 
-        report = self.__generate_asciidoc_information(cid, aggregated_data, statistics)
+        report = self.__generate_asciidoc_information(cid=cid, aggregated_data=aggregated_data, statistics=statistics)
 
         return report
 
