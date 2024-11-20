@@ -11,11 +11,10 @@ For examples see:
 === reqstool_config.yml
 Contains file and directory configuration used by `Reqstool`.
 
-The layout of files and directories for a project can change using any of the following types:
+The layout of files and directories for a project are depending on any of the following languages:
 
-* java-maven: xref:data.adoc#dynamic-directory-structure[dynamic files] are relative "../target" to the xref:data.adoc#static-directory-structure[static files]
-* java-maven-docs: xref:data.adoc#dynamic-directory-structure[dynamic files] are relative "../../target" to the xref:data.adoc#static-directory-structure[static files]
-* custom: custom path to xref:data.adoc#dynamic-directory-structure[dynamic files] can be set relative to the xref:data.adoc#static-directory-structure[static files]
+* java (build: maven): xref:data.adoc#dynamic-directory-structure[dynamic files] are relative "../../target" to the xref:data.adoc#static-directory-structure[static files]
+* python (build: hatch/poetry): xref:data.adoc#dynamic-directory-structure[dynamic files] are relative "../../build" to the xref:data.adoc#static-directory-structure[static files]
 
 If no reqstool_config.yml file is present in the folder that contains the xref:data.adoc#static-directory-structure[static files], Reqstool will expect all files and folders, even the dynamic ones, to reside in the path provided to the -p argument when Reqstool is run. This works well with a xref:data.adoc#maven-artifact-zip-directory-structure[Maven zip file directory structure]. 
 
@@ -25,24 +24,27 @@ If you are using a regular xref:data.adoc#java-maven-directory-structure[Maven] 
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
-type: java-maven
+language: java
+build: maven
 ```
 
 
 Below is an example on how to change the default paths to the required *.yml files and folders that are generated when the artifact is produced by Maven. The path specified for should be relative to the -p argument that you provide when Reqstool is run. 
 
+In this case the reqstool_config.yml file is two dirs up from project root.
+
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
 
-type: custom 
-locations:
-  test_results_dirs:
-    - ../target/some_folder/failsafe
-    - ../target/my_folder/surefire
-  annotations:
-    implementations: ../target/hello/requirements_annotations_impls.yml
-    tests: ../target/demo/requirements_annotations_tests.yml
-
+type: java 
+build: maven
+resources:
+  requirements: ../../target/some_folder/requirements.yml
+  software_verification_cases: ../../target/some_folder/software_verification_cases.yml
+  manual_verification_results: ../../target/some_folder/manual_verification_results.yml
+  annotations: ../../target/reqstool/annotations.yml
+  test_results:
+    - ../../target/**/*.xml
 ```
 
 === requirements.yml

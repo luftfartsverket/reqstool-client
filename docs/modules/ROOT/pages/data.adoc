@@ -2,11 +2,12 @@
 
 === Data Source Types
 
-Reqstool reads data from three (3) different sources:
+Reqstool reads data from three (4) different sources:
 
 * Local file system
 * Maven Repository (zip file)
 * Git Repository
+* PyPi package
 
 [plantuml,format=svg]
 ....
@@ -14,20 +15,24 @@ Reqstool reads data from three (3) different sources:
 !include <C4/C4_Context>
 !include <logos/git-icon>
 !include <logos/maven>
+!include <logos/pypi>
 title Source Types Overview
 
 AddExternalSystemTag("git", $sprite="git-icon,color=red", $legendText="Git repository")
 AddExternalSystemTag("maven", $sprite="maven", $legendText="Maven repository")
+AddExternalSystemTag("pypi", $sprite="pypi", $legendText="Pypi package")
 
 System(reqstool, Reqstool)
 System_Ext(git, , $tags="git")
 System_Ext(mvn, , $tags="maven")
+System_Ext(pypi, , $tags="pypi")
 System(local, Local files)
 System(output, Output)
 
 
 Rel(git,reqstool,)
 Rel(mvn,reqstool,)
+Rel(pypi,reqstool,)
 Rel(local, reqstool,)
 Rel(reqstool, output, )
 
@@ -97,9 +102,9 @@ Reqstool will then look for the files specified above in the folder that's speci
 
 The structure of the files that are generated will differ from language to language (Java vs Python) and from build tool to build tool (Maven vs Gradle).
 
-Currently, only Java using Maven is supported. A custom layout can be specified in xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml].
+Currently, only Java using Maven and Python using Hatch or Poetry is supported. A custom layout can be specified in xref:file_and_directory_set.adoc#reqstool_config[reqstool_config.yml].
 
-The tree below shows where the dynamic files will reside after the project has been built. If you have a configuration where the requirements_annotations.yml and/or svcs_annotations.yml will be placed elsewhere after a successful build, Reqstool will need the path to those files specified in a reqstool_config.yml file. See link above for examples and further information.
+The tree below shows where the dynamic files will reside after the Maven project has been built. If you have a configuration where the requirements_annotations.yml and/or svcs_annotations.yml will be placed elsewhere after a successful build, Reqstool will need the path to those files specified in a reqstool_config.yml file. See link above for examples and further information.
 
 
 [[java-maven-directory-structure]]
@@ -135,7 +140,7 @@ The plugin will also combine the svcs_annotations.yml and the equirements_annota
 
 The Reqstool artifact uploaded as a zip to a Maven repository needs to have the following structure:
 
-[listing]
+[listing]Maven
 ----
 📒 requirements  <.>
   📄 manual_verification_results.yml <.>
@@ -156,6 +161,47 @@ The Reqstool artifact uploaded as a zip to a Maven repository needs to have the 
 <.> Failsafe Reports root
 <.> Surefire Reports root
 
+[[python-hatch-poetry-directory-structure]]
+=== Python - Hatch/Poetry
+
+The tree below shows where the dynamic files will reside after a Hatch or Poetry project has been built. If you have a configuration where the annotations.yml will be placed elsewhere after a successful build, Reqstool will need the path to those files specified in a reqstool_config.yml file.
+
+[listing]
+----
+📒 build <.>
+  📂 reqstool
+    📄 annotations.yml <.>
+----
+<.> Python build root
+<.> See xref:yml/requirements_annotations.adoc[requirements_annotations.yml example]
+
+
+[[hatch-poetry-pypi-package-directory-structure]]
+=== Python Package Directory Structure
+
+In order to run reqstool directly on or from the tar.gz file, a custom reqstool_config.yml is added to the tar.gz file by incorporating the https://github.com/luftfartsverket/reqstool-python-hatch-plugin[Reqstool Python Hatch Plugin] or the https://github.com/luftfartsverket/reqstool-python-poetry-plugin[Reqstool Python Poetry Plugin] into your build process. 
+
+During the build process, the plugin creates a custom reqstool_config.yml file with paths based on the tar.gz file structure to the static and dynamic files. The reqstool_config.yml file will be located in the root directory of the tar.gz file.
+
+[listing]
+----
+📒 <project_name>.<version>  <.>
+  📂 build
+    📂 reqstool
+      📄 annotations.yml
+    📄 test_results.xml
+  📂 reqstool
+    📄 manual_verification_results.yml
+    📄 requirements.yml
+    📄 reqstool_config.yml
+    📄 software_verification_cases.yml
+  📂 src
+  📂 tests
+  📄 reqstool_config.yml <.>
+
+----
+<.> tar.gz file root
+<.> Generated custom reqstool_config.yml added - See xref:yml/reqstool_config.adoc[reqstool_config.yml example]
 
 == What data can exist in what variant?
 
@@ -225,9 +271,21 @@ imports:
       version: 0.0.2
 ```
 
+=== PyPI import
+
+.requirements.yml
+```yaml
+imports:
+  pypi:
+    - env_token: PYPI_TOKEN
+      url: https://pypi.org/project/reqstool/
+      package: reqstool
+      version: 0.4.7
+```
+
 === Import from different sources
 
-It is also possible to import files from different types of sources. 
+It is also possible to import files from multiple types of sources. 
 
 .requirements.yml
 ```yaml
