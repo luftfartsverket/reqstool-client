@@ -140,7 +140,7 @@ The plugin will also combine the svcs_annotations.yml and the equirements_annota
 
 The Reqstool artifact uploaded as a zip to a Maven repository needs to have the following structure:
 
-[listing]Maven
+[listing]
 ----
 📒 requirements  <.>
   📄 manual_verification_results.yml <.>

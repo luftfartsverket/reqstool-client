@@ -31,7 +31,7 @@ build: maven
 
 Below is an example on how to change the default paths to the required *.yml files and folders that are generated when the artifact is produced by Maven. The path specified for should be relative to the -p argument that you provide when Reqstool is run. 
 
-In this case the reqstool_config.yml file is two dirs up from project root.
+In this case the reqstool_config.yml file is two dirs deep from project root.
 
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Luftfartsverket/reqstool-client/main/src/reqstool/resources/schemas/v1/reqstool_config.schema.json
