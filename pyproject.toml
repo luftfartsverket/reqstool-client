@@ -9,7 +9,7 @@ addopts = [
     "-s",
     "--import-mode=importlib",
     "--log-cli-level=DEBUG",
-    '-m not slow or not integration',
+    '-m not slow and not integration',
 ]
 pythonpath = [".", "src", "tests"]
 testpaths = ["tests"]
