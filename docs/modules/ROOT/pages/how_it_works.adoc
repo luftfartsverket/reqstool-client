@@ -42,7 +42,7 @@ The CombinedIndexedDatasetGenerator prepares the data provided from the Combined
 
 Below is an breakdown of the cental components of Reqstool
 
-[plantuml, format="png"]
+[plantuml,format=svg]
 ....
 @startuml
 !include <C4/C4_Component>
@@ -55,8 +55,6 @@ Component(CombinedRawDatasetsGenerator, "CombinedRawDatasetsGenerator", "Generat
 Component(ReqstoolConfig, "ReqstoolConfig", "Resolves paths to yaml files")
 Component(CombinedIndexedDatasetGenerator, "CombinedIndexedDatasetGenerator", "Prepares data for rendering of Jinja2 templates")
 Component(Command, "Command", "Handles user commands")
-
-
 
 Rel(Command, StatusCommand, "Uses") 
 Rel(Command, GenerateJsonCommand, "Uses") 
@@ -129,15 +127,14 @@ def test_somefunction():
 
 Below is an example to illustrate how Reqstool parses data from the initial source. 
 
-[plantuml, format="png"]
+[plantuml,format=svg]
 ....
 @startuml
-include::partial$C4_Sequence.puml[]
+!include <C4/C4_Sequence>
 
 Person(user, "User", "", "")
 
 Container(reqsTool, "Reqstool")
-
 
 Container_Boundary(b, "Requirement files")
   Container_Boundary(b1, "MS-001")
