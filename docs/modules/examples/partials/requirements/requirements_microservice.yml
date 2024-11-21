@@ -13,12 +13,17 @@ imports: #Optional
       url: url
       path: path
   maven:
-    - url: x.se
+    - env_token: e.g. MAVEN_TOKEN or empty
+      url: x.se
       group_id: x
       artifact_id: y
-      version: 1.0.0
       classifier: s
-      path: d
+      version: 1.0.0
+  pypi:
+    - env_token: e.g. PYPI_TOKEN or empty
+      url: url
+      package: package-name
+      version: 1.0.0
   local:
     - path: path
 
