@@ -9,8 +9,6 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
-from requests.exceptions import RequestException
-
 from reqstool.common.utils import Utils
 from reqstool.locations.location import LocationInterface
 
@@ -39,9 +37,9 @@ class PypiLocation(LocationInterface):
         package_url = self.get_package_url(self.package, self.version, self.url, token)
 
         if not package_url:
-            raise RequestException(
-                f"Unable to find a sdist pypi package for {self.package} == {self.version} in repo {self.url}"
-                f" {'with token' if self.token else ''}"
+            token_info = f"(with token in environment variable '{self.env_token}')" if self.env_token else ""
+            raise RuntimeError(
+                f"Unable to find a sdist pypi package for {self.package} == {self.version} in repo {self.url}{token_info}"
             )
 
         logging.debug(f"Downloading {self.package} from {self.url} to {dst_path}\n")
