@@ -54,16 +54,14 @@ def _build_table(
     return row
 
 
-def _get_row_with_totals(stats_container: StatisticsContainer):
+def _get_row_with_totals(stats_container: StatisticsContainer) -> List[str]:
     total_automatic = (
         stats_container._total_statistics.nr_of_passed_automatic_tests
         + stats_container._total_statistics.nr_of_failed_automatic_tests
-        + stats_container._total_statistics.nr_of_missing_automated_tests
     )
     total_manual = (
         stats_container._total_statistics.nr_of_passed_manual_tests
         + stats_container._total_statistics.nr_of_failed_manual_tests
-        + stats_container._total_statistics.nr_of_missing_automated_tests
     )
     return [
         "Total",
@@ -79,7 +77,7 @@ def _get_row_with_totals(stats_container: StatisticsContainer):
         f"T{total_manual}"
         f" {Fore.GREEN}P{stats_container._total_statistics.nr_of_passed_manual_tests} "
         f"{Fore.RED}F{stats_container._total_statistics.nr_of_failed_manual_tests} "
-        f"{Fore.RED}M{stats_container._total_statistics.nr_of_missing_automated_tests}{Style.RESET_ALL}",
+        f"{Fore.RED}M{stats_container._total_statistics.nr_of_missing_manual_tests}{Style.RESET_ALL}",
     ]
 
 
@@ -299,7 +297,9 @@ def __numbers_as_percentage(numerator: int, denominator: int) -> str:
     return percentage_as_string
 
 
-def __colorize_headers(total: int, total_completed: int, total_reqs_no_impl: int, completed_reqs_no_impl: int):
+def __colorize_headers(
+    total: int, total_completed: int, total_reqs_no_impl: int, completed_reqs_no_impl: int
+) -> tuple[str, str, str]:
     total_code = total - total_reqs_no_impl
     total_code_completed = total_code == (total_completed - completed_reqs_no_impl)
     total_no_impl_completed = total_reqs_no_impl - completed_reqs_no_impl == 0
@@ -315,7 +315,7 @@ def __colorize_headers(total: int, total_completed: int, total_reqs_no_impl: int
     return CODE, NA, IMPLEMENTATIONS
 
 
-def _extend_row(result: TestStatisticsItem, row: List[str]):
+def _extend_row(result: TestStatisticsItem, row: List[str]) -> None:
     colored_item = ""
     if result.not_applicable:
         colored_item = f"{'N/A'}"

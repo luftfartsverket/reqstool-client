@@ -36,7 +36,9 @@ class StatsTestStatus(Enum):
 
 @Requirements("REQ_028")
 class StatisticsGenerator:
-    def __init__(self, initial_location: LocationInterface, semantic_validator: SemanticValidator, apply_filter=True):
+    def __init__(
+        self, initial_location: LocationInterface, semantic_validator: SemanticValidator, apply_filter: bool = True
+    ):
         self.cid: CombinedIndexedDataset = self._get_combined_index_data(
             initial_location=initial_location, semantic_validator=semantic_validator, apply_filter=apply_filter
         )
@@ -138,7 +140,7 @@ class StatisticsGenerator:
         return implementation_ok
 
     # Returns a string if all test passes or fails
-    def _get_test_stats(self, tests: List[TestData], svcs: List[SVCData]) -> StatsTestStatus:
+    def _get_test_stats(self, tests: List[TestData], svcs: List[SVCData]) -> TestStatisticsItem:
         if not tests:
             # if we have no results from the gathering of results, expect at least as many missing
             # tests as we have svc's
@@ -149,6 +151,8 @@ class StatisticsGenerator:
         # we need to do a check if the current automated test is already counted as passed or failed,
         # as each test could relate to several svc's
         for test in tests:
+            if test.fully_qualified_name == "":
+                stats_item.nr_of_total_tests -= 1
             match (test.status):
                 case TEST_RUN_STATUS.PASSED:
                     stats_item.nr_of_passed_tests += 1
@@ -182,7 +186,7 @@ class StatisticsGenerator:
 
         return stats_item
 
-    def _req_verification_equals(self, svcs: List[SVCData], verification: Sequence[VERIFICATIONTYPES]):
+    def _req_verification_equals(self, svcs: List[SVCData], verification: Sequence[VERIFICATIONTYPES]) -> bool:
         for svc in svcs:
             if svc.verification in verification:
                 return True
@@ -199,7 +203,7 @@ class StatisticsGenerator:
     def _get_annotated_automated_test_results_for_req(
         self,
         svcs_urn_ids: List[UrnId],
-    ) -> List[TEST_RUN_STATUS]:
+    ) -> List[TestData]:
         automated_test_results: List[TestData] = []
         for urn_id in svcs_urn_ids:
             if urn_id in self.cid.annotations_tests:
@@ -209,6 +213,9 @@ class StatisticsGenerator:
                         test_urn_id = UrnId(urn=urn_id.urn, id=test.fully_qualified_name)
                         results = self.__get_annotated_test_results(urn_id=test_urn_id)
                         automated_test_results.extend(results)
+            else:
+                # No tests found for this SVC - create TestData with missing status
+                automated_test_results.append(TestData(fully_qualified_name="", status=TEST_RUN_STATUS.MISSING))
 
         return automated_test_results
 
@@ -235,7 +242,7 @@ class StatisticsGenerator:
     def _get_mvrs_for_req(self, mvrs: Dict[UrnId, MVRData], mvr_ids: List[UrnId]) -> List[MVRData] | None:
         return [mvrs[mvr_id] for mvr_id in mvr_ids] if mvr_ids else None
 
-    def calculate_totals(self):
+    def calculate_totals(self) -> StatisticsContainer:
         stats_container = StatisticsContainer()
         # Sum totals
         total_no_of_annotated_tests = len(self.cid.automated_test_result)
@@ -268,7 +275,7 @@ class StatisticsGenerator:
 
         return stats_container
 
-    def __count_mvr_status(self, mvrs: List[MVRData], stats_container: StatisticsContainer):
+    def __count_mvr_status(self, mvrs: List[MVRData], stats_container: StatisticsContainer) -> None:
         for mvr in mvrs:
             if mvr.passed:
                 stats_container._total_statistics.nr_of_passed_tests += 1
@@ -303,14 +310,12 @@ class StatisticsGenerator:
                 # We shouldn't add the same test result several times.
                 if test not in test_results:
                     test_results.append(test)
-        else:
-            test_results.append(TEST_RUN_STATUS.MISSING)
 
         return test_results
 
     def __calculate_total_automated_test_statistics(
         self, test_results: List[TEST_RUN_STATUS], stats_container: StatisticsContainer
-    ):
+    ) -> None:
         for test in test_results:
             match test.status:
                 case TEST_RUN_STATUS.PASSED:

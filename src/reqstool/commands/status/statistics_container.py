@@ -19,7 +19,7 @@ class TestStatisticsItem:
     nr_of_total_tests: int = 0
     not_applicable: bool = False
 
-    def is_completed(self):
+    def is_completed(self) -> bool:
         if self.nr_of_missing_automated_tests or self.nr_of_missing_manual_tests > 0:
             return False
         return self.nr_of_total_tests == self.nr_of_passed_tests
@@ -57,7 +57,7 @@ class TotalStatisticsItem:
     nr_of_passed_automatic_tests: int = 0
     nr_of_failed_automatic_tests: int = 0
 
-    def update(self, completed: bool, combined_req_test_item: CombinedRequirementTestItem):
+    def update(self, completed: bool, combined_req_test_item: CombinedRequirementTestItem) -> None:
         self.nr_of_total_requirements += 1
         self.nr_of_missing_automated_tests += combined_req_test_item.automated_tests_stats.nr_of_missing_automated_tests
         self.nr_of_missing_manual_tests += combined_req_test_item.mvrs_stats.nr_of_missing_manual_tests
@@ -89,7 +89,7 @@ class StatisticsContainer:
         implementation: IMPLEMENTATION,
         automated_tests_stats: TestStatisticsItem,
         mvrs_stats: TestStatisticsItem,
-    ):
+    ) -> None:
         assert id not in self._requirement_statistics
 
         combined_requirement_test_item = CombinedRequirementTestItem(
