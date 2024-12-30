@@ -69,9 +69,12 @@ source = "vcs"
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 
-[tool.hatch.build.targets.wheel.hooks.decorators]
-dependencies = ["reqstool-python-hatch-plugin==0.0.4"]
-path = ["src", "tests"]
+[tool.hatch.build.hooks.reqstool]
+dependencies = ["reqstool-python-hatch-plugin == 0.1.1"]
+sources = ["src", "tests"]
+dataset_directory = "docs/reqstool"
+output_directory = "build/reqstool"
+test_results = ["build/**/junit.xml"]
 
 [tool.hatch.envs.dev]
 dependencies = [
