@@ -3,7 +3,7 @@
 from reqstool.locations.git_location import GitLocation
 
 
-def test_git_location(resource_funcname_rootdir_w_path):
+def test_git_location(resource_funcname_rootdir_w_path: str) -> None:
     PATH = "/tmp/somepath"
 
     git_location = GitLocation(
