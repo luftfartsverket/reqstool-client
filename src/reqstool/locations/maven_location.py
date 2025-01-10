@@ -4,13 +4,14 @@ import logging
 import os
 import sys
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import List, Optional
 from zipfile import ZipFile
-from maven_artifact import Artifact, Downloader, RequestException, Resolver
-from reqstool_python_decorators.decorators.decorators import Requirements
-from reqstool.locations.location import LocationInterface
 
 from lxml import etree
+from maven_artifact import Artifact, Downloader, RequestException, Resolver
+from reqstool_python_decorators.decorators.decorators import Requirements
+
+from reqstool.locations.location import LocationInterface
 
 
 @Requirements("REQ_003", "REQ_017")
@@ -23,7 +24,7 @@ class MavenLocation(LocationInterface):
     classifier: str = field(default="reqstool")
     env_token: str
 
-    def _get_versions(self, resolver: Resolver, artifact: Artifact) -> Any:
+    def _get_all_versions(self, resolver: Resolver, artifact: Artifact) -> List[str]:
         """Get all available versions for the artifact."""
         try:
             # Construct Maven metadata path
@@ -34,7 +35,7 @@ class MavenLocation(LocationInterface):
             xml = resolver.requestor.request(
                 resolver.base + path, resolver._onFail, lambda r: etree.fromstring(r.content)
             )
-            all_versions = xml.xpath("/metadata/versioning/versions/version/text()")
+            all_versions: List[str] = xml.xpath("/metadata/versioning/versions/version/text()")
 
             if not all_versions:
                 raise RequestException(f"No versions found for {artifact}")
@@ -45,19 +46,23 @@ class MavenLocation(LocationInterface):
 
     def _resolve_version(self, resolver: Resolver, base_artifact: Artifact) -> str:
         """Resolve version based on version specifier."""
-        if self.version == "latest":
-            versions = self._get_versions(resolver, base_artifact)
-            if not versions:
-                raise RequestException(f"No versions found for {self.group_id}:{self.artifact_id}")
-            return versions[-1]
 
-        if self.version not in ["latest-stable", "latest-unstable"]:
+        if self.version not in ["latest", "latest-stable", "latest-unstable"]:
             return self.version
 
-        versions = self._get_versions(resolver, base_artifact)
+        if self.version == "latest":
+            versions = self._get_all_versions(resolver, base_artifact)
+
+            if not versions:
+                raise RequestException(f"No versions found for {self.group_id}:{self.artifact_id}")
+
+            return versions[-1]
+
+        versions = self._get_all_versions(resolver, base_artifact)
         is_stable = self.version == "latest-stable"
         filtered_versions = [v for v in versions if v.endswith("-SNAPSHOT") != is_stable]
 
+        # no matching version found
         if not filtered_versions:
             version_type = "stable" if is_stable else "unstable"
             raise RequestException(f"No {version_type} versions found for {self.group_id}:{self.artifact_id}")
@@ -89,19 +94,19 @@ class MavenLocation(LocationInterface):
             base_artifact = Artifact(
                 group_id=self.group_id, version=self.version, artifact_id=self.artifact_id, classifier=self.classifier
             )
-            version = self._resolve_version(resolver, base_artifact)
+            resolved_version = self._resolve_version(resolver, base_artifact)
 
             artifact = Artifact(
                 group_id=self.group_id,
                 artifact_id=self.artifact_id,
-                version=version,
+                version=resolved_version,
                 classifier=self.classifier,
                 extension="zip",
             )
             resolved_artifact = resolver.resolve(artifact)
 
-            if resolved_artifact.version != version:
-                logging.debug(f"Resolved version '{version}' to: {resolved_artifact.version}")
+            if resolved_artifact.version != resolved_version:
+                logging.debug(f"Resolved version '{self.version}' to: {resolved_artifact.version}")
 
             if not downloader.download(resolved_artifact, filename=dst_path):
                 raise RequestException(f"Error downloading artifact {resolved_artifact} from: {self.url}")
