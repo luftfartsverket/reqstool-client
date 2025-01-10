@@ -22,14 +22,22 @@ class MavenLocation(LocationInterface):
     artifact_id: str
     version: str  # Can be "latest", "latest-stable", "latest-unstable", or specific version
     classifier: str = field(default="reqstool")
-    env_token: str
+    env_token: Optional[str]
+    token: Optional[str] = field(init=False, default=None)
+
+    def __post_init__(self) -> None:
+        # Retrieve token from environment variable
+        self.token = os.getenv(self.env_token) if self.env_token else None
+
+        if self.token:
+            logging.debug("Using OAuth Bearer token for authentication")
 
     def _get_all_versions(self, resolver: Resolver, artifact: Artifact) -> List[str]:
         """Get all available versions for the artifact."""
         try:
             # Construct Maven metadata path
-            group_path = artifact.group_id.replace("/", ".")  # Convert slashes to dots first
-            group_path = group_path.replace(".", "/")  # Then convert dots to slashes
+            group_path: str = artifact.group_id.replace("/", ".")  # Convert slashes to dots first
+            group_path: str = group_path.replace(".", "/")  # Then convert dots to slashes
             path = f"/{group_path}/{artifact.artifact_id}/maven-metadata.xml"
 
             xml = resolver.requestor.request(
@@ -44,27 +52,27 @@ class MavenLocation(LocationInterface):
         except Exception as e:
             raise RequestException(f"Failed to get versions for {artifact}: {str(e)}")
 
-    def _resolve_version(self, resolver: Resolver, base_artifact: Artifact) -> str:
+    def _resolve_version(self, resolver: Resolver) -> str:
         """Resolve version based on version specifier."""
 
         if self.version not in ["latest", "latest-stable", "latest-unstable"]:
             return self.version
 
+        base_artifact: Artifact = Artifact(
+            group_id=self.group_id, version=self.version, artifact_id=self.artifact_id, classifier=self.classifier
+        )
+
+        all_versions: List[str] = self._get_all_versions(resolver, base_artifact)
+
         if self.version == "latest":
-            versions = self._get_all_versions(resolver, base_artifact)
+            return all_versions[-1]
 
-            if not versions:
-                raise RequestException(f"No versions found for {self.group_id}:{self.artifact_id}")
-
-            return versions[-1]
-
-        versions = self._get_all_versions(resolver, base_artifact)
         is_stable = self.version == "latest-stable"
-        filtered_versions = [v for v in versions if v.endswith("-SNAPSHOT") != is_stable]
+        filtered_versions = [v for v in all_versions if v.endswith("-SNAPSHOT") != is_stable]
 
         # no matching version found
         if not filtered_versions:
-            version_type = "stable" if is_stable else "unstable"
+            version_type: str = "stable" if is_stable else "unstable"
             raise RequestException(f"No {version_type} versions found for {self.group_id}:{self.artifact_id}")
 
         return filtered_versions[-1]
@@ -86,24 +94,20 @@ class MavenLocation(LocationInterface):
         return top_level_dir
 
     def _make_available_on_localdisk(self, dst_path: str) -> str:
-        token = os.getenv(self.env_token)
-        downloader = Downloader(base=self.url, token=token)
+        downloader = Downloader(base=self.url, token=self.token)
         resolver = downloader.resolver
 
         try:
-            base_artifact = Artifact(
-                group_id=self.group_id, version=self.version, artifact_id=self.artifact_id, classifier=self.classifier
-            )
-            resolved_version = self._resolve_version(resolver, base_artifact)
+            resolved_version: str = self._resolve_version(resolver)
 
-            artifact = Artifact(
+            artifact: Artifact = Artifact(
                 group_id=self.group_id,
                 artifact_id=self.artifact_id,
                 version=resolved_version,
                 classifier=self.classifier,
                 extension="zip",
             )
-            resolved_artifact = resolver.resolve(artifact)
+            resolved_artifact: Artifact = resolver.resolve(artifact)
 
             if resolved_artifact.version != resolved_version:
                 logging.debug(f"Resolved version '{self.version}' to: {resolved_artifact.version}")
