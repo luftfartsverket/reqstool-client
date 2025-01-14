@@ -1,5 +1,7 @@
 # Copyright © LFV
 
+import os
+
 from reqstool.locations.git_location import GitLocation
 
 
@@ -29,3 +31,12 @@ def test_git_location(resource_funcname_rootdir_w_path: str) -> None:
     assert git_location.url == "https://git.example.com/repo.git"
     assert git_location.branch == "test"
     assert git_location.path == PATH
+
+
+def test_git_location(resource_funcname_rootdir_w_path: str) -> None:
+
+    x = "/home/u30576/dev/clones/github/Luftfartsverket/reqstool-client"
+
+    all_versions = GitLocation._get_all_versions(repo_path=x, token=os.getenv("GITLAB_TOKEN"))
+
+    assert all_versions is not None

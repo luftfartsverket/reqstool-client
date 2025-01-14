@@ -1,20 +1,26 @@
 # Copyright © LFV
 
+# type: ignore[no-untyped-call]
+
 import logging
 import os
 import re
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import pygit2
 from attrs import field
-from pygit2 import RemoteCallbacks, UserPass, clone_repository
+from pygit2 import CredentialType, RemoteCallbacks, UserPass, clone_repository
 from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.locations.location import LocationInterface
 
 RE_GIT_TAG_VERSION: re.Pattern[str] = re.compile(
-    r"(?:^v)?(?P<version>\d+\.\d+\.\d+)(?P<suffix>\S+)?", re.VERBOSE | re.IGNORECASE
+    r"^refs\/tags\/(?P<version>(?:v)?\d+\.\d+\.\d+\S*)$", re.VERBOSE | re.IGNORECASE
+)
+
+RE_SEMANTIC_VERSION_PLUS_EXTRA: re.Pattern[str] = re.compile(
+    r"^(?P<version>(?P<semantic>(?:v)?\d+\.\d+\.\d+)(?P<rest>\S+)?)$", re.VERBOSE | re.IGNORECASE
 )
 
 
@@ -38,14 +44,14 @@ class GitLocation(LocationInterface):
     def _make_available_on_localdisk(self, dst_path: str) -> str:
         if self.branch:
             repo = clone_repository(
-                url=self.url, path=dst_path, checkout_branch=self.branch, callbacks=self.MyRemoteCallbacks(self.token)
+                url=self.url, path=dst_path, checkout_branch=self.branch, callbacks=MyRemoteCallbacks(self.token)
             )
         else:
-            repo = clone_repository(url=self.url, path=dst_path, callbacks=self.MyRemoteCallbacks(self.token))
+            repo = clone_repository(url=self.url, path=dst_path, callbacks=MyRemoteCallbacks(self.token))
 
         logging.debug(f"Cloned repo {self.url} (branch: {self.branch}) to {repo.workdir}\n")
 
-        return repo.workdir
+        return str(repo.workdir)
 
     @staticmethod
     def _get_all_versions(repo_path: str, token: Optional[str] = None) -> List[str]:
@@ -56,23 +62,21 @@ class GitLocation(LocationInterface):
         repo = pygit2.Repository(path=repo_path)
 
         # If the repository needs authentication for remote references:
-        if repo.remotes:
-            callbacks = self.MyRemoteCallbacks(token)
-            remote = repo.remotes["origin"]
+        # if repo.remotes:
+        #     callbacks = MyRemoteCallbacks(token)
+        #     remote = repo.remotes["origin"]
 
-            # Ensure remote references are updated (no fetch, just accessing the tags)
-            remote.fetch(callbacks=callbacks)
+        #     # Ensure remote references are updated (no fetch, just accessing the tags)
+        #     remote.fetch(callbacks=callbacks)
 
         all_versions: list[str] = list()
 
-        for tag in repo.references:
-            if tag.startswith("refs/tags/"):
-                tag_name = tag.split("refs/tags/", 1)[1]
-                if RE_GIT_TAG_VERSION.match(tag_name):
-                    all_versions.append(tag_name)
+        for ref in repo.references:
+            if match := RE_GIT_TAG_VERSION.match(ref):
+                all_versions.append(match.group("version"))
 
         if not all_versions:
-            raise Exception(f"No versions found for repo. {repo_path}")
+            raise ValueError(f"No versions found for repo. {repo_path}")
 
         return all_versions
 
@@ -82,35 +86,40 @@ class GitLocation(LocationInterface):
         if self.version not in ["latest", "latest-stable", "latest-unstable"]:
             return self.version
 
-        all_versions: List[str] = self._get_all_versions()
+        all_versions: List[str] = self._get_all_versions(package=self.package, base_url=self.url, token=self.token)
 
         if self.version == "latest":
             return all_versions[-1]
 
         is_stable = self.version == "latest-stable"
 
-        resolved_version: Optional[str] = None
-        for v in reversed(all_versions):
-            match: Optional[re.Match[str]] = RE_PEP440_VERSION.search(v)
+        filtered_versions: List[str] = self._filter_versions(all_versions=all_versions, stable_versions=is_stable)
 
-            if not match:
-                continue
+        # no matching version found
+        if not filtered_versions:
+            version_type = "stable" if is_stable else "unstable"
+            raise ValueError(f"No {version_type} versions found for {self.package}")
 
-            version: str = match.group("version")
-            extra: str = match.group("extra")
+        return filtered_versions[-1]
 
-            if is_stable and not extra:
-                resolved_version = version
-            elif not is_stable and extra:
-                resolved_version = f"{version}{extra}"
+    @staticmethod
+    def _filter_versions(all_versions: List[str], stable_versions: bool) -> List[str]:
+        return [
+            v
+            for v in all_versions
+            if (match := RE_SEMANTIC_VERSION_PLUS_EXTRA.search(v)) and (bool(match.group("rest")) != stable_versions)
+        ]
 
-            if resolved_version:
-                break
 
-    class MyRemoteCallbacks(RemoteCallbacks):
-        def __init__(self, token):
-            self.auth_method = ""  # x-oauth-basic, x-access-token
-            self.token = token
+class MyRemoteCallbacks(RemoteCallbacks):
+    def __init__(self, token: str):
+        self.auth_method = ""  # x-oauth-basic, x-access-token
+        self.token = token
 
-        def credentials(self, url, username_from_url, allowed_types):
-            return UserPass(username=self.auth_method, password=self.token)
+    def credentials(
+        self,
+        url: str,
+        username_from_url: Union[str, None],
+        allowed_types: CredentialType,
+    ) -> UserPass:
+        return UserPass(username=self.auth_method, password=self.token)

@@ -16,7 +16,7 @@ from reqstool.locations.location import LocationInterface
 # https://packaging.python.org/en/latest/specifications/version-specifiers/#version-specifiers-regex
 VERSION_PATTERN = r"""
     v?
-    (?P<version>                                          # Combined version (epoch + release)
+    (?P<semantic>                                          # Combined version (epoch + release)
         (?:(?P<epoch>[0-9]+)!)?                           # epoch
         (?P<release>[0-9]+(?:\.[0-9]+)*)                  # release segment
     )
@@ -189,7 +189,7 @@ class PypiLocation(LocationInterface):
                 continue
 
             # Extract semantic version value if found, otherwise set to "unknown"
-            version = match.group("version")
+            version = match.group("semantic")
 
             all_versions.append(version)
 
