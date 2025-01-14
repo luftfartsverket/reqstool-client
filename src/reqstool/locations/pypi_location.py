@@ -20,7 +20,7 @@ VERSION_PATTERN = r"""
         (?:(?P<epoch>[0-9]+)!)?                           # epoch
         (?P<release>[0-9]+(?:\.[0-9]+)*)                  # release segment
     )
-    (?P<extra>                                            # extra: everything after version
+    (?P<rest>                                            # rest: everything after version
         (?P<pre>                                          # pre-release
             [-_\.]?
             (?P<pre_l>(a|b|c|rc|alpha|beta|pre|preview))
@@ -131,30 +131,21 @@ class PypiLocation(LocationInterface):
 
         is_stable = self.version == "latest-stable"
 
-        resolved_version: Optional[str] = None
-        for v in reversed(all_versions):
-            match: Optional[re.Match[str]] = RE_PEP440_VERSION.search(v)
-
-            if not match:
-                continue
-
-            version: str = match.group("version")
-            extra: str = match.group("extra")
-
-            if is_stable and not extra:
-                resolved_version = version
-            elif not is_stable and extra:
-                resolved_version = f"{version}{extra}"
-
-            if resolved_version:
-                break
+        filtered_versions: List[re.Match] = [
+            match
+            for v in all_versions
+            if (match := RE_PEP440_VERSION.search(v)) and (bool(match.group("rest")) != is_stable)
+        ]
 
         # no matching version found
-        if not resolved_version:
+        if not filtered_versions:
             version_type = "stable" if is_stable else "unstable"
             raise Exception(f"No {version_type} versions found for {self.package}")
 
-        return resolved_version
+        if is_stable:
+            return str(filtered_versions[-1].group("version"))
+        else:
+            return "".join(filtered_versions[-1].group("version", "rest"))
 
     @staticmethod
     def _get_all_versions(package: str, base_url: str, token: Optional[str] = None) -> List[str]:

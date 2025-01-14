@@ -2,15 +2,14 @@
 
 import logging
 import os
-import sys
 from dataclasses import dataclass, field
 from typing import List, Optional
-from zipfile import ZipFile
 
 from lxml import etree
-from maven_artifact import Artifact, Downloader, RequestException, Resolver
+from maven_artifact import Artifact, RequestException, Resolver
 from reqstool_python_decorators.decorators.decorators import Requirements
 
+from reqstool.common.dataclasses.maven_version import MavenVersion
 from reqstool.locations.location import LocationInterface
 
 
@@ -68,14 +67,19 @@ class MavenLocation(LocationInterface):
             return all_versions[-1]
 
         is_stable = self.version == "latest-stable"
-        filtered_versions = [v for v in all_versions if v.endswith("-SNAPSHOT") != is_stable]
+        mv: MavenVersion
+        filtered_versions: List[MavenVersion] = [
+            mv
+            for v in all_versions
+            if (mv := MavenVersion(version=v)) and ((bool(mv.qualifier) or mv.snapshot) != is_stable)
+        ]
 
         # no matching version found
         if not filtered_versions:
             version_type: str = "stable" if is_stable else "unstable"
             raise RequestException(f"No {version_type} versions found for {self.group_id}:{self.artifact_id}")
 
-        return filtered_versions[-1]
+        return filtered_versions[-1].version
 
     def _extract_zip(self, zip_file: str, dst_path: str) -> str:
         """Extract ZIP file and return top level directory."""
