@@ -16,7 +16,8 @@ class MavenVersion:
     snapshot: bool = field(init=False, default=False)  # New field for SNAPSHOT detection
 
     PATTERN_SEMANTIC_VERSION: re.Pattern[str] = re.compile(
-        "^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:-(?P<buildno>\d+))?(?:[-.]?(?P<qualifier>(?!SNAPSHOT$)[a-zA-Z][a-zA-Z0-9]*))?(?:-(?P<snapshot>SNAPSHOT))?$"
+        "^(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(?:-(?P<buildno>\\d+))?(?:[-.]?(?P<qualifier>"
+        "(?!SNAPSHOT$)[a-zA-Z][a-zA-Z0-9]*))?(?:-(?P<snapshot>SNAPSHOT))?$"
     )
 
     def __post_init__(self) -> None:

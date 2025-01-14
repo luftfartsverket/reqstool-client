@@ -131,21 +131,22 @@ class PypiLocation(LocationInterface):
 
         is_stable = self.version == "latest-stable"
 
-        filtered_versions: List[re.Match] = [
-            match
-            for v in all_versions
-            if (match := RE_PEP440_VERSION.search(v)) and (bool(match.group("rest")) != is_stable)
-        ]
+        filtered_versions: List[str] = self._filter_versions(all_versions=all_versions, stable_versions=is_stable)
 
         # no matching version found
         if not filtered_versions:
             version_type = "stable" if is_stable else "unstable"
-            raise Exception(f"No {version_type} versions found for {self.package}")
+            raise ValueError(f"No {version_type} versions found for {self.package}")
 
-        if is_stable:
-            return str(filtered_versions[-1].group("version"))
-        else:
-            return "".join(filtered_versions[-1].group("version", "rest"))
+        return filtered_versions[-1]
+
+    @staticmethod
+    def _filter_versions(all_versions: List[str], stable_versions: bool) -> List[str]:
+        return [
+            v
+            for v in all_versions
+            if (match := RE_PEP440_VERSION.search(v)) and (bool(match.group("rest")) != stable_versions)
+        ]
 
     @staticmethod
     def _get_all_versions(package: str, base_url: str, token: Optional[str] = None) -> List[str]:

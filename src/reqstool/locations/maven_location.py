@@ -2,11 +2,13 @@
 
 import logging
 import os
+import sys
 from dataclasses import dataclass, field
 from typing import List, Optional
+from zipfile import ZipFile
 
 from lxml import etree
-from maven_artifact import Artifact, RequestException, Resolver
+from maven_artifact import Artifact, Downloader, RequestException, Resolver
 from reqstool_python_decorators.decorators.decorators import Requirements
 
 from reqstool.common.dataclasses.maven_version import MavenVersion
@@ -30,6 +32,37 @@ class MavenLocation(LocationInterface):
 
         if self.token:
             logging.debug("Using OAuth Bearer token for authentication")
+
+    def _make_available_on_localdisk(self, dst_path: str) -> str:
+        downloader = Downloader(base=self.url, token=self.token)
+        resolver = downloader.resolver
+
+        try:
+            resolved_version: str = self._resolve_version(resolver)
+
+            artifact: Artifact = Artifact(
+                group_id=self.group_id,
+                artifact_id=self.artifact_id,
+                version=resolved_version,
+                classifier=self.classifier,
+                extension="zip",
+            )
+            resolved_artifact: Artifact = resolver.resolve(artifact)
+
+            if resolved_artifact.version != resolved_version:
+                logging.debug(f"Resolved version '{self.version}' to: {resolved_artifact.version}")
+
+            if not downloader.download(resolved_artifact, filename=dst_path):
+                raise RequestException(f"Error downloading artifact {resolved_artifact} from: {self.url}")
+
+            return self._extract_zip(resolved_artifact.get_filename(dst_path), dst_path)
+
+        except RequestException as e:
+            logging.fatal(str(e))
+            sys.exit(1)
+        except Exception as e:
+            logging.fatal(f"Unexpected error: {str(e)}")
+            sys.exit(1)
 
     def _get_all_versions(self, resolver: Resolver, artifact: Artifact) -> List[str]:
         """Get all available versions for the artifact."""
@@ -67,19 +100,24 @@ class MavenLocation(LocationInterface):
             return all_versions[-1]
 
         is_stable = self.version == "latest-stable"
-        mv: MavenVersion
-        filtered_versions: List[MavenVersion] = [
-            mv
-            for v in all_versions
-            if (mv := MavenVersion(version=v)) and ((bool(mv.qualifier) or mv.snapshot) != is_stable)
-        ]
+        filtered_versions: List[str] = self._filter_versions(all_versions=all_versions, stable_versions=is_stable)
 
         # no matching version found
         if not filtered_versions:
             version_type: str = "stable" if is_stable else "unstable"
             raise RequestException(f"No {version_type} versions found for {self.group_id}:{self.artifact_id}")
 
-        return filtered_versions[-1].version
+        return filtered_versions[-1]
+
+    @staticmethod
+    def _filter_versions(all_versions: List[str], stable_versions: bool) -> List[str]:
+        filtered_versions: List[str] = [
+            mv.version
+            for v in all_versions
+            if (mv := MavenVersion(version=v)) and ((bool(mv.qualifier) or mv.snapshot) != stable_versions)
+        ]
+
+        return filtered_versions
 
     def _extract_zip(self, zip_file: str, dst_path: str) -> str:
         """Extract ZIP file and return top level directory."""
@@ -96,34 +134,3 @@ class MavenLocation(LocationInterface):
         top_level_dir = os.path.join(dst_path, top_level_dirs.pop())
         logging.debug(f"Unzipped {zip_file} to {top_level_dir}")
         return top_level_dir
-
-    def _make_available_on_localdisk(self, dst_path: str) -> str:
-        downloader = Downloader(base=self.url, token=self.token)
-        resolver = downloader.resolver
-
-        try:
-            resolved_version: str = self._resolve_version(resolver)
-
-            artifact: Artifact = Artifact(
-                group_id=self.group_id,
-                artifact_id=self.artifact_id,
-                version=resolved_version,
-                classifier=self.classifier,
-                extension="zip",
-            )
-            resolved_artifact: Artifact = resolver.resolve(artifact)
-
-            if resolved_artifact.version != resolved_version:
-                logging.debug(f"Resolved version '{self.version}' to: {resolved_artifact.version}")
-
-            if not downloader.download(resolved_artifact, filename=dst_path):
-                raise RequestException(f"Error downloading artifact {resolved_artifact} from: {self.url}")
-
-            return self._extract_zip(resolved_artifact.get_filename(dst_path), dst_path)
-
-        except RequestException as e:
-            logging.fatal(str(e))
-            sys.exit(1)
-        except Exception as e:
-            logging.fatal(f"Unexpected error: {str(e)}")
-            sys.exit(1)

@@ -8,7 +8,8 @@ from reqstool.common.dataclasses.maven_version import MavenVersion
 
 
 @pytest.mark.parametrize(
-    "version_string, expected_major, expected_minor, expected_patch, expected_build_number, expected_qualifier, expected_snapshot",
+    "version_string, expected_major, expected_minor, expected_patch, "
+    "expected_build_number, expected_qualifier, expected_snapshot",
     [
         ("1.2.3-alpha", 1, 2, 3, None, "alpha", False),
         ("1.2.3-SNAPSHOT", 1, 2, 3, None, None, True),
