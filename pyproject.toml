@@ -57,7 +57,7 @@ dependencies = [
     "reqstool-python-decorators==0.0.5",
     "packaging==24.2",
     "requests==2.32.3",
-    "beautifulsoup4==4.12.3",
+    "beautifulsoup4==4.13.3",
 ]
 
 [project.scripts]
