@@ -48,7 +48,7 @@ dependencies = [
     "jsonschema[format-nongpl]==4.23.0",
     "lark==1.2.2",
     "maven-artifact==0.3.4",
-    "pygit2==1.16.0",
+    "pygit2==1.17.0",
     "referencing==0.35.1",
     "requests-file==2.1.0",
     "ruamel.yaml==0.18.10",
