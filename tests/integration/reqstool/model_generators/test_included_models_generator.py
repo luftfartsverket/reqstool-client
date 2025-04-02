@@ -54,10 +54,10 @@ def test_basic_maven():
         # Setup
         initial_location=MavenLocation(
             env_token=choose_token(),
-            url="https://maven.pkg.github.com/Luftfartsverket/reqstool-test-packages",
-            group_id="se.lfv.reqstool.testdata",
-            artifact_id="reqstool-testdata-test-basic-ms101",
-            version="0.0.3",
+            url="https://maven.pkg.github.com/Luftfartsverket/reqstool-demo",
+            group_id="se.lfv.reqstool",
+            artifact_id="reqstool-demo",
+            version="0.0.4",
             classifier="reqstool",
         ),
         semantic_validator=semantic_validator,
