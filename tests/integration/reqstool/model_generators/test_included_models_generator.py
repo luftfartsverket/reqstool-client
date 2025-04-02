@@ -57,7 +57,7 @@ def test_basic_maven():
             url="https://maven.pkg.github.com/Luftfartsverket/reqstool-demo",
             group_id="se.lfv.reqstool",
             artifact_id="reqstool-demo",
-            version="0.0.3",
+            version="0.0.4",
             classifier="reqstool",
         ),
         semantic_validator=semantic_validator,
