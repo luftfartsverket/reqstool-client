@@ -72,8 +72,8 @@ local_scheme = "no-local-version"
 [tool.hatch.build.hooks.reqstool]
 dependencies = ["reqstool-python-hatch-plugin==0.1.4"]
 sources = ["src", "tests"]
-junit_xml_file = "build/junit.xml"
-dataset_path = "docs/reqstool"
+test_results = "build/junit.xml"
+dataset_directory = "docs/reqstool"
 output_directory = "build/reqstool"
 
 [tool.hatch.envs.dev]
