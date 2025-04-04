@@ -58,6 +58,7 @@ dependencies = [
     "packaging==24.2",
     "requests==2.32.3",
     "beautifulsoup4==4.13.3",
+    "reqstool-python-hatch-plugin==0.1.4",
 ]
 
 [project.scripts]
