@@ -80,7 +80,7 @@ output_directory = "build/reqstool"
 dependencies = [
     "pytest==8.3.5",
     "pytest-sugar==1.0.0",
-    "pytest-cov==6.1.0",
+    "pytest-cov==6.1.1",
     "black==25.1.0",
     "flake8==7.2.0",
     "flake8-pyproject==1.2.3",
