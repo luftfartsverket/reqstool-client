@@ -45,7 +45,7 @@ dependencies = [
     "distlib==0.3.9",
     "Jinja2==3.1.6",
     "jsonpickle==4.1.1",
-    "jsonschema[format-nongpl]==4.23.0",
+    "jsonschema[format-nongpl]==4.25.1",
     "lark==1.2.2",
     "maven-artifact==0.3.5",
     "pygit2==1.18.0",
