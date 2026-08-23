@@ -41,7 +41,7 @@ permissions:
 
 jobs:
   prepare:
-    uses: reqstool/.github/.github/workflows/common-release-prepare.yml@main
+    uses: reqstool/.github/.github/workflows/common-release-prepare.yml@ef815eae0bca7160cdc714126cac73f76d638b39 # 1.0.0
     permissions:
       contents: read
     with:
@@ -67,7 +67,7 @@ jobs:
   tag:
     needs: [prepare, checks]
     if: ${{ !inputs.dry-run }}
-    uses: reqstool/.github/.github/workflows/common-release-tag.yml@main
+    uses: reqstool/.github/.github/workflows/common-release-tag.yml@ef815eae0bca7160cdc714126cac73f76d638b39 # 1.0.0
     permissions:
       contents: write
     with:
@@ -88,7 +88,7 @@ jobs:
 
   assets:
     needs: [prepare, build-tagged]
-    uses: reqstool/.github/.github/workflows/common-release-assets.yml@main
+    uses: reqstool/.github/.github/workflows/common-release-assets.yml@ef815eae0bca7160cdc714126cac73f76d638b39 # 1.0.0
     permissions:
       contents: write
     with:
@@ -109,7 +109,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: reqstool/.github/.github/actions/download-dists@ef815eae0bca7160cdc714126cac73f76d638b39 # main 2026-08-23
+      - uses: reqstool/.github/.github/actions/download-dists@ef815eae0bca7160cdc714126cac73f76d638b39 # 1.0.0
         with:
           artifact: dist-tagged
       # Inline, not inside download-dists: nesting this Docker action in a
@@ -142,7 +142,7 @@ jobs:
   promote:
     needs: [prepare, assets, publish-to-pypi, publish-image-to-ghcr]
     if: ${{ !inputs.dry-run && !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
-    uses: reqstool/.github/.github/workflows/common-release-promote.yml@main
+    uses: reqstool/.github/.github/workflows/common-release-promote.yml@ef815eae0bca7160cdc714126cac73f76d638b39 # 1.0.0
     permissions:
       contents: write
     with:
