@@ -95,26 +95,13 @@ jobs:
       version: ${{ needs.prepare.outputs.version }}
       artifact: dist-tagged
 
-  publish-to-testpypi:
-    needs: [prepare, assets]
-    runs-on: ubuntu-latest
-    environment:
-      name: test
-      url: https://test.pypi.org
-    permissions:
-      id-token: write
-    steps:
-      - uses: reqstool/.github/.github/actions/publish-to-pypi@main
-        with:
-          target: testpypi
-          artifact: dist-tagged
-
   # PyPI is the only step here that cannot be undone: a version can be yanked but
-  # never replaced. A release candidate stops at Test PyPI -- pip needs --pre to
-  # see a prerelease anyway.
+  # never replaced. Publishes release candidates too, with their pre-release
+  # identifier -- pip ignores them without --pre, so there is nothing unsafe
+  # about it landing on the real index; there is no separate staging index to
+  # route them to instead. Matches npm and Maven Central's existing behavior.
   publish-to-pypi:
-    needs: [prepare, publish-to-testpypi]
-    if: ${{ needs.prepare.outputs.prerelease != 'true' }}
+    needs: [prepare, assets]
     runs-on: ubuntu-latest
     environment:
       name: stable
@@ -124,7 +111,6 @@ jobs:
     steps:
       - uses: reqstool/.github/.github/actions/publish-to-pypi@main
         with:
-          target: pypi
           artifact: dist-tagged
 
   # The image wraps the PyPI release, so it can only be built once that exists.
@@ -143,16 +129,12 @@ jobs:
   # a prerelease. Promotion itself is one API call against a release that already
   # has its artifacts.
   #
-  # The guard is `no job failed`, not the default `every job succeeded`: a release
-  # candidate deliberately skips the publish jobs that a real release runs, and a
-  # skipped dependency would otherwise cascade and skip this too -- leaving the
-  # candidate unpromoted, which is right, and every *real* release unpromoted the
-  # moment any optional job is skipped, which is not.
-  #
-  # `!inputs.dry-run` has to be spelled out for the same reason: on a dry run
-  # every job above is skipped, and "nothing failed" would otherwise be true.
+  # The guard is `no job failed`, not the default `every job succeeded`: on a dry
+  # run every job above is skipped, which would make plain success() false too --
+  # `!inputs.dry-run` is what actually gates this job then, and `no job failed`
+  # is what confirms nothing above it errored on a real run.
   promote:
-    needs: [prepare, assets, publish-to-testpypi, publish-to-pypi, publish-image-to-ghcr]
+    needs: [prepare, assets, publish-to-pypi, publish-image-to-ghcr]
     if: ${{ !inputs.dry-run && !cancelled() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
     uses: reqstool/.github/.github/workflows/common-release-promote.yml@main
     permissions:
