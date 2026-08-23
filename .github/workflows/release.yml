@@ -97,12 +97,17 @@ jobs:
 
   publish-to-testpypi:
     needs: [prepare, assets]
-    uses: reqstool/.github/.github/workflows/python-publish-to-pypi.yml@main
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+      url: https://test.pypi.org
     permissions:
       id-token: write
-    with:
-      target: testpypi
-      artifact: dist-tagged
+    steps:
+      - uses: reqstool/.github/.github/actions/publish-to-pypi@main
+        with:
+          target: testpypi
+          artifact: dist-tagged
 
   # PyPI is the only step here that cannot be undone: a version can be yanked but
   # never replaced. A release candidate stops at Test PyPI -- pip needs --pre to
@@ -110,12 +115,17 @@ jobs:
   publish-to-pypi:
     needs: [prepare, publish-to-testpypi]
     if: ${{ needs.prepare.outputs.prerelease != 'true' }}
-    uses: reqstool/.github/.github/workflows/python-publish-to-pypi.yml@main
+    runs-on: ubuntu-latest
+    environment:
+      name: stable
+      url: https://pypi.org
     permissions:
       id-token: write
-    with:
-      target: pypi
-      artifact: dist-tagged
+    steps:
+      - uses: reqstool/.github/.github/actions/publish-to-pypi@main
+        with:
+          target: pypi
+          artifact: dist-tagged
 
   # The image wraps the PyPI release, so it can only be built once that exists.
   publish-image-to-ghcr:

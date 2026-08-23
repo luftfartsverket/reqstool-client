@@ -22,8 +22,13 @@ jobs:
 
   publish-to-test-pypi:
     needs: build
-    uses: reqstool/.github/.github/workflows/python-publish-to-pypi.yml@main
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+      url: https://test.pypi.org
     permissions:
       id-token: write
-    with:
-      target: testpypi
+    steps:
+      - uses: reqstool/.github/.github/actions/publish-to-pypi@main
+        with:
+          target: testpypi
