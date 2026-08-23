@@ -109,9 +109,13 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: reqstool/.github/.github/actions/publish-to-pypi@b10b898cd5a1d552a578dbe4f170f84fb8f98b6c # main 2026-08-23
+      - uses: actions/download-artifact@v8.0.1
         with:
-          artifact: dist-tagged
+          name: dist-tagged
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          attestations: true
 
   # The image wraps the PyPI release, so it can only be built once that exists.
   publish-image-to-ghcr:
