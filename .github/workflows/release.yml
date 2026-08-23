@@ -109,7 +109,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: reqstool/.github/.github/actions/publish-to-pypi@main
+      - uses: reqstool/.github/.github/actions/publish-to-pypi@b10b898cd5a1d552a578dbe4f170f84fb8f98b6c # main 2026-08-23
         with:
           artifact: dist-tagged
 
