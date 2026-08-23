@@ -109,7 +109,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: reqstool/.github/.github/actions/download-dists@main
+      - uses: reqstool/.github/.github/actions/download-dists@ef815eae0bca7160cdc714126cac73f76d638b39 # main 2026-08-23
         with:
           artifact: dist-tagged
       # Inline, not inside download-dists: nesting this Docker action in a
