@@ -214,3 +214,22 @@ async def test_list_annotations(mcp_session):
         assert "req_urn" in ann
         assert "element_kind" in ann
         assert "fqn" in ann
+
+
+# ---------------------------------------------------------------------------
+# get_urn_details / enrich_document
+# ---------------------------------------------------------------------------
+
+
+async def test_get_urn_details_not_found(mcp_session):
+    result = await mcp_session.call_tool("get_urn_details", {"urn": "no-such-urn"})
+    assert result.is_error
+    assert "no-such-urn" in str(result.content)
+
+
+async def test_enrich_document_unknown_preset(mcp_session):
+    """The message has to name the valid presets, which is the only way to recover from this."""
+    result = await mcp_session.call_tool("enrich_document", {"content": "REQ_PASS", "preset": "no:such:preset"})
+    assert result.is_error
+    assert "no:such:preset" in str(result.content)
+    assert "openspec:spec" in str(result.content)
