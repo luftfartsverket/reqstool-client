@@ -77,6 +77,9 @@ async def test_get_requirement_known(mcp_session):
 async def test_get_requirement_not_found(mcp_session):
     result = await mcp_session.call_tool("get_requirement", {"id": "REQ_NONEXISTENT"})
     assert result.is_error
+    # The reason has to reach the model, not just the failure: an SDK that masks it
+    # leaves a bare "Error executing tool get_requirement" and no way to spot a typo.
+    assert "REQ_NONEXISTENT" in str(result.content)
 
 
 # ---------------------------------------------------------------------------
@@ -114,6 +117,7 @@ async def test_get_svc_known(mcp_session):
 async def test_get_svc_not_found(mcp_session):
     result = await mcp_session.call_tool("get_svc", {"id": "SVC_NONEXISTENT"})
     assert result.is_error
+    assert "SVC_NONEXISTENT" in str(result.content)
 
 
 # ---------------------------------------------------------------------------
@@ -133,6 +137,7 @@ async def test_list_mvrs(mcp_session):
 async def test_get_mvr_not_found(mcp_session):
     result = await mcp_session.call_tool("get_mvr", {"id": "MVR_NONEXISTENT"})
     assert result.is_error
+    assert "MVR_NONEXISTENT" in str(result.content)
 
 
 # ---------------------------------------------------------------------------
@@ -167,6 +172,7 @@ async def test_get_requirement_status(mcp_session):
 async def test_get_requirement_status_not_found(mcp_session):
     result = await mcp_session.call_tool("get_requirement_status", {"id": "REQ_NONEXISTENT"})
     assert result.is_error
+    assert "REQ_NONEXISTENT" in str(result.content)
 
 
 @pytest.mark.parametrize("include_post_build", [False, True])
@@ -176,6 +182,7 @@ async def test_get_requirement_status_not_found_with_include_post_build(mcp_sess
         "get_requirement_status", {"id": "REQ_NONEXISTENT", "include_post_build": include_post_build}
     )
     assert result.is_error
+    assert "REQ_NONEXISTENT" in str(result.content)
 
 
 async def test_get_requirement_status_missing_automated_test_not_met(mcp_session):
@@ -207,3 +214,22 @@ async def test_list_annotations(mcp_session):
         assert "req_urn" in ann
         assert "element_kind" in ann
         assert "fqn" in ann
+
+
+# ---------------------------------------------------------------------------
+# get_urn_details / enrich_document
+# ---------------------------------------------------------------------------
+
+
+async def test_get_urn_details_not_found(mcp_session):
+    result = await mcp_session.call_tool("get_urn_details", {"urn": "no-such-urn"})
+    assert result.is_error
+    assert "no-such-urn" in str(result.content)
+
+
+async def test_enrich_document_unknown_preset(mcp_session):
+    """The message has to name the valid presets, which is the only way to recover from this."""
+    result = await mcp_session.call_tool("enrich_document", {"content": "REQ_PASS", "preset": "no:such:preset"})
+    assert result.is_error
+    assert "no:such:preset" in str(result.content)
+    assert "openspec:spec" in str(result.content)

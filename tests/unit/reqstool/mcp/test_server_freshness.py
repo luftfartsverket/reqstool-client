@@ -12,9 +12,9 @@ from unittest.mock import patch
 
 import mcp.server.mcpserver
 import pytest
+from mcp.server.mcpserver.exceptions import ToolError
 from reqstool_python_decorators.decorators.decorators import SVCs
 
-from reqstool.common.exceptions import SnapshotReloadError
 from reqstool.locations.local_location import LocalLocation
 from reqstool.mcp import server as mcp_server
 
@@ -111,9 +111,11 @@ def test_a_tool_errors_when_the_changed_project_cannot_be_reloaded(project_copy)
     async def scenario(tools):
         (project_copy / "requirements.yml").write_text(": this is not: [ valid yaml")
 
-        with pytest.raises(SnapshotReloadError, match="sources changed but reloading them failed"):
+        # ToolError, not the underlying SnapshotReloadError: only a ToolError's message
+        # survives the SDK, so asserting the type is what proves the reason reaches the model.
+        with pytest.raises(ToolError, match="sources changed but reloading them failed"):
             await tools["get_status"]()
-        with pytest.raises(SnapshotReloadError):
+        with pytest.raises(ToolError):
             await tools["list_requirements"]()
         return True
 

@@ -6,6 +6,7 @@ from typing import Literal
 
 from reqstool_python_decorators.decorators.decorators import Requirements
 
+from reqstool.common.exceptions import SnapshotReloadError
 from reqstool.common.project_session import ProjectSession
 from reqstool.common.enrichment.enricher import BUILT_IN_PRESETS, enrich_text
 from reqstool.common.queries.details import (
@@ -32,6 +33,11 @@ def start_server(  # noqa: C901
 ) -> None:
     try:
         from mcp.server.mcpserver import MCPServer
+
+        # SDK 2.1: only a ToolError's message reaches the model. Any other exception is
+        # treated as a crash and reported as a bare "Error executing tool <name>", so
+        # every anticipated failure below raises ToolError to keep its text.
+        from mcp.server.mcpserver.exceptions import ToolError
     except ImportError as exc:
         raise ImportError("MCP server requires extra dependencies: pip install 'mcp>=2.0'") from exc
 
@@ -51,10 +57,13 @@ def start_server(  # noqa: C901
         Every tool must resolve the repository through this. Binding it once at startup is
         what let long-lived servers serve a snapshot from before the last build (#437).
         """
-        session.ensure_fresh()
+        try:
+            session.ensure_fresh()
+        except SnapshotReloadError as exc:
+            raise ToolError(str(exc)) from exc
         repo = session.repo
         if repo is None:
-            raise RuntimeError(f"reqstool project is not loaded: {session.error}")
+            raise ToolError(f"reqstool project is not loaded: {session.error}")
         return repo
 
     @Requirements("MCP_0008")
@@ -87,7 +96,7 @@ def start_server(  # noqa: C901
         """Get full details for a requirement by ID (e.g. REQ_010)."""
         result = get_requirement_details(id, _repo(), session.urn_source_paths)
         if result is None:
-            raise ValueError(f"Requirement {id!r} not found")
+            raise ToolError(f"Requirement {id!r} not found")
         return result
 
     @mcp.tool()
@@ -109,7 +118,7 @@ def start_server(  # noqa: C901
         """Get full details for an SVC by ID (e.g. SVC_010)."""
         result = get_svc_details(id, _repo(), session.urn_source_paths)
         if result is None:
-            raise ValueError(f"SVC {id!r} not found")
+            raise ToolError(f"SVC {id!r} not found")
         return result
 
     @mcp.tool()
@@ -122,7 +131,7 @@ def start_server(  # noqa: C901
         """Get full details for an MVR by ID."""
         result = get_mvr_details(id, _repo(), session.urn_source_paths)
         if result is None:
-            raise ValueError(f"MVR {id!r} not found")
+            raise ToolError(f"MVR {id!r} not found")
         return result
 
     @mcp.tool()
@@ -144,7 +153,7 @@ def start_server(  # noqa: C901
         unconditionally — after a build, for instance — or to confirm what is being served."""
         session.build()
         if not session.ready:
-            raise RuntimeError(f"Failed to reload reqstool project: {session.error}")
+            raise ToolError(f"Failed to reload reqstool project: {session.error}")
         return _snapshot_info()
 
     @mcp.tool()
@@ -154,7 +163,7 @@ def start_server(  # noqa: C901
         `status --with-post-tests` (scopes to post-build-phase SVCs too)."""
         result = _get_requirement_status(id, _repo(), include_post_build=include_post_build)
         if result is None:
-            raise ValueError(f"Requirement {id!r} not found")
+            raise ToolError(f"Requirement {id!r} not found")
         return result
 
     @mcp.tool()
@@ -184,7 +193,7 @@ def start_server(  # noqa: C901
         """Get details for a URN: variant, title, location, file paths, and entity counts."""
         result = _get_urn_details(urn, _repo(), session.urn_source_paths)
         if result is None:
-            raise ValueError(f"URN {urn!r} not found")
+            raise ToolError(f"URN {urn!r} not found")
         return result
 
     @mcp.tool()
@@ -198,7 +207,7 @@ def start_server(  # noqa: C901
                  openspec:proposal, openspec:tasks
         """
         if preset not in BUILT_IN_PRESETS:
-            raise ValueError(f"Unknown preset {preset!r}. Valid: {sorted(BUILT_IN_PRESETS)}")
+            raise ToolError(f"Unknown preset {preset!r}. Valid: {sorted(BUILT_IN_PRESETS)}")
         config = BUILT_IN_PRESETS[preset]
         repo = _repo()
         return enrich_text(content, repo.get_all_requirements(), repo.get_all_svcs(), repo.get_all_mvrs(), config)
